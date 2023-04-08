@@ -1,6 +1,6 @@
 Validation of invasion
 ================
-Shashank
+Shashank Pritam
 
 ## Introduction
 
@@ -31,15 +31,27 @@ A chromosome of size 1Mb and no piRNA clusters. We used 500 replicates
 
 ## Materials & Methods
 
-version: invadego0.1.3 seed:1677013420283152972
+version 0.1.3, seed: 1680983462701036530
 
 ### Commands for the simulation:
 
 ``` bash
-folder="Simulation-Results/Insertion-Bias/validation_1"
 tool="./main"
+N=1000
+gen=100
+genome="mb:1"
+cluster="kb:0"
+rr="4"
+rep=500
+u=0.1
+steps=1
+folder="Simulation-Results/Insertion-Bias/validation_1"
 
-$tool --N 1000 --gen 100 --genome mb:1 --cluster kb:0 --rr 4 --rep 500 --u 0.1 --basepop "10(0)" --silent --steps 1 > $folder/2023_02_21_Validation_1_invasion
+output_file="$folder/$(date +%Y_%m_%d)_Validation_1_invasion.txt"
+command="$tool --N $N --gen $gen --genome $genome --cluster $cluster --rr $rr --rep $rep --u $u --basepop \"10(0)\" --silent --steps $steps > $output_file"
+echo "Running command: $command"
+eval "$command"
+
 ```
 
 
