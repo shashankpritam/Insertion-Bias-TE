@@ -9,7 +9,6 @@ Result and Data related to Invadego validation and simulation.
 ## Directory Structure
 
 The directory structure for this repository is as follows:
-
 Insertion-Bias
 ├── Insertion-Bias
 │   ├── Slurm-Jobs 
@@ -34,4 +33,3 @@ Insertion-Bias
 │   ├── Validation_5_linkage_disequilibrium.md
 │   └── Validation_6_insertion-bias.md
 └── README.md
-
