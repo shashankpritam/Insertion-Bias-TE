@@ -8,26 +8,15 @@ Result and Data related to Invadego validation and simulation.
 
 ## Directory Structure
 
-The directory structure for this repository is as follows:
-Insertion-Bias
-├── Slurm-Jobs
-├── Simulation-Results_Files
-│   ├── validation_1
-│   ├── validation_2
-│   ├── validation_3
-│   ├── validation_4
-│   └── validation_5
-├── archives
-├── images
-├── .DS_Store
-├── .RData
-├── .Rhistory
-├── .gitattributes
-├── .gitignore
-├── Validation_1_invasion.md
-├── Validation_2_drift.md
-├── Validation_3_clusters.md
-├── Validation_4_selection.md
-├── Validation_5_linkage_disequilibrium.md
-└── Validation_6_insertion-bias.md
-└── README.md
+.
+ * [tree-md](./tree-md)
+ * [dir2](./dir2)
+   * [file21.ext](./dir2/file21.ext)
+   * [file22.ext](./dir2/file22.ext)
+   * [file23.ext](./dir2/file23.ext)
+ * [dir1](./dir1)
+   * [file11.ext](./dir1/file11.ext)
+   * [file12.ext](./dir1/file12.ext)
+ * [file_in_root.ext](./file_in_root.ext)
+ * [README.md](./README.md)
+ * [dir3](./dir3)
