@@ -14,3 +14,10 @@ data_new$sampleid <- factor(data_new$sampleid,
 gl<-ggplot()+geom_line(data=data_new,aes(x=gen,group=rep,y=avtes*1000),alpha=0.4)+scale_y_log10()+theme(legend.position="none")+ylab("TE copies in population")+xlab("generation")+facet_grid(.~sampleid)
 plot(gl)
 
+g<-ggplot()+geom_line(data=data_new,aes(x=gen,group=rep,y=avtes),alpha=0.4)+
+  scale_y_log10()+
+  ylab("TEs insertions per diploid individual")+xlab("generation")+
+  facet_grid(.~sampleid)+
+  facet_wrap(~sampleid, ncol=3)
+
+plot(g)

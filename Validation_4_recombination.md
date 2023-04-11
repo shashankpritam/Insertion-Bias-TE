@@ -45,16 +45,16 @@ For all validations, a population of N = 10000 was used and an initial
 TE distribution of 1000. These were simulated for 150 generations.
 
 -   Validation 4_1: Linkage disequilibrium Recombination rate = 0.00
-    seed:1678298900411384477
+    seed:1681243390616095155
 
 -   Validation 4_2: Linkage disequilibrium Recombination rate = 0.01
-    seed:1678299623759727104
+    seed:1681244011402783386
 
 -   Validation 4_3: Linkage disequilibrium Recombination rate = 0.05
-    seed:1678300302211346167
+    seed:1681244634844366186
 
 -   Validation 4_4: Linkage disequilibrium Recombination rate = 0.1
-    seed:1678300960683806049
+    seed:1681245276735087346
 
 ## Materials & Methods
 
@@ -116,7 +116,7 @@ gl<-ggplot(df, aes( x = gen))+
 plot(gl)
 ```
 
-<img src="images/2023_02_27_Validation_8_Linkage_Disequilibrium_a.png" alt="8A.">
+<img src="images/2023_04_11_Validation_4a_recombination.png" alt="4A.">
 
 This plot shows how linkage disequilibrium decays with different
 recombination rates.
@@ -165,7 +165,7 @@ g_8_4<-ggplot()+
   (g_8_3+g_8_4)
 ```
 
-<img src="images/2023_03_08_Validation_8_Linkage_Disequilibrium.png" alt="8B.">
+<img src="images/2023_04_11_Validation_4b_recombination.png" alt="4B.">
 
 In the 4 graphs above the theoretical value is described by the colored
 line, while the grey lines represent the 100 simulated populations for
