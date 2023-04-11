@@ -1,6 +1,6 @@
 Validation of recombination
 ================
-Almorò Scarpa
+Shashank Pritam
 
 ## Introduction
 
@@ -44,16 +44,16 @@ For more informations about the basics of linkage disequilibrium visit:
 For all validations, a population of N = 10000 was used and an initial
 TE distribution of 1000. These were simulated for 150 generations.
 
--   Validation 8_1: Linkage disequilibrium Recombination rate = 0.00
+-   Validation 4_1: Linkage disequilibrium Recombination rate = 0.00
     seed:1678298900411384477
 
--   Validation 8_2: Linkage disequilibrium Recombination rate = 0.01
+-   Validation 4_2: Linkage disequilibrium Recombination rate = 0.01
     seed:1678299623759727104
 
--   Validation 8_3: Linkage disequilibrium Recombination rate = 0.05
+-   Validation 4_3: Linkage disequilibrium Recombination rate = 0.05
     seed:1678300302211346167
 
--   Validation 8_4: Linkage disequilibrium Recombination rate = 0.1
+-   Validation 4_4: Linkage disequilibrium Recombination rate = 0.1
     seed:1678300960683806049
 
 ## Materials & Methods
@@ -64,16 +64,14 @@ version: invadego 0.1.3
 
 ``` bash
 
-folder="Simulation-Results/Insertion-Bias/validation_8"
 tool="./main"
+folder="Simulation-Results/Insertion-Bias/validation_4"
 
-$tool --N 10000 --u 0 --basepop "100(0)" --file-debug $folder/validation_8_1_debug --gen 150 --genome mb:1 --steps 1 --rr 0 --rep 100 > $folder/validation_8_1
+$tool --N 10000 --u 0 --basepop "100(0)" --file-debug $folder/validation_4_1_debug --gen 150 --genome mb:1 --steps 1 --rr 0 --rep 100 > $folder/validation_4_1
+$tool --N 10000 --u 0 --basepop "100(0)" --file-debug $folder/validation_4_2_debug --gen 150 --genome mb:1 --steps 1 --rr 1 --rep 100 > $folder/validation_4_2
+$tool --N 10000 --u 0 --basepop "100(0)" --file-debug $folder/validation_4_3_debug --gen 150 --genome mb:1 --steps 1 --rr 5 --rep 100 > $folder/validation_4_3
+$tool --N 10000 --u 0 --basepop "100(0)" --file-debug $folder/validation_4_4_debug --gen 150 --genome mb:1 --steps 1 --rr 10 --rep 100 > $folder/validation_4_4
 
-$tool --N 10000 --u 0 --basepop "100(0)" --file-debug $folder/validation_8_2_debug --gen 150 --genome mb:1 --steps 1 --rr 1 --rep 100 > $folder/validation_8_2
-
-$tool --N 10000 --u 0 --basepop "100(0)" --file-debug $folder/validation_8_3_debug --gen 150 --genome mb:1 --steps 1 --rr 5 --rep 100 > $folder/validation_8_3
-
-$tool --N 10000 --u 0 --basepop "100(0)" --file-debug $folder/validation_8_4_debug --gen 150 --genome mb:1 --steps 1 --rr 10 --rep 100 > $folder/validation_8_4
 
 ```
 
@@ -124,7 +122,7 @@ This plot shows how linkage disequilibrium decays with different
 recombination rates.
 
 ``` r
-t_8_1<-read.table("validation_8_1_debug", fill = TRUE, sep = "\t")
+t_8_1<-read.table("validation_4_1_debug", fill = TRUE, sep = "\t")
 names(t_8_1)<-c("rep", "gen", "D")
 g_8_1<-ggplot()+
   geom_line(data = t_8_1, aes(x = gen, y = D, group = rep), color = "grey")+
@@ -134,7 +132,7 @@ g_8_1<-ggplot()+
   ylim(0, 0.25)
 
 
-t_8_2<-read.table("validation_8_2_debug", fill = TRUE, sep = "\t")
+t_8_2<-read.table("validation_4_2_debug", fill = TRUE, sep = "\t")
 names(t_8_2)<-c("rep", "gen", "D")
 g_8_2<-ggplot()+
   geom_line(data = t_8_2, aes(x = gen, y = D, group = rep), color = "grey")+
@@ -144,7 +142,7 @@ g_8_2<-ggplot()+
   ylim(-0.01, 0.25)
 
 
-t_8_3<-read.table("validation_8_3_debug", fill = TRUE, sep = "\t")
+t_8_3<-read.table("validation_4_3_debug", fill = TRUE, sep = "\t")
 names(t_8_3)<-c("rep", "gen", "D")
 g_8_3<-ggplot()+
   geom_line(data = t_8_3, aes(x = gen, y = D, group = rep), color = "grey")+
@@ -154,7 +152,7 @@ g_8_3<-ggplot()+
   ylim(-0.01, 0.25)
 
 
-t_8_4<-read.table("validation_8_4_debug", fill = TRUE, sep = "\t")
+t_8_4<-read.table("validation_4_4_debug", fill = TRUE, sep = "\t")
 names(t_8_4)<-c("rep", "gen", "D")
 g_8_4<-ggplot()+
   geom_line(data = t_8_4, aes(x = gen, y = D, group = rep), color = "grey")+
