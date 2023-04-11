@@ -9,7 +9,7 @@ Result and Data related to Invadego validation and simulation.
 ## Directory Structure
 
 * [Simulation-Results_Files](./Simulation-Results_Files)
-    * [Slurm-Jobs](./Slurm-Jobs)
+    * [Slurm-Jobs](./Simulation-Results_Files/Slurm-Jobs)
     * [validation_1](./Simulation-Results_Files/validation_1)
     * [validation_2](./Simulation-Results_Files/validation_2)
     * [validation_3](./Simulation-Results_Files/validation_3)
