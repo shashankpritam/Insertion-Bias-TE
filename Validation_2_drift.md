@@ -82,7 +82,7 @@ library(patchwork)
 Visualization: comparing the simulations with the prediction
 
 ``` r
-validation<-read.table("2023_03_03_Validation_2_Drift", fill = TRUE, sep = "\t")
+validation<-read.table("2023_04_11_Validation_2_Drift", fill = TRUE, sep = "\t")
 names(validation)<-c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "minw","avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli","avcli","fixcli","spacer_4","avbias","3tot", "3cluster", "spacer 5", "sampleid")
 
 data_1 <- validation[which(validation$sampleid == "pd250"),names(validation) %in% c("rep","fixed")]
