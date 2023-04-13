@@ -19,8 +19,8 @@ u=0.1
 steps=500
 folder="Simulation-Results/Insertion-Bias/validation_5.1"
 
-for i in {1..19}; do
-  i=$(($i * -10))
+for i in {-9..9}; do
+  i=$(($i * 10))
 
   if (( $i < 0 )); then
     sampleid="mb$(($i * -1))"
@@ -39,7 +39,7 @@ done
 wait
 
 # concatenate output files with system date
-for i in {1..19}; do
-  i=$(($i * -10))
+for i in {-9..9}; do
+  i=$(($i * 10))
   cat "$folder"/"$(date +%Y_%m_%d)"_simulation_*"$i"* | grep -v "^Invade" | grep -v "^#" > "$folder"/"$(date +%Y_%m_%d)"_Simulation_"$i"_500_gen_exploration
 done
