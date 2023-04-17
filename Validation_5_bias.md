@@ -2,16 +2,47 @@ Validation of Insertion Bias
 ================
 Shashank Pritam
 
+
 ## Introduction
 
+With this simulation we wanted to understand the impact of the insertion
+bias on the transposable elements invasion dynamics.
 
-## Scenarios
+### Initial conditions:
 
+A population of 1000, 5 chromosomes of size 10 Mb, 5 piRNA clusters of
+size 300 Kb and an initial number of TEs in the population equal to 10.
 
+We used 1000 replicates for the establishment probability simulation.
 
-
+We used 100 replicates for the other simulations.
 
 ## Materials & Methods
+
+version: invadego-insertionbias
+
+- seed bm90: 
+- seed bm80: 
+- seed bm70: 
+- seed bm60: 
+- seed bm50: 
+- seed bm40: 
+- seed bm30: 
+- seed bm20: 
+- seed bm10: 
+- seed b0: 
+- seed b10: 
+- seed b20: 
+- seed b30: 
+- seed b40: 
+- seed b50: 
+- seed b60: 
+- seed b70: 
+- seed b80: 
+- seed b90: 
+
+
+
 
 version: invadego 0.1.3
 
@@ -59,6 +90,17 @@ done
 ### Visualization in R
 
 Setting the environment
+
+``` r
+library(tidyverse)
+library(RColorBrewer)
+library(ggpubr)
+theme_set(theme_bw())
+```
+
+Visualization:
+
+``` r
 
 
 ## Conclusions
