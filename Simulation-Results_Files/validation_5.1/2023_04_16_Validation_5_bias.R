@@ -27,9 +27,9 @@ df0_stat <- df00 %>%
 
 # Modify sampleid values
 df0_stat <- df0_stat %>%
-  mutate(sampleid = str_replace_all(sampleid, c("bm90" = "-90", "bm80" = "-80", "bm70" = "-70", "bm60" = "-60",
-                                                "bm50" = "-50", "bm40" = "-40", "bm30" = "-30", "bm20" = "-20",
-                                                "bm10" = "-10", "b90" = "90", "b80" = "80", "b70" = "70",
+  mutate(sampleid = str_replace_all(sampleid, c("mb90" = "-90", "mb80" = "-80", "mb70" = "-70", "mb60" = "-60",
+                                                "mb50" = "-50", "mb40" = "-40", "mb30" = "-30", "mb20" = "-20",
+                                                "mb10" = "-10", "b90" = "90", "b80" = "80", "b70" = "70",
                                                 "b60" = "60", "b50" = "50", "b40" = "40", "b30" = "30",
                                                 "b20" = "20", "b10" = "10", "b0" = "0")))
 
@@ -38,14 +38,19 @@ df0_stat$sampleid <- as.integer(df0_stat$sampleid)
 df0_stat <- df0_stat[order(df0_stat$sampleid),]
 
 # Create and plot the graph
-g0 <- ggplot(data = df0_stat, aes(x = as.factor(sampleid), y = ok_rate)) +
-  geom_col() +
+g0 <- ggplot(data = df0_stat, aes(x = as.factor(sampleid), y = ok_rate, fill = ok_rate)) +
+  geom_col(show.legend = FALSE) +
   geom_hline(yintercept = 0.8, linetype = "dashed", color = "red") +
-  scale_y_continuous(limits = c(0, 1), expand = expansion(mult = c(0, 0)), breaks = seq(0, 1, 0.2)) +
+  scale_y_continuous(limits = c(0, 1), expand = expansion(mult = c(0, 0)), breaks = seq(0, 1, 0.2),
+                     labels = scales::percent) +
   scale_x_discrete(labels = setNames(c("-90", "-80", "-70", "-60", "-50", "-40", "-30", "-20", "-10", "0",
                                        "10", "20", "30", "40", "50", "60", "70", "80", "90"),
                                      unique(df0_stat$sampleid))) +
-  xlab("insertion bias") +
-  ylab("successful invasions")
+  scale_fill_gradientn(colors = RColorBrewer::brewer.pal(3, "Dark2")) +
+  xlab("Insertion Bias") +
+  ylab("Successful Invasions (%)") +
+  theme_minimal() +
+  theme(text = element_text(size = 12))
 
 plot(g0)
+
