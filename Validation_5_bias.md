@@ -21,25 +21,25 @@ We used 100 replicates for the other simulations.
 
 version: invadego-insertionbias
 
-- seed bm90: 
-- seed bm80: 
-- seed bm70: 
-- seed bm60: 
-- seed bm50: 
-- seed bm40: 
-- seed bm30: 
-- seed bm20: 
-- seed bm10: 
-- seed b0: 
-- seed b10: 
-- seed b20: 
-- seed b30: 
-- seed b40: 
-- seed b50: 
-- seed b60: 
-- seed b70: 
-- seed b80: 
-- seed b90: 
+- seed bm90: 1681416686772742525
+- seed bm80: 1681416686774110472
+- seed bm70: 1681416686775454804
+- seed bm60: 1681416686777197238
+- seed bm50: 1681416686800571008
+- seed bm40: 1681416686781159100
+- seed bm30: 1681416686799564808
+- seed bm20: 1681416686789184445
+- seed bm10: 1681416686852215098
+- seed b0: 1681416686895551778
+- seed b10: 1681416686901710885
+- seed b20: 1681416686922069349
+- seed b30: 1681416686945831086
+- seed b40: 1681416686916556559
+- seed b50: 1681416686923950537
+- seed b60: 1681416686979799130
+- seed b70: 1681416686963536390
+- seed b80: 1681416687018751364
+- seed b90: 1681416687027712625
 
 
 
@@ -101,6 +101,53 @@ theme_set(theme_bw())
 Visualization:
 
 ``` r
+p<-c("#1a9850","#ffd700","#d73027")
 
+df0 <- read.table("2023_03_07_Simulation_0_500_gen_exploration", fill = TRUE, sep = "\t") 
+names(df0)<-c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq",
+             "fixed","spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3",
+             "avbias","3tot", "3cluster","spacer_4", "sampleid")
+
+df00 <- subset(df0, gen != 0)
+
+df00<-select (df00,-c(22))
+
+df0_stat <- df00 %>%
+  group_by(sampleid) %>%
+  summarize(fail = sum(popstat == "fail-0"),
+            success = sum(popstat == "ok"),
+            total = success + fail,
+            ok_rate = success/total)
+
+
+df0_stat <- df0_stat %>%
+  mutate(sampleid = str_replace(sampleid,"bm75", "-75")) %>%
+  mutate(sampleid = str_replace(sampleid,"bm50", "-50")) %>%
+  mutate(sampleid = str_replace(sampleid,"bm20", "-25")) %>%
+  mutate(sampleid = str_replace(sampleid,"b0", "0")) %>%
+  mutate(sampleid = str_replace(sampleid,"b10", "10")) %>%
+  mutate(sampleid = str_replace(sampleid,"b20", "20")) %>%
+  mutate(sampleid = str_replace(sampleid,"b30", "30")) %>%
+  mutate(sampleid = str_replace(sampleid,"b40", "40")) %>%
+  mutate(sampleid = str_replace(sampleid,"b50", "50")) %>%
+  mutate(sampleid = str_replace(sampleid,"b60", "60")) %>%
+  mutate(sampleid = str_replace(sampleid,"b70", "70")) %>%
+  mutate(sampleid = str_replace(sampleid,"b80", "80")) %>%
+  mutate(sampleid = str_replace(sampleid,"b90", "90")) %>%
+  mutate(sampleid = str_replace(sampleid,"b100", "100"))
+
+
+df0_stat$sampleid<-as.integer(df0_stat$sampleid)
+df0_stat <- df0_stat[order(df0_stat$sampleid),]
+
+g0 <- ggplot(data=df0_stat,aes(x=as.factor(sampleid),y=ok_rate)) +
+  geom_col() +
+  geom_hline(yintercept = 0.8, linetype = "dashed", color = "red") +
+  scale_y_continuous(limits = c(0,1), expand = expansion(mult = c(0, 0)), breaks = seq(0, 1, 0.2)) +
+  xlab("insertion bias") +
+  ylab("successful invasions")
+
+plot(g0)
+```
 
 ## Conclusions
