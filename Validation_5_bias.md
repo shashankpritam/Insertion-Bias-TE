@@ -11,8 +11,8 @@ bias on the transposable elements invasion dynamics.
 ### Initial conditions:
 
 * A population of 1000, 5 chromosomes of size 10 Mb, 5 piRNA clusters of size 300 Kb and an initial number of TEs in the population equal to 10.
-* We used 1000 replicates for the establishment probability simulation.
-* We used 100 replicates for the other simulations.
+* We used 1000 replicates for the establishment probability simulation. (Part A)
+* We used 100 replicates for the other simulations. (Part B)
 
 ## Part A
 
@@ -20,15 +20,15 @@ bias on the transposable elements invasion dynamics.
 
 version: invadego-insertionbias
 
-- seed bm90: 1681416686772742525
-- seed bm80: 1681416686774110472
-- seed bm70: 1681416686775454804
-- seed bm60: 1681416686777197238
-- seed bm50: 1681416686800571008
-- seed bm40: 1681416686781159100
-- seed bm30: 1681416686799564808
-- seed bm20: 1681416686789184445
-- seed bm10: 1681416686852215098
+- seed mb90: 1681416686772742525
+- seed mb80: 1681416686774110472
+- seed mb70: 1681416686775454804
+- seed mb60: 1681416686777197238
+- seed mb50: 1681416686800571008
+- seed mb40: 1681416686781159100
+- seed mb30: 1681416686799564808
+- seed mb20: 1681416686789184445
+- seed mb10: 1681416686852215098
 - seed b0: 1681416686895551778
 - seed b10: 1681416686901710885
 - seed b20: 1681416686922069349
@@ -39,9 +39,6 @@ version: invadego-insertionbias
 - seed b70: 1681416686963536390
 - seed b80: 1681416687018751364
 - seed b90: 1681416687027712625
-
-
-
 
 version: invadego 0.1.3
 
