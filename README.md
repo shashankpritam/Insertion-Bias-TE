@@ -14,7 +14,6 @@ Result and Data related to Invadego validation and simulation.
     * [validation_2](./Simulation-Results_Files/validation_2)
     * [validation_3](./Simulation-Results_Files/validation_3)
     * [validation_4](./Simulation-Results_Files/validation_4)
-    * [validation_5](./Simulation-Results_Files/validation_5)
     * [validation_5.1](./Simulation-Results_Files/validation_5.1)
     * [validation_5.2](./Simulation-Results_Files/validation_5.2)
     * [validation_6](./Simulation-Results_Files/validation_6)
