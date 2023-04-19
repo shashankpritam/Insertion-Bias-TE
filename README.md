@@ -23,7 +23,6 @@ Result and Data related to Invadego validation and simulation.
 * .Rhistory
 * [.gitattributes](./.gitattributes)
 * [.gitignore](./.gitignore)
-* [Insertion-Bias-TE.Rproj](./.Insertion-Bias-TE.Rproj)
 * [Validation_1_invasion.md](./Validation_1_invasion.md)
 * [Validation_2_drift.md](./Validation_2_drift.md)
 * [Validation_3_clusters.md](./Validation_3_clusters.md)
