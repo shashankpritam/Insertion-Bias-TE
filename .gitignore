@@ -1,2 +1,5 @@
 *.Rmd
 .Rproj.user
+Simulation-Results_Files/.DS_Store
+Simulation-Results_Files/validation_5.2/.RData
+Simulation-Results_Files/validation_5.2/.Rhistory
