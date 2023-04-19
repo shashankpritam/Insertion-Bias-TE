@@ -3,5 +3,4 @@
 *.DS_Store
 *.RData
 *.Rhistory
-.DS_Store
-images/.DS_Store
+*.DS_Store
