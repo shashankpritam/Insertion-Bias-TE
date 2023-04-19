@@ -29,5 +29,5 @@ Result and Data related to Invadego validation and simulation.
 * [Validation_3_clusters.md](./Validation_3_clusters.md)
 * [Validation_4_selection.md](./Validation_4_selection.md)
 * [Validation_5_insertion-bias.md](./Validation_5_bias.md)
-* [Validation_6_selection.md](./Validation_6_selection.md)
+* [Validation_6_Selection.md](./Validation_6_Selection.md)
 * [README.md](./README.md)
