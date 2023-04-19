@@ -33,4 +33,4 @@ $tool --N 10000 --u 0 -x 0.0001 --basepop "10000(0)" --gen 1000 --genome $genome
 wait
 
 # Concatenate output files
-cat "$folder/validation_6_3" "$folder/validation_6_4" "$folder/validation_6_5" "$folder/validation_6_6" "$folder/validation_6_7" | grep -v "^Invade" | grep -v "^#" > "$folder/2023_03_09_Validation_6_Selection"
+cat "$folder/validation_6_3" "$folder/validation_6_4" "$folder/validation_6_5" "$folder/validation_6_6" "$folder/validation_6_7" | grep -v "^Invade" | grep -v "^#" > "$folder/2023_04_19_Validation_6_Selection"
