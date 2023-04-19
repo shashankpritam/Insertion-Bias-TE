@@ -18,9 +18,9 @@ Result and Data related to Invadego validation and simulation.
     * [validation_5.2](./Simulation-Results_Files/validation_5.2)
     * [validation_6](./Simulation-Results_Files/validation_6)
 * [archives](./archives)
-* .DS_Store
-* .RData
-* .Rhistory
+* [.DS_Store](./.DS_Store)
+* [.RData](./.RData)
+* [.Rhistory](./.Rhistory)
 * [.gitattributes](./.gitattributes)
 * [.gitignore](./.gitignore)
 * [Validation_1_invasion.md](./Validation_1_invasion.md)
