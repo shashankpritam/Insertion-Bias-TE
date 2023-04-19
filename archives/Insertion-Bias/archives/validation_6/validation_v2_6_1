@@ -1,0 +1,22 @@
+Invade: 21:06:47 Welcome to InvadeGo InsBias 0.1.3
+Invade: 21:06:47 Will use current time as seed: 1677532007336528604
+Invade: 21:06:47 parsing genome definition kb:500,1000
+Invade: 21:06:47 parsed genome definition, will use: [500000 1000000]
+Invade: 21:06:47 parsing cluster definition 
+Invade: 21:06:47 no piRNA clusters were provided - will not simulate piRNA clusters
+Invade: 21:06:47 parsing recombination rates 4,4
+Invade: 21:06:47 Parsed recombination rate; will proceed with a recombination rate of [4 4] cM/Mb for the different chormosomes
+Invade: 21:06:47 Setting up environment; genome, piRNA cluster, reference regions, trigger sites, paramutable sites and the recombination rate
+Invade: 21:06:47 Setting up jumper
+Invade: 21:06:47 Setting up fitness function
+Invade: 21:06:47 Setting up output manager
+Invade: 21:06:47 Commencing simulations
+# args: --N 1000 --gen 100 --genome kb:500,1000 --rr 4,4 --u 0.1 --basepop 100(0) --steps 25 --file-mhp Simulation-Results/Insertion-Bias/validation_6/validation_v2_6_1_mhp
+# version 0.1.3, seed: 1677532007336528604
+# rep	gen	popstat	|	fwte	avw	minw	avtes	avpopfreq	fixed	|	phase	fwcli	avcli	fixcli	|	avbias	3tot	3cluster	|	sampleids
+1	0	ok	|	0.10	1.00	1.00	0.10	0.00	0	|	rapi	0.00	0.00	0	|	0.0	0.10(0)		
+1	25	ok	|	0.58	1.00	1.00	1.23	0.00	0	|	rapi	0.00	0.00	0	|	0.0	1.23(0)		
+1	50	ok	|	1.00	1.00	1.00	12.01	0.00	0	|	rapi	0.00	0.00	0	|	0.0	12.01(0)		
+1	75	ok	|	1.00	1.00	1.00	143.34	0.00	0	|	rapi	0.00	0.00	0	|	0.0	143.34(0)		
+1	100	ok	|	1.00	1.00	1.00	1511.20	0.00	0	|	rapi	0.00	0.00	0	|	0.0	1511.20(0)		
+Invade: 21:06:58 Done - thank you for using InvadeGo InsBias
