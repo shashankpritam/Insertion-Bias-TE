@@ -30,7 +30,6 @@ Result:
 
 - [ ] Fig3: properties of TE invasions with insertion bias; length of phases, number of cluster insertions; which ones to show?
 
-_These three?_
 
 Result:
 
@@ -42,20 +41,3 @@ Result:
 
 ---
 
-- [ ] Fig4: fitness effect of insertion bias; insertion biases reduce the fitness burden of TEs; but is this reduction of fitness burden sufficient to promote TEs with an insertion bias.
-
-- [ ] Fig5: simulation-storm; competition among TEs with a different insertion bias, which one wins; a) normal genome (5chromosomes pirna cluster) b) one chromosome one cluster no recombination c) clonal; hence insertion bias always wins; only advantage when clonal.
-
-- [ ] Fig6: possibly simulation with selective cluster insertions; show how insertion bias gradually wins (not sure if necessary)
-
-- [ ] Fig7: simulation-storm; consequences of insertion bias against pirna clusters: extinction; many more extinct populations,
-
-- [ ] Fig8: discussion: why do we not see more extinctions? maybe the TE can't control it; maybe other mechanisms; why does the p-element have the shitty bias than?
-
-- [ ] Fig 1; Fitness after invasion; shotgun phase with different insertion bias
-
-- [ ] Fig 2; direction competition; no insertion bias vs insertion bias. Who wins?
-
-- [ ] Fig 3; probability of establishment is not affected
-
-- [ ] Fig 4; properties of TE invasions with insertion bias - shorter phase length - fewer TEs - more cluster insertions
