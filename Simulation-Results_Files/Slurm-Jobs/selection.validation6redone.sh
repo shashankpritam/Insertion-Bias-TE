@@ -7,6 +7,12 @@
 #SBATCH --error=job.%A.err
 #SBATCH --output=job.%A.out
 
+
+echo "2500; 1(0) 400(-60); 50000(-70)
+2500;;
+5000; 2(0) 10000(60) 50000(70);" > input_sel
+
+
 tool="./main"
 folder="Simulation-Results/Insertion-Bias/validation_6_redone"
 genome="mb:1"
