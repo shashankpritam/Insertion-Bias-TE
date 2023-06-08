@@ -7,9 +7,9 @@
 #SBATCH --error=job.%A.err
 #SBATCH --output=job.%A.out
 
-echo "5000; 0(0); 0(0);
-2500; 0(0) ; 0(0);
-2500; 0(0); ;" > input_sel
+echo "5000; 0(0); 0(0)
+2500;;
+2500; 0(0);" > input_sel
 
 tool="./main"
 folder="Simulation-Results/Insertion-Bias/validation_6.1_redone"
