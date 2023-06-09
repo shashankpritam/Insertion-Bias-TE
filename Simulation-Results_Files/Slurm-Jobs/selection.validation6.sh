@@ -34,4 +34,4 @@ $tool --N 10000 --u 0 -x 0.0001 --basepop file:input_sel --gen 1000 --genome $ge
 wait
 
 # Concatenate output files
-cat "$folder/validation_6_"* | grep -v "^Invade" | grep -v "^#" > "$folder/Validation_6_Redone_Selection"
+cat validation_6_3 validation_6_4 validation_6_5 validation_6_6 validation_6_7 | grep -v "^Invade" | grep -v "^#" > Validation_6_Redone_Selection
