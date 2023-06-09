@@ -177,7 +177,7 @@ to be lost, while in the second only non cluster TEs are lost, while
 cluster insertions are maintained.
 
 ``` r
-df_sel<-read.table("Validation_6_Redone_Selection"", fill = TRUE, sep = "\t")
+df_sel<-read.table("Validation_6_Redone_Selection", fill = TRUE, sep = "\t")
 names(df_sel)<-c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq",
                  "fixed","spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3",
                  "avbias",	"3tot",	"3cluster",	"spacer 4", "sampleid")
