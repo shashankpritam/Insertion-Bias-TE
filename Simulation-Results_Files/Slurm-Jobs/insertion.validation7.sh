@@ -17,6 +17,7 @@ rep=100
 gen=1
 steps=1
 folder="Simulation-Results/Insertion-Bias/validation_7"
+rr=0
 
 # Make sure the output folder exists
 mkdir -p $folder
@@ -24,16 +25,16 @@ mkdir -p $folder
 # Initialize a counter
 counter=1
 
-# Function to generate a random number between 0 and 10 million
+# Function to generate a random number between 0 and 1 million
 generate_random_number() {
-    echo $(( $(od -An -N3 -i /dev/urandom) % 10000001 ))
+    echo $(( $(od -An -N3 -i /dev/urandom) % 1000001 ))
 }
 
 # Loop over values from -100 to 100 in steps of 10
 for j in $(seq -100 10 100)
 do
     # Formulate the outfile name for this iteration
-    outfile="${outfile_base}${counter}"
+    outfile="$folder/${outfile_base}${counter}"  # Added $folder to the path
 
     # Remove the outfile if it already exists
     if [ -e "$outfile" ]
@@ -54,10 +55,10 @@ do
     echo "$line; 0(0)" >> $outfile
 
     # Specify basepop with the current outfile
-    basepop="file:$outfile"
+    basepop="file:$outfile"  # Now correctly pointing to the outfile in $folder
 
     # Run the command
-    $tool --N 10000 --gen $gen --genome $genome --cluster $cluster --rep $rep --u 0.1 --basepop $basepop --steps $steps >> "$folder/result_${counter}.out"
+    $tool --N 10000 --gen $gen --genome $genome --cluster $cluster --rr $rr --rep $rep --u 0.1 --basepop $basepop --steps $steps >> "$folder/result_${counter}.out"
 
     # Increment the counter
     counter=$((counter+1))
