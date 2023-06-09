@@ -11,23 +11,23 @@ To do so we tested different scenarios:
 
 ### Selection on all TEs vs selection on non-cluster TEs
 
--   selection on all TEs, seed: 1686264227384929651
+-   selection on all TEs, seed: 
 
--   selection only on non-cluster TEs, seed: 1686264227386263993
+-   selection only on non-cluster TEs, seed: 
 
 ### Different selection coefficients on the same population:
 
 x is the selection coefficient.
 
--   x = 0, seed: 1686264227386263993
+-   x = 0, seed: 
 
--   x = 0.1, seed: 1686264227385276716
+-   x = 0.1, seed: 
 
--   x = 0.01, seed: 1686264227385901840
+-   x = 0.01, seed: 
 
--   x = 0.001, seed: 1686264227386482900
+-   x = 0.001, seed: 
 
--   x = 0.0001, seed: 1686264227386677014
+-   x = 0.0001, seed: 
 
 ## Materials & Methods
 
@@ -37,39 +37,34 @@ version: invadego 0.1.3
 
 ``` bash
 
-# Create Input Basepop File
-echo "5000; 0(0); 0(0)
-2500;;
-2500; 0(0);" > input_sel
+echo "4000; 0(0); 0(0)
+4000;;
+2000; 0(0);" > input_sel
 
 tool="./main"
-folder="Simulation-Results/Insertion-Bias/validation_6.1_redone"
+folder="Simulation-Results/Insertion-Bias/validation_6"
 genome="mb:1"
 rep=100
 
-# Get the current date
-current_date=$(date "+%Y_%m_%d")
+$tool --N 1000 --gen 100 --genome $genome --cluster kb:100 --rr 4 --rep $rep --u 0.1 --basepop "100(0)" --steps 25 -x 0.1 --file-mhp "$folder/validation_6_1_mhp" > "$folder/validation_6_1" &
 
-# All commands updated
-$tool --N 1000 --gen 100 --genome $genome --cluster kb:100 --rr 4 --rep $rep --u 0.1 --basepop "100(0)" --steps 25 -x 0.1 --file-mhp "$folder/validation_6_redone_1_mhp" > "$folder/validation_6_redone_1_$current_date" &
+$tool --N 1000 --gen 100 --genome $genome --cluster kb:100 --rr 4 --rep $rep --u 0.1 --basepop "100(0)" --steps 25 -x 0.1 -no-x-cluins --file-mhp "$folder/validation_6_2_mhp" > "$folder/validation_6_2" &
 
-$tool --N 1000 --gen 100 --genome $genome --cluster kb:100 --rr 4 --rep $rep --u 0.1 --basepop "100(0)" --steps 25 -x 0.1 -no-x-cluins --file-mhp "$folder/validation_6_redone_2_mhp" > "$folder/validation_6_redone_2_$current_date" &
+$tool --N 10000 --u 0 --basepop file:input_sel --gen 1000 --genome $genome --steps 10 --rr 0 --rep $rep --sampleid psel3 > "$folder/validation_6_3" &
 
-$tool --N 10000 --u 0 --basepop file:input_sel --gen 1000 --genome $genome --steps 10 --rr 0 --rep $rep --sampleid psel3 > "$folder/validation_6_redone_3_$current_date" &
+$tool --N 10000 --u 0 -x 0.1 --basepop file:input_sel --gen 1000 --genome $genome --steps 10 --rr 0 --rep $rep --sampleid psel4 > "$folder/validation_6_4" &
 
-$tool --N 10000 --u 0 -x 0.1 --basepop file:input_sel --gen 1000 --genome $genome --steps 10 --rr 0 --rep $rep --sampleid psel4 > "$folder/validation_6_redone_4_$current_date" &
+$tool --N 10000 --u 0 -x 0.01 --basepop file:input_sel --gen 1000 --genome $genome --steps 10 --rr 0 --rep $rep --sampleid psel5 > "$folder/validation_6_5" &
 
-$tool --N 10000 --u 0 -x 0.01 --basepop file:input_sel --gen 1000 --genome $genome --steps 10 --rr 0 --rep $rep --sampleid psel5 > "$folder/validation_6_redone_5_$current_date" &
+$tool --N 10000 --u 0 -x 0.001 --basepop file:input_sel --gen 1000 --genome $genome --steps 10 --rr 0 --rep $rep --sampleid psel6 > "$folder/validation_6_6" &
 
-$tool --N 10000 --u 0 -x 0.001 --basepop file:input_sel --gen 1000 --genome $genome --steps 10 --rr 0 --rep $rep --sampleid psel6 > "$folder/validation_6_redone_6_$current_date" &
-
-$tool --N 10000 --u 0 -x 0.0001 --basepop file:input_sel --gen 1000 --genome $genome --steps 10 --rr 0 --rep $rep --sampleid psel7 > "$folder/validation_6_redone_7_$current_date" &
+$tool --N 10000 --u 0 -x 0.0001 --basepop file:input_sel --gen 1000 --genome $genome --steps 10 --rr 0 --rep $rep --sampleid psel7 > "$folder/validation_6_7" &
 
 # Wait for all simulations to finish
 wait
 
 # Concatenate output files
-cat "$folder/validation_6_redone_3_$current_date" "$folder/validation_6_redone_4_$current_date" "$folder/validation_6_redone_5_$current_date" "$folder/validation_6_redone_6_$current_date" "$folder/validation_6_redone_7_$current_date" | grep -v "^Invade" | grep -v "^#" > "$folder/$current_date_Validation_6_Redone_Selection"
+cat "$folder/validation_6_"* | grep -v "^Invade" | grep -v "^#" > "$folder/Validation_6_Redone_Selection""
 
 ```
 
@@ -88,7 +83,7 @@ library(ggpubr)
 # Selection vs selection on non-cluster insertions
 
 ``` r
-t_1<-read.table("validation_6_redone_1_mhp", fill = TRUE, sep = "\t")
+t_1<-read.table("validation_6_1_mhp", fill = TRUE, sep = "\t")
 names(t_1)<-c("rep","gen","chr","pos","locus","popfreq")
 t_1$rep<-as.factor(t_1$rep)
 t_1$gen<-as.factor(t_1$gen)
@@ -100,10 +95,10 @@ g_1<-ggplot(data=t_1,aes(x=pos, fill=locus))+geom_histogram(binwidth=10000)+face
 plot(g_1)
 ```
 
-<img src="images/2023_06_08_Validation_6a_selection.png" alt="6A.">
+<img src="images/Validation_6a_selection.png" alt="6A.">
 
 ``` r
-t_1_2<-read.table("validation_6_redone_1_mhp", fill = TRUE, sep = "\t")
+t_1_2<-read.table("validation_6_1_mhp", fill = TRUE, sep = "\t")
 names(t_1_2)<-c("rep","gen","chr","pos","locus","popfreq")
 t_1_2$gen<-as.factor(t_1_2$gen)
 t_1_2<-subset(t_1_2, gen==0)
@@ -114,7 +109,7 @@ g_1_2<-ggplot()+
   theme(legend.position="none", plot.title = element_text(size=14, face="bold.italic"))+
   ylab("relative frequencies")
 
-t_1_3<-read.table("validation_6_redone_1_mhp", fill = TRUE, sep = "\t")
+t_1_3<-read.table("validation_6_1_mhp", fill = TRUE, sep = "\t")
 names(t_1_3)<-c("rep","gen","chr","pos","locus","popfreq")
 t_1_3$gen<-as.factor(t_1_3$gen)
 t_1_3<-subset(t_1_3, gen==50)
@@ -128,10 +123,10 @@ g_1_3<-ggplot()+
 g_1_2+g_1_3
 ```
 
-<img src="images/2023_06_08_Validation_6b_selection.png" alt="6B.">
+<img src="images/Validation_6b_selection.png" alt="6B.">
 
 ``` r
-t_2<-read.table("validation_6_redone_2_mhp", fill = TRUE, sep = "\t")
+t_2<-read.table("validation_6_2_mhp", fill = TRUE, sep = "\t")
 names(t_2)<-c("rep","gen","chr","pos","locus","popfreq")
 t_2$rep<-as.factor(t_2$rep)
 t_2$gen<-as.factor(t_2$gen)
@@ -143,10 +138,10 @@ g_2<-ggplot(data=t_2,aes(x=pos, fill=locus))+geom_histogram(binwidth=10000)+face
 plot(g_2)
 ```
 
-<img src="images/2023_06_08_Validation_6c_selection.png" alt="6C.">
+<img src="images/Validation_6c_selection.png" alt="6C.">
 
 ``` r
-t_2_2<-read.table("validation_6_redone_2_mhp", fill = TRUE, sep = "\t")
+t_2_2<-read.table("validation_6_2_mhp", fill = TRUE, sep = "\t")
 names(t_2_2)<-c("rep","gen","chr","pos","locus","popfreq")
 t_2_2$gen<-as.factor(t_2_2$gen)
 t_2_2<-subset(t_2_2, gen==0)
@@ -157,7 +152,7 @@ g_2_2<-ggplot()+
   theme(legend.position="none", plot.title = element_text(size=14, face="bold.italic"))+
   ylab("relative frequencies")
 
-t_2_3<-read.table("validation_6_redone_2_mhp", fill = TRUE, sep = "\t")
+t_2_3<-read.table("validation_6_2_mhp", fill = TRUE, sep = "\t")
 names(t_2_3)<-c("rep","gen","chr","pos","locus","popfreq")
 t_2_3$gen<-as.factor(t_2_3$gen)
 t_2_3<-subset(t_2_3, gen==100)
@@ -171,7 +166,7 @@ g_2_3<-ggplot()+
 g_2_2+g_2_3
 ```
 
-<img src="images/2023_06_08_Validation_6d_selection.png" alt="6D.">
+<img src="images/Validation_6d_selection.png" alt="6D.">
 
 Selection can act on all TEs insertion, as in the first case or only in
 non-cluster TEs insertions in the latter. The reason being is that
@@ -182,7 +177,7 @@ to be lost, while in the second only non cluster TEs are lost, while
 cluster insertions are maintained.
 
 ``` r
-df_sel<-read.table("2023_06_08_Validation_6_Selection_redone", fill = TRUE, sep = "\t")
+df_sel<-read.table("Validation_6_Redone_Selection"", fill = TRUE, sep = "\t")
 names(df_sel)<-c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq",
                  "fixed","spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3",
                  "avbias",	"3tot",	"3cluster",	"spacer 4", "sampleid")
@@ -201,7 +196,7 @@ g_sel<-ggplot(df_sel, aes(x=gen, y=avpopfreq , group=rep))+
 plot(g_sel)
 ```
 
-<img src="images/2023_06_08_Validation_6e_selection.png" alt="6E.">
+<img src="images/Validation_6e_selection.png" alt="6E.">
 
 
 ``` r
@@ -240,7 +235,7 @@ g_s_3<-ggplot()+
 plot(g_s_3)
 ```
 
-<img src="images/2023_06_08_Validation_6f_selection.png" alt="6F.">
+<img src="images/Validation_6f_selection.png" alt="6F.">
 
 ``` r
 df4_s<-subset(df_sel, sampleid=="psel4")
@@ -277,7 +272,7 @@ g_s_4<-ggplot()+
 plot(g_s_4)
 ```
 
-<img src="images/2023_06_08_Validation_6g_selection.png" alt="6G.">
+<img src="images/Validation_6g_selection.png" alt="6G.">
 
 ``` r
 df5_s<-subset(df_sel, sampleid=="psel5")
@@ -315,7 +310,7 @@ g_s_5<-ggplot()+
 plot(g_s_5)
 ```
 
-<img src="images/2023_06_08_Validation_6h_selection.png" alt="6H.">
+<img src="images/Validation_6h_selection.png" alt="6H.">
 
 ``` r
 df6_s<-subset(df_sel, sampleid=="psel6")
@@ -352,7 +347,7 @@ g_s_6<-ggplot()+
 plot(g_s_6)
 ```
 
-<img src="images/2023_06_08_Validation_6i_selection.png" alt="6I.">
+<img src="images/Validation_6i_selection.png" alt="6I.">
 
 ``` r
 df7_s<-subset(df_sel, sampleid=="psel7")
@@ -389,7 +384,7 @@ g_s_7<-ggplot()+
 plot(g_s_7)
 ```
 
-<img src="images/2023_06_08_Validation_6j_selection.png" alt="6J.">
+<img src="images/Validation_6j_selection.png" alt="6J.">
 
 ``` r
 ggarrange(g_s_3, g_s_7, g_s_6, g_s_5, g_s_4,
@@ -398,7 +393,7 @@ ggarrange(g_s_3, g_s_7, g_s_6, g_s_5, g_s_4,
 )
 ```
 
-<img src="images/2023_06_08_Validation_6k_selection.png" alt="6K.">
+<img src="images/Validation_6k_selection.png" alt="6K.">
 
 The simulations match the expected values (blue line).
 
