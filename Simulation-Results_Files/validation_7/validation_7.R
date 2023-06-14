@@ -37,11 +37,3 @@ for(i in seq(1, N)) {
   result_df <- rbind(result_df, result)
 }
 
-# Reshape the data to a longer format
-result_df_long <- pivot_longer(result_df, everything(), names_to = "variable", values_to = "value")
-
-# Make box plots for each variable
-ggplot(result_df_long, aes(x = variable, y = value)) +
-  geom_boxplot() +
-  labs(y = "Values", title = "Box Plot for Each Variable") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
