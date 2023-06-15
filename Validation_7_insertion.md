@@ -1,14 +1,122 @@
-Bias Validation
+Validation of insertion
 ================
+
+## Shashank Pritam
 
 # Introduction
 
-This notebook illustrates the data processing and visualization steps.
-We start by loading necessary libraries, defining some parameters, and
-then we process the data files. The final part of the notebook presents
-a bar plot of `avtes` for 21 `sampleid`s.
+In this validation we wanted to test if insertion was correctly
+implemented.
 
-# Data Processing
+version: invadego-insertionbias
+
+### Materials & Methods
+
+| Bias | SampleID | Seed                |
+|------|----------|---------------------|
+| -100 | mb100    | 1686770879523998894 |
+| -90  | mb90     | 1686771718574230166 |
+| -80  | mb80     | 1686772555915943630 |
+| -70  | mb70     | 1686773393544347167 |
+| -60  | mb60     | 1686774231935093186 |
+| -50  | mb50     | 1686775071484589895 |
+| -40  | mb40     | 1686775911463785597 |
+| -30  | mb30     | 1686776750162246315 |
+| -20  | mb20     | 1686777590950853421 |
+| -10  | mb10     | 1686778429311511212 |
+| 0    | b0       | 1686779268523079622 |
+| 10   | b10      | 1686780106772056421 |
+| 20   | b20      | 1686780945785645464 |
+| 30   | b30      | 1686781784522882135 |
+| 40   | b40      | 1686782622204643493 |
+| 50   | b50      | 1686783462555771126 |
+| 60   | b60      | 1686784300400838990 |
+| 70   | b70      | 1686785138223446093 |
+| 80   | b80      | 1686785978272667371 |
+| 90   | b90      | 1686786816510484323 |
+| 100  | b100     | 1686787656366000793 |
+
+version: invadego 0.1.3
+
+Commands for the simulation:
+
+``` bash
+#!/bin/bash
+
+# Base name for the output files
+outfile_base="input_bias"
+
+tool="./main"
+genome="mb:1"
+cluster="kb:30"
+rep=100
+gen=1
+steps=1
+folder="Simulation-Results_Files/Insertion-Bias/validation_7.1"
+rr=0
+
+# Make sure the output folder exists
+mkdir -p $folder
+
+# Initialize a counter
+counter=1
+
+# Function to generate a random number between 0 and 1 million
+generate_random_number() {
+    echo $(( $(od -An -N3 -i /dev/urandom) % 1000001 ))
+}
+
+# Generate 1000 random numbers and store them in an array
+declare -a random_numbers
+for i in {1..1000}
+do
+    random_numbers[i]=$(generate_random_number)
+done
+
+# Loop over values from -100 to 100 in steps of 10
+for j in $(seq -100 10 100)
+do
+    # Formulate the outfile name for this iteration
+    outfile="$folder/${outfile_base}${counter}"  # Added $folder to the path
+
+    # Remove the outfile if it already exists
+    if [ -e "$outfile" ]
+    then
+        rm "$outfile"
+    fi
+
+    # Start the line with "10000;" and the first random number
+    line="10000; ${random_numbers[1]}(${j})"
+
+    # Add 999 more random numbers and the bias value to the line
+    for i in {2..1000}
+    do
+        line="$line, ${random_numbers[i]}(${j})"
+    done
+
+    # Finish the line with "; 0(0)" and write it to the file
+    echo "$line; 0(0)" >> $outfile
+
+    # Specify basepop with the current outfile
+    basepop="file:$outfile"  # Now correctly pointing to the outfile in $folder
+
+    # Assign current counter value to sampleid with descriptive prefix
+    if [ $j -ge 0 ]
+    then
+        sampleid="b${j}"
+    else
+        sampleid="mb${j#-}"  # Use parameter expansion to remove the negative sign
+    fi
+
+    # Run the command
+    $tool --N 10000 --gen $gen --genome $genome --cluster $cluster --rr $rr --rep $rep --u 0.1 --basepop $basepop --steps $steps --sampleid $sampleid >> "$folder/result_${counter}.out"
+
+    # Increment the counter
+    counter=$((counter+1))
+done
+```
+
+# Data Processing in R
 
 This part includes loading and cleaning the data. First, we specify the
 column names for our data. Then, we define a function `process_file` to
@@ -55,7 +163,7 @@ process_file <- function(i) {
 result_df <- map_df(seq_len(N), process_file)
 ```
 
-# Data Visualization
+# Visualization in R
 
 After the data is cleaned, we create a barplot of `avtes` for 21
 `sampleid`s to visualize and evaluate potential bias in the data.
@@ -81,10 +189,10 @@ p <- ggplot(result_df_filtered, aes(x = sampleid, y = avtes_normalized)) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 
-ggsave("images/validation7.1.png", plot = p)
+ggsave("images/Validation_7a_insertion.png", plot = p)
 ```
 
-\#![Here is a Plot](images/validation7.1.png)
+\#![Here is a Plot for avtes vs](images/Validation_7a_insertion.png)
 
 This bar plot gives us insights about …
 
