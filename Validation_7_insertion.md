@@ -8,7 +8,13 @@ Validation of insertion
 In this validation we wanted to test if insertion was correctly
 implemented.
 
-We introduced one TE at 0 with o bias as one of he
+We introduced one TE at 0 with 0 bias in one chromosome and 1000 TEs
+with 0 bias at random places in other chromosome, for all the 10000
+population size; like this - basepop – 10000; 0(0); X<sub>1</sub>(-100)
+… X<sub>1000</sub>(-100).
+
+We define only one diploid chromosome with genome size =“mb:1” and with
+3% cluster size =“kb:30”.
 
 version: invadego-insertionbias
 
