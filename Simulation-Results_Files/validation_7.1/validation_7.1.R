@@ -1,27 +1,11 @@
----
-title: "Bias Validation"
-output: html_notebook
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
 library(ggplot2)
 library(readr)
 library(dplyr)
 library(stringr)
 library(purrr)
 library(tidyr)
-```
 
-# Introduction
 
-This notebook illustrates the data processing and visualization steps. We start by loading necessary libraries, defining some parameters, and then we process the data files. The final part of the notebook presents a bar plot of `avtes` for 21 `sampleid`s.
-
-# Data Processing
-
-This part includes loading and cleaning the data. First, we specify the column names for our data. Then, we define a function `process_file` to read and process each file. 
-
-```{r data-processing, message=FALSE, warning=FALSE}
 # Define column names
 column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq",
                   "fixed","spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3",
@@ -60,26 +44,10 @@ process_file <- function(i) {
 
 # Loop over result files and combine them into a single data frame
 result_df <- map_df(seq_len(N), process_file)
-```
+
 
 # Data Visualization
-
-After the data is cleaned, we create a barplot of `avtes` for 21 `sampleid`s.
-
-```{r bias_validation, message=FALSE, warning=FALSE}
 ggplot(result_df, aes(x=factor(sampleid), y=avtes)) + 
   geom_bar(stat='identity') + 
   labs(title = "Barplot of 'avtes' for 21 SampleIDs", x = "Sample ID", y = "avtes") +
   theme_minimal()
-```
-This bar plot gives us insights about ...
-
-# Conclusion
-
-The notebook illustrated how we can efficiently process our data files and generate insightful visualizations. The bar plot gives us an understanding of ...
-
-```{r session-info, echo=FALSE}
-sessionInfo()
-```
-
-

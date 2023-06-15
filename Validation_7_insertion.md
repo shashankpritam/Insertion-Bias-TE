@@ -8,6 +8,8 @@ Validation of insertion
 In this validation we wanted to test if insertion was correctly
 implemented.
 
+We introduced one TE at 0 with o bias as one of he
+
 version: invadego-insertionbias
 
 ### Materials & Methods
