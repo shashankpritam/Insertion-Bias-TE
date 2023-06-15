@@ -16,7 +16,7 @@ population size; like this - basepop – 10000; 0(0); X<sub>1</sub>(-100)
 We define only one diploid chromosome with genome size =“mb:1” and with
 3% cluster size =“kb:30”.
 
-version: invadego-insertionbias
+version: invadego 0.1.3
 
 ### Materials & Methods
 
@@ -43,8 +43,6 @@ version: invadego-insertionbias
 | 80   | b80      | 1686785978272667371 |
 | 90   | b90      | 1686786816510484323 |
 | 100  | b100     | 1686787656366000793 |
-
-version: invadego 0.1.3
 
 Commands for the simulation:
 
@@ -200,15 +198,18 @@ p <- ggplot(result_df_filtered, aes(x = sampleid, y = avtes_normalized)) +
 ggsave("images/Validation_7a_insertion.png", plot = p)
 ```
 
-\#![Here is a Plot for avtes vs](images/Validation_7a_insertion.png)
+# Results
 
-This bar plot gives us insights about …
+<figure>
+<img src="images/Validation_7a_insertion.png"
+alt="Here is a Plot for avtes vs bias" />
+<figcaption aria-hidden="true">Here is a Plot for avtes vs
+bias</figcaption>
+</figure>
 
 # Conclusion
 
-The notebook illustrated how we can efficiently process our data files
-and generate insightful visualizations. The bar plot gives us an
-understanding of …
+TBA
 
     ## R version 4.2.1 (2022-06-23)
     ## Platform: aarch64-apple-darwin20 (64-bit)
