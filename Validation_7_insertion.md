@@ -46,7 +46,7 @@ version: invadego 0.1.3
 
 The insertions within the piRNA Clusters -
 
-| Index | Value |
+| Index | Place |
 |-------|-------|
 | 1     | 10000 |
 | 2     | 5598  |
