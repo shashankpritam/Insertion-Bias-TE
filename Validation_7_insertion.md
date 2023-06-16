@@ -46,7 +46,7 @@ version: invadego 0.1.3
 
 The insertions within the piRNA Clusters -
 
-| Index | Place |
+| Index | Value |
 |-------|-------|
 | 1     | 10000 |
 | 2     | 5598  |
@@ -221,15 +221,9 @@ After the data is cleaned, we create a barplot of `avtes` for 21
 `sampleid`s to visualize and evaluate potential bias in the data.
 
 ``` r
-# Define a function to normalize values using min-max normalization
-normalize_min_max <- function(x) {
-  return((x - min(x)) / (max(x) - min(x)))
-}
-
-# Filter the results for generations 0 and 1 with repetition 10, and normalize 'avtes'
+# Filter the results for generations 0 and 1 with repetition 10
 result_df_filtered <- result_df %>%
-  filter(gen %in% c(0, 1), rep == 10) %>%
-  mutate(avtes_normalized = normalize_min_max(avtes))
+  filter(gen %in% c(0, 1), rep == 10)
 
 # Specify the order of sample IDs for the bars in the plot
 sampleid_order <- c("-100", "-90", "-80", "-70", "-60", "-50", "-40", "-30", "-20", "-10", "0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100")
@@ -237,15 +231,32 @@ sampleid_order <- c("-100", "-90", "-80", "-70", "-60", "-50", "-40", "-30", "-2
 # Arrange the levels of the `sampleid` factor according to the specified order
 result_df_filtered$sampleid <- factor(result_df_filtered$sampleid, levels = sampleid_order)
 
-# Create a bar plot
-a <- ggplot(result_df_filtered, aes(x = sampleid, y = avtes_normalized)) +
-  geom_bar(stat = 'identity') +
-  labs(title = "Barplot of Normalized 'avtes' for 21 SampleIDs", x = "Bias", y = "Normalized Average TE Insertion") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+# Filter the data for `gen` 0 and 1 separately
+result_df_gen0 <- result_df_filtered %>%
+  filter(gen == 0)
 
+result_df_gen1 <- result_df_filtered %>%
+  filter(gen == 1)
+
+# Create scatter plots for `gen` 0 and 1 separately
+a1 <- ggplot(result_df_gen0, aes(x = as.numeric(as.character(sampleid)), y = avtes)) +
+  geom_point() +
+  labs(title = "Scatterplot of 'avtes' vs 'sampleid' (gen = 0)", x = "Bias", y = "Average TE Insertion") +
+  theme_minimal()
+
+a2 <- ggplot(result_df_gen1, aes(x = as.numeric(as.character(sampleid)), y = avtes)) +
+  geom_point() +
+  labs(title = "Scatterplot of 'avtes' vs 'sampleid' (gen = 1)", x = "Bias", y = "Average TE Insertion") +
+  theme_minimal()
+
+# Arrange the plots side by side using the `gridExtra` package
+
+a <- grid.arrange(a1, a2, ncol = 2)
+```
+
+``` r
 # Save the plot as a PNG file
-ggsave("images/Validation_7a_insertion.png", plot = a)
+ggsave("images/Validation_7a_insertion.png", a, width = 12, height = 8, dpi = 600)
 ```
 
 # Result (Part A)
@@ -377,8 +388,8 @@ expected.
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] tidyr_1.3.0   purrr_1.0.1   stringr_1.5.0 dplyr_1.1.2   readr_2.1.4  
-    ## [6] ggplot2_3.4.2
+    ## [1] gridExtra_2.3 tidyr_1.3.0   purrr_1.0.1   stringr_1.5.0 dplyr_1.1.2  
+    ## [6] readr_2.1.4   ggplot2_3.4.2
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] pillar_1.9.0      compiler_4.2.1    tools_4.2.1       bit_4.0.5        
@@ -390,5 +401,5 @@ expected.
     ## [25] grid_4.2.1        tidyselect_1.2.0  glue_1.6.2        R6_2.5.1         
     ## [29] textshaping_0.3.6 fansi_1.0.4       vroom_1.6.3       rmarkdown_2.22   
     ## [33] farver_2.1.1      tzdb_0.4.0        magrittr_2.0.3    scales_1.2.1     
-    ## [37] htmltools_0.5.5   colorspace_2.1-0  labeling_0.4.2    ragg_1.2.5       
+    ## [37] htmltools_0.5.5   colorspace_2.1-0  ragg_1.2.5        labeling_0.4.2   
     ## [41] utf8_1.2.3        stringi_1.7.12    munsell_0.5.0     crayon_1.5.2
