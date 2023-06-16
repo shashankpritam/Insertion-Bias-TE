@@ -311,16 +311,16 @@ ggsave("images/Validation_7c_insertion.png", plot = c, width = 12, height = 8, d
 
 <figure>
 <img src="images/Validation_7b_insertion.png"
-alt="Here is a Plot for avcli vs bias for Gen = 0" />
-<figcaption aria-hidden="true">Here is a Plot for avcli vs bias for Gen
-= 0</figcaption>
+alt="Here is a plot for avcli vs rep for Gen = 0, and three values of Bias : -40, 0 and 40" />
+<figcaption aria-hidden="true">Here is a plot for avcli vs rep for Gen =
+0, and three values of Bias : -40, 0 and 40</figcaption>
 </figure>
 
 <figure>
 <img src="images/Validation_7c_insertion.png"
-alt="Here is a Plot for avcli vs bias for Gen = 1" />
-<figcaption aria-hidden="true">Here is a Plot for avcli vs bias for Gen
-= 1</figcaption>
+alt="Here is a plot for avcli vs rep for Gen = 1, and three values of Bias : -40, 0 and 40" />
+<figcaption aria-hidden="true">Here is a plot for avcli vs rep for Gen =
+1, and three values of Bias : -40, 0 and 40</figcaption>
 </figure>
 
 # Conclusion
