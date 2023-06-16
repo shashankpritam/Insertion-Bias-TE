@@ -346,7 +346,7 @@ d <- ggplot(df, aes(x = bias, y = insprob)) +
 ggsave("images/Validation_7d_insertion.png", plot = d, width = 12, height = 8, dpi = 600)
 ```
 
-# Result (Part C)
+# Result (Part C - Work in progess)
 
 <figure>
 <img src="images/Validation_7d_insertion.png"
