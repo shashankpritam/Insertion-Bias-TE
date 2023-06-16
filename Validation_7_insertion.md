@@ -267,6 +267,10 @@ keep_values <- c(-40, 0, 40)
 data_gen0 <- result_df %>% filter(gen == 0, sampleid %in% keep_values)
 data_gen1 <- result_df %>% filter(gen == 1, sampleid %in% keep_values)
 
+# Change the levels of sampleid to include "Bias = "
+data_gen0$sampleid <- paste("Bias =", data_gen0$sampleid)
+data_gen1$sampleid <- paste("Bias =", data_gen1$sampleid)
+
 # Get breaks for x axis
 breaks <- seq(min(result_df$rep), max(result_df$rep), by = 20)
 
