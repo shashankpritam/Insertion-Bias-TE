@@ -44,6 +44,46 @@ version: invadego 0.1.3
 | 90   | b90      | 1686786816510484323 |
 | 100  | b100     | 1686787656366000793 |
 
+The insertions within the piRNA Clusters -
+
+| Index | Value |
+|-------|-------|
+| 1     | 10000 |
+| 2     | 5598  |
+| 3     | 5698  |
+| 4     | 1469  |
+| 5     | 22900 |
+| 6     | 9478  |
+| 7     | 29202 |
+| 8     | 29000 |
+| 9     | 2026  |
+| 10    | 18615 |
+| 11    | 24544 |
+| 12    | 18197 |
+| 13    | 17935 |
+| 14    | 17257 |
+| 15    | 29766 |
+| 16    | 14626 |
+| 17    | 8253  |
+| 18    | 25481 |
+| 19    | 29009 |
+| 20    | 24390 |
+| 21    | 24500 |
+| 22    | 8637  |
+| 23    | 24634 |
+| 24    | 13613 |
+| 25    | 27845 |
+| 26    | 2193  |
+| 27    | 341   |
+| 28    | 19864 |
+| 29    | 6987  |
+| 30    | 27319 |
+| 31    | 23332 |
+| 32    | 4214  |
+| 33    | 9471  |
+| 34    | 10166 |
+| 35    | 3249  |
+
 Commands for the simulation:
 
 ``` bash
@@ -167,6 +207,12 @@ process_file <- function(i) {
 
 # Loop over result files and combine them into a single data frame
 result_df <- map_df(seq_len(N), process_file)
+result_df <- result_df %>%
+  mutate(sampleid = str_replace_all(sampleid, c("mb100" = "-100","mb90" = "-90", "mb80" = "-80", "mb70" = "-70", "mb60" = "-60",
+                                                "mb50" = "-50", "mb40" = "-40", "mb30" = "-30", "mb20" = "-20",
+                                                "mb10" = "-10", "b100" = "100","b90" = "90", "b80" = "80", "b70" = "70",
+                                                "b60" = "60", "b50" = "50", "b40" = "40", "b30" = "30",
+                                                "b20" = "20", "b10" = "10", "b0" = "0")))
 ```
 
 # Visualization in R
@@ -175,41 +221,84 @@ After the data is cleaned, we create a barplot of `avtes` for 21
 `sampleid`s to visualize and evaluate potential bias in the data.
 
 ``` r
+# Define a function to normalize values using min-max normalization
 normalize_min_max <- function(x) {
   return((x - min(x)) / (max(x) - min(x)))
 }
 
+# Filter the results for generations 0 and 1 with repetition 10, and normalize 'avtes'
 result_df_filtered <- result_df %>%
   filter(gen %in% c(0, 1), rep == 10) %>%
   mutate(avtes_normalized = normalize_min_max(avtes))
 
-# Define the desired order of the bars
-sampleid_order <- c("mb100", "mb90", "mb80", "mb70", "mb60", "mb50", "mb40", "mb30", "mb20", "mb10", "b0", "b10", "b20", "b30", "b40", "b50", "b60", "b70", "b80", "b90", "b100")
+# Specify the order of sample IDs for the bars in the plot
+sampleid_order <- c("-100", "-90", "-80", "-70", "-60", "-50", "-40", "-30", "-20", "-10", "0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100")
 
-# Set the order of the `sampleid` factor levels
+# Arrange the levels of the `sampleid` factor according to the specified order
 result_df_filtered$sampleid <- factor(result_df_filtered$sampleid, levels = sampleid_order)
 
-p <- ggplot(result_df_filtered, aes(x = sampleid, y = avtes_normalized)) +
+# Create a bar plot
+a <- ggplot(result_df_filtered, aes(x = sampleid, y = avtes_normalized)) +
   geom_bar(stat = 'identity') +
-  labs(title = "Barplot of Normalized 'avtes' for 21 SampleIDs", x = "Sample ID", y = "Normalized avtes") +
+  labs(title = "Barplot of Normalized 'avtes' for 21 SampleIDs", x = "Bias", y = "Normalized Average TE Insertion") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 
-ggsave("images/Validation_7a_insertion.png", plot = p)
+# Save the plot as a PNG file
+ggsave("images/Validation_7a_insertion.png", plot = a)
+```
+
+``` r
+# Filter data for gen 0 and gen 1
+data_gen0 <- result_df %>% filter(gen == 0)
+data_gen1 <- result_df %>% filter(gen == 1)
+
+# Plotting for gen 0
+b <- ggplot(data_gen0, aes(x = as.factor(rep), y = avcli)) +
+  geom_boxplot() +
+  geom_hline(yintercept = mean(data_gen0$avcli), linetype="dashed", color = "blue") +
+  facet_wrap(~sampleid, scales = "free_x") +
+  labs(title = "Boxplot of avcli for gen 0",
+       x = "Replication",
+       y = "Average Cluster Insertion") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        legend.position = "none")
+ggsave("images/Validation_7b_insertion.png", plot = b)
+
+# Plotting for gen 1
+c <- ggplot(data_gen1, aes(x = as.factor(rep), y = avcli)) +
+  geom_boxplot() +
+  geom_hline(yintercept = mean(data_gen1$avcli), linetype="dashed", color = "blue") +
+  facet_wrap(~sampleid, scales = "free_x") +
+  labs(title = "Boxplot of avcli for gen 1",
+       x = "Replication",
+       y = "Average Cluster Insertion") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        legend.position = "none")
+ggsave("images/Validation_7c_insertion.png", plot = c)
 ```
 
 # Results
 
+![Here is a Plot for avtes vs bias](images/Validation_7a_insertion.png)
+![Here is a Plot for avcli vs bias for Gen =
+0](images/Validation_7b_insertion.png)
+
 <figure>
-<img src="images/Validation_7a_insertion.png"
-alt="Here is a Plot for avtes vs bias" />
-<figcaption aria-hidden="true">Here is a Plot for avtes vs
-bias</figcaption>
+<img src="images/Validation_7c_insertion.png"
+alt="Here is a Plot for avcli vs bias for Gen = 1" />
+<figcaption aria-hidden="true">Here is a Plot for avcli vs bias for Gen
+= 1</figcaption>
 </figure>
 
 # Conclusion
 
-TBA
+The validation matches our expectations and the insertion is working as
+expected.
+
+# Session Info
 
     ## R version 4.2.1 (2022-06-23)
     ## Platform: aarch64-apple-darwin20 (64-bit)

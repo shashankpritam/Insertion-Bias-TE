@@ -2,6 +2,9 @@
 
 counter=1
 
+# Ask for the file name
+read -p "Please enter the name of the file: " filename
+
 # Read the file line by line
 while IFS=';' read -ra lines; do
   for line in "${lines[@]}"; do
@@ -20,4 +23,4 @@ while IFS=';' read -ra lines; do
       fi
     done
   done
-done < "input_bias1"
+done < "$filename"
