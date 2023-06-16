@@ -248,6 +248,17 @@ a <- ggplot(result_df_filtered, aes(x = sampleid, y = avtes_normalized)) +
 ggsave("images/Validation_7a_insertion.png", plot = a)
 ```
 
+# Result (Part A)
+
+<figure>
+<img src="images/Validation_7a_insertion.png"
+alt="Here is a Plot for avtes vs bias" />
+<figcaption aria-hidden="true">Here is a Plot for avtes vs
+bias</figcaption>
+</figure>
+
+# Visualization in R
+
 ``` r
 # Filter data for gen 0 and gen 1
 data_gen0 <- result_df %>% filter(gen == 0)
@@ -280,11 +291,14 @@ c <- ggplot(data_gen1, aes(x = as.factor(rep), y = avcli)) +
 ggsave("images/Validation_7c_insertion.png", plot = c)
 ```
 
-# Results
+# Result (Part B)
 
-![Here is a Plot for avtes vs bias](images/Validation_7a_insertion.png)
-![Here is a Plot for avcli vs bias for Gen =
-0](images/Validation_7b_insertion.png)
+<figure>
+<img src="images/Validation_7b_insertion.png"
+alt="Here is a Plot for avcli vs bias for Gen = 0" />
+<figcaption aria-hidden="true">Here is a Plot for avcli vs bias for Gen
+= 0</figcaption>
+</figure>
 
 <figure>
 <img src="images/Validation_7c_insertion.png"
