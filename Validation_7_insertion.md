@@ -323,6 +323,38 @@ alt="Here is a plot for avcli vs rep for Gen = 1, and three values of Bias : -40
 1, and three values of Bias : -40, 0 and 40</figcaption>
 </figure>
 
+# Visualization in R
+
+``` r
+pc <- function(bias, clufrac = 0.03) {
+  genfrac <- 1.0 - clufrac
+  bias <- bias / 100
+  clufit <- (bias + 1.0) / 2.0
+  genfit <- 1.0 - clufit
+  totfit <- clufrac * clufit + genfrac * genfit
+  p <- (clufrac * clufit) / totfit
+}
+bias_values <- seq(-100, 100, by = 10)
+probabilities <- pc(bias_values)
+df <- data.frame(bias = bias_values, insprob = probabilities)
+d <- ggplot(df, aes(x = bias, y = insprob)) +
+  geom_line() +
+  xlab("Insertion Bias") +
+  ylab("Probability of TE Jumping into Cluster") +
+  theme_bw()
+
+ggsave("images/Validation_7d_insertion.png", plot = d, width = 12, height = 8, dpi = 600)
+```
+
+# Result (Part C)
+
+<figure>
+<img src="images/Validation_7d_insertion.png"
+alt="Here is a plot for insertionbias" />
+<figcaption aria-hidden="true">Here is a plot for
+insertionbias</figcaption>
+</figure>
+
 # Conclusion
 
 The validation matches our expectations and the insertion is working as
