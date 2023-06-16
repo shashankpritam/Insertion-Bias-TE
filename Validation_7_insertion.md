@@ -252,17 +252,23 @@ ggsave("images/Validation_7a_insertion.png", plot = a)
 
 <figure>
 <img src="images/Validation_7a_insertion.png"
-alt="Here is a Plot for avtes vs bias" />
-<figcaption aria-hidden="true">Here is a Plot for avtes vs
-bias</figcaption>
+alt="Here is a Plot for avtes vs bias for rep = 10" />
+<figcaption aria-hidden="true">Here is a Plot for avtes vs bias for rep
+= 10</figcaption>
 </figure>
 
 # Visualization in R
 
 ``` r
-# Filter data for gen 0 and gen 1
-data_gen0 <- result_df %>% filter(gen == 0)
-data_gen1 <- result_df %>% filter(gen == 1)
+# Define the bias values you want to keep
+keep_values <- c(-40, 0, 40)
+
+# Filter data for gen 0 and gen 1, only keeping the specified bias values
+data_gen0 <- result_df %>% filter(gen == 0, sampleid %in% keep_values)
+data_gen1 <- result_df %>% filter(gen == 1, sampleid %in% keep_values)
+
+# Get breaks for x axis
+breaks <- seq(min(result_df$rep), max(result_df$rep), by = 20)
 
 # Plotting for gen 0
 b <- ggplot(data_gen0, aes(x = as.factor(rep), y = avcli)) +
@@ -273,9 +279,12 @@ b <- ggplot(data_gen0, aes(x = as.factor(rep), y = avcli)) +
        x = "Replication",
        y = "Average Cluster Insertion") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1),
-        legend.position = "none")
-ggsave("images/Validation_7b_insertion.png", plot = b)
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 12),
+        legend.position = "none",
+        plot.margin = margin(1, 1, 1, 1, "cm")) +
+  coord_cartesian(ylim = c(32.5, 37.5)) +
+  scale_x_discrete(breaks = breaks)
+ggsave("images/Validation_7b_insertion.png", plot = b, width = 12, height = 8, dpi = 600)
 
 # Plotting for gen 1
 c <- ggplot(data_gen1, aes(x = as.factor(rep), y = avcli)) +
@@ -286,9 +295,12 @@ c <- ggplot(data_gen1, aes(x = as.factor(rep), y = avcli)) +
        x = "Replication",
        y = "Average Cluster Insertion") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1),
-        legend.position = "none")
-ggsave("images/Validation_7c_insertion.png", plot = c)
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 12),
+        legend.position = "none",
+        plot.margin = margin(1, 1, 1, 1, "cm")) +
+  coord_cartesian(ylim = c(32.5, 37.5)) +
+  scale_x_discrete(breaks = breaks)
+ggsave("images/Validation_7c_insertion.png", plot = c, width = 12, height = 8, dpi = 600)
 ```
 
 # Result (Part B)
