@@ -38,3 +38,4 @@ do
     $tool --N 100000 --gen $gen --genome $genome --cluster $cluster --rr $rr --rep $rep --basepop "$basepop" --steps $steps --sampleid $sampleid > "$folder/result_${sampleid}.out"
 done
 
+cat result_*.out | grep -v "^Invade" | grep -v "^#" > combined_results.out
