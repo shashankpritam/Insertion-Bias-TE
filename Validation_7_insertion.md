@@ -129,31 +129,21 @@ df2 <- df %>%
 This part includes plotting the data.
 
 ``` r
-head(df2)
-```
+pc <- function(bias,clufrac){
+genfrac<- 1.0-clufrac
+bias <- bias/100
+clufit <- (bias+1.0)/2.0
+genfit <- 1.0 - clufit
+totfit <- clufrac*clufit + genfrac*genfit
+p<-(clufrac*clufit)/totfit
+}
 
-    ##   rep gen fwte avw min_w avtes avpopfreq fixed fwcli avcli fixcli avbias
-    ## 1   1   0 0.01   1     1  0.01         0     0  0.00  0.00      0      0
-    ## 2   1   0 0.01   1     1  0.01         0     0  0.00  0.00      0     10
-    ## 3   1   0 0.01   1     1  0.01         0     0  0.01  0.01      0    100
-    ## 4   1   0 0.01   1     1  0.01         0     0  0.00  0.00      0     20
-    ## 5   1   0 0.01   1     1  0.01         0     0  0.00  0.00      0     30
-    ## 6   1   0 0.01   1     1  0.01         0     0  0.00  0.00      0     40
-    ##   sampleid
-    ## 1        0
-    ## 2       10
-    ## 3      100
-    ## 4       20
-    ## 5       30
-    ## 6       40
-
-``` r
-# Plotting
-g_bar_av_TEs <- ggplot(df2, aes(x = sampleid, y = avtes)) +
-  geom_boxplot() +
-  ggtitle("Insertions at 0th generations") +
-  ylab("Ins. per individual") +
-  xlab("Insertion bias") +
+# Create a scatterplot
+g_scatter_av_TEs <- ggplot(df2, aes(x = sampleid, y = avcli)) +
+  geom_point() +  # Create a scatterplot
+  ggtitle("Average Cluster Insertions vs Insertion Bias") +
+  ylab("Average Cluster Insertions") +
+  xlab("Insertion Bias") +
   theme(legend.position = "none",
         axis.text.x = element_text(size = 14, angle = 45, hjust = 1),
         axis.text.y = element_text(size = 14),
@@ -161,28 +151,10 @@ g_bar_av_TEs <- ggplot(df2, aes(x = sampleid, y = avtes)) +
         axis.title.y = element_text(size = 14),
         strip.text = element_text(size = 14),
         plot.title = element_text(hjust = 0.5)) +
-  scale_x_discrete(labels = c("b0" = "bias = 0",
-                              "b10" = "bias = 10",
-                              "b20" = "bias = 20",
-                              "b30" = "bias = 30",
-                              "b40" = "bias = 40",
-                              "b50" = "bias = 50",
-                              "b60" = "bias = 60",
-                              "b70" = "bias = 70",
-                              "b80" = "bias = 80",
-                              "b90" = "bias = 90",
-                              "bm10" = "bias = -10",
-                              "bm20" = "bias = -20",
-                              "bm30" = "bias = -30",
-                              "bm40" = "bias = -40",
-                              "bm50" = "bias = -50",
-                              "bm60" = "bias = -60",
-                              "bm70" = "bias = -70",
-                              "bm80" = "bias = -80",
-                              "bm90" = "bias = -90"))
+  scale_x_discrete(labels = labels)
 
-# Plot the graph
-plot(g_bar_av_TEs)
+# Display the plot
+g_scatter_av_TEs
 ```
 
 ![](Validation_7_insertion_files/figure-gfm/data-plotting-1.png)<!-- -->
