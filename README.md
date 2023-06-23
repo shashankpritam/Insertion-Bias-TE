@@ -31,6 +31,4 @@ Result and Data related to Invadego validation and simulation.
 * [Validation_7 Insertion.md](./Validation_7_insertion.md)
 * [README.md](./README.md)
 
-
-
-![wave_animation.gif](./images/wave_animation.gif)
+    <img src="images/wave_animation.gif" alt="wave_animation.gif" width="100"/>
