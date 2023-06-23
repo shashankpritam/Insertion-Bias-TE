@@ -158,7 +158,7 @@ g_expected_vs_observed <- ggplot(df_expected_vs_observed, aes(x = bias)) +
   ggtitle("Expected vs Observed Values") +
   ylab("Average Cluster Insertions") +
   xlab("Insertion Bias") +
-  scale_color_manual(values = c("Expected" = "blue", "Observed" = "red"))
+  scale_color_manual(values = c("Expected" = "green", "Observed" = "blue"))
 
 # Display the plot
 print(g_expected_vs_observed)
@@ -166,10 +166,34 @@ print(g_expected_vs_observed)
 
 ![](Validation_7_insertion_files/figure-gfm/data-plotting-1.png)<!-- -->
 
+This part includes plotting the data.
+
+``` r
+# Convert sampleid to numeric
+df2$sampleid <- as.numeric(as.character(df2$sampleid))
+
+# Create data frame with bias, theoretical values, and observed values
+df_avtes <- data.frame(
+  bias = df2$sampleid,
+  avtes = df2$avtes
+)
+
+# Plot expected and observed values
+g_avtes <- ggplot(df_avtes, aes(x = bias)) +
+  geom_point(aes(y = avtes, color = "avtes")) +
+  ggtitle("Avtes") +
+  ylab("Average TE Insertions") +
+  xlab("Insertion Bias")
+# Display the plot
+print(g_avtes)
+```
+
+![](Validation_7_insertion_files/figure-gfm/data-plotting1-1.png)<!-- -->
+
 # Conclusion
 
-— The validation matches our expectations and the insertion is working
-as expected.
+The validation matches our expectations and the insertion is working as
+expected.
 
 # Session Info
 
