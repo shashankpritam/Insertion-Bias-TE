@@ -80,37 +80,62 @@ cat result_*.out | grep -v "^Invade" | grep -v "^#" > combined_results.out
 
 # Data Processing in R
 
-This part includes loading and cleaning the data. First, we specify the
-column names for our data. Then, we define a function `process_file` to
-read and process each file.
+This part includes loading and cleaning the data.
 
 ``` r
+# Read the raw data
+raw_data <- readLines("Simulation-Results_Files/validation_7/combined_results.out")
+
+# Split the data by tabs ("\t")
+data_split <- strsplit(raw_data, "\t")
+
+# Convert the list into a data frame
+df <- as.data.frame(do.call(rbind, data_split), stringsAsFactors = FALSE)
+
+# Assign column names
+column_names <- c("V1", "V2", "V3", "V4", "V5")
+
+# Split columns by tabs and replace empty strings with NA
+df[, -5] <- lapply(df[, -5], function(x) {
+  strsplit(x, "\t")
+})
+
 # Define column names
 column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq",
-                  "fixed","spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3",
+                  "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3",
                   "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
+
+# Assign column names to df
+colnames(df) <- column_names
+
+# Replace values in the 'sampleid' column
+df <- df %>%
+  mutate(sampleid = str_replace_all(sampleid, c("mb100" = "-100","mb90" = "-90", "mb80" = "-80", "mb70" = "-70", "mb60" = "-60",
+                                                "mb50" = "-50", "mb40" = "-40", "mb30" = "-30", "mb20" = "-20",
+                                                "mb10" = "-10", "b100" = "100","b90" = "90", "b80" = "80", "b70" = "70",
+                                                "b60" = "60", "b50" = "50", "b40" = "40", "b30" = "30",
+                                                "b20" = "20", "b10" = "10", "b0" = "0")))
+
 
 # Define numeric columns
 numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq",
                      "fixed", "fwcli", "avcli", "fixcli",
                      "avbias")
 
-# Read the combined file into R
-combined <- readLines("Simulation-Results_Files/validation_7/combined_results.out") %>%
-  str_split("\\s+", simplify = TRUE) %>%
-  as_tibble() %>%
-  `[`(-ncol(.)) %>%  # Remove the last column ('sampleids')
-  set_names(column_names) %>%
-  mutate(across(all_of(numeric_columns), as.numeric), .keep = "all") %>%
-  filter(gen == 0)  # Only include rows where gen = 0
 
-# Replace values in the 'sampleid' column
-combined <- combined %>%
-  mutate(sampleid = str_replace_all(sampleid, c("mb100" = "-100","mb90" = "-90", "mb80" = "-80", "mb70" = "-70", "mb60" = "-60",
-                                                "mb50" = "-50", "mb40" = "-40", "mb30" = "-30", "mb20" = "-20",
-                                                "mb10" = "-10", "b100" = "100","b90" = "90", "b80" = "80", "b70" = "70",
-                                                "b60" = "60", "b50" = "50", "b40" = "40", "b30" = "30",
-                                                "b20" = "20", "b10" = "10", "b0" = "0")))
+# Define df2 with numeric columns and gen = 0 filter
+df2 <- df %>%
+  mutate(across(all_of(numeric_columns), as.numeric)) %>%
+  filter(gen == 0) %>%
+  select(all_of(numeric_columns))
+```
+
+# Data Visualiztion in R
+
+This part includes loading and cleaning the data.
+
+``` r
+# Some Code
 ```
 
 # Conclusion
