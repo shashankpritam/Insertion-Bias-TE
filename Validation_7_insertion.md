@@ -8,12 +8,6 @@ Validation of insertion
 In this validation we wanted to test if insertion was correctly
 implemented.
 
-We introduced 1000 TEs with varying bias at random places in other
-chromosome.
-
-We define only one diploid chromosome with genome size =“mb:1” and with
-3% cluster size =“kb:30”.
-
 version: invadego 0.1.3
 
 ### Materials & Methods
@@ -120,7 +114,7 @@ df <- df %>%
 # Define numeric columns
 numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq",
                      "fixed", "fwcli", "avcli", "fixcli",
-                     "avbias")
+                     "avbias", "sampleid")
 
 
 # Define df2 with numeric columns and gen = 0 filter
@@ -132,16 +126,71 @@ df2 <- df %>%
 
 # Data Visualiztion in R
 
-This part includes loading and cleaning the data.
+This part includes plotting the data.
 
 ``` r
-# Some Code
+head(df2)
 ```
+
+    ##   rep gen fwte avw min_w avtes avpopfreq fixed fwcli avcli fixcli avbias
+    ## 1   1   0 0.01   1     1  0.01         0     0  0.00  0.00      0      0
+    ## 2   1   0 0.01   1     1  0.01         0     0  0.00  0.00      0     10
+    ## 3   1   0 0.01   1     1  0.01         0     0  0.01  0.01      0    100
+    ## 4   1   0 0.01   1     1  0.01         0     0  0.00  0.00      0     20
+    ## 5   1   0 0.01   1     1  0.01         0     0  0.00  0.00      0     30
+    ## 6   1   0 0.01   1     1  0.01         0     0  0.00  0.00      0     40
+    ##   sampleid
+    ## 1        0
+    ## 2       10
+    ## 3      100
+    ## 4       20
+    ## 5       30
+    ## 6       40
+
+``` r
+# Plotting
+g_bar_av_TEs <- ggplot(df2, aes(x = sampleid, y = avtes)) +
+  geom_boxplot() +
+  ggtitle("Insertions at 0th generations") +
+  ylab("Ins. per individual") +
+  xlab("Insertion bias") +
+  theme(legend.position = "none",
+        axis.text.x = element_text(size = 14, angle = 45, hjust = 1),
+        axis.text.y = element_text(size = 14),
+        axis.title.x = element_text(size = 14),
+        axis.title.y = element_text(size = 14),
+        strip.text = element_text(size = 14),
+        plot.title = element_text(hjust = 0.5)) +
+  scale_x_discrete(labels = c("b0" = "bias = 0",
+                              "b10" = "bias = 10",
+                              "b20" = "bias = 20",
+                              "b30" = "bias = 30",
+                              "b40" = "bias = 40",
+                              "b50" = "bias = 50",
+                              "b60" = "bias = 60",
+                              "b70" = "bias = 70",
+                              "b80" = "bias = 80",
+                              "b90" = "bias = 90",
+                              "bm10" = "bias = -10",
+                              "bm20" = "bias = -20",
+                              "bm30" = "bias = -30",
+                              "bm40" = "bias = -40",
+                              "bm50" = "bias = -50",
+                              "bm60" = "bias = -60",
+                              "bm70" = "bias = -70",
+                              "bm80" = "bias = -80",
+                              "bm90" = "bias = -90"))
+
+# Plot the graph
+plot(g_bar_av_TEs)
+```
+
+![](Validation_7_insertion_files/figure-gfm/data-plotting-1.png)<!-- -->
 
 # Conclusion
 
-The validation matches our expectations and the insertion is working as
-expected.
+— The validation matches our expectations and the insertion is working
+as expected.
 
 # Session Info
 
@@ -165,12 +214,13 @@ expected.
     ##  [9] stringr_1.5.0   readr_2.1.4    
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] pillar_1.9.0     compiler_4.2.1   tools_4.2.1      digest_0.6.31   
-    ##  [5] timechange_0.2.0 evaluate_0.21    lifecycle_1.0.3  gtable_0.3.3    
-    ##  [9] pkgconfig_2.0.3  rlang_1.1.1      cli_3.6.1        rstudioapi_0.14 
-    ## [13] yaml_2.3.7       xfun_0.39        fastmap_1.1.1    withr_2.5.0     
-    ## [17] knitr_1.43       generics_0.1.3   vctrs_0.6.3      hms_1.1.3       
-    ## [21] grid_4.2.1       tidyselect_1.2.0 glue_1.6.2       R6_2.5.1        
-    ## [25] fansi_1.0.4      rmarkdown_2.22   tzdb_0.4.0       magrittr_2.0.3  
-    ## [29] scales_1.2.1     htmltools_0.5.5  colorspace_2.1-0 utf8_1.2.3      
-    ## [33] stringi_1.7.12   munsell_0.5.0
+    ##  [1] highr_0.10       pillar_1.9.0     compiler_4.2.1   tools_4.2.1     
+    ##  [5] digest_0.6.31    timechange_0.2.0 evaluate_0.21    lifecycle_1.0.3 
+    ##  [9] gtable_0.3.3     pkgconfig_2.0.3  rlang_1.1.1      cli_3.6.1       
+    ## [13] rstudioapi_0.14  yaml_2.3.7       xfun_0.39        fastmap_1.1.1   
+    ## [17] withr_2.5.0      knitr_1.43       generics_0.1.3   vctrs_0.6.3     
+    ## [21] hms_1.1.3        grid_4.2.1       tidyselect_1.2.0 glue_1.6.2      
+    ## [25] R6_2.5.1         fansi_1.0.4      rmarkdown_2.22   farver_2.1.1    
+    ## [29] tzdb_0.4.0       magrittr_2.0.3   scales_1.2.1     htmltools_0.5.5 
+    ## [33] colorspace_2.1-0 labeling_0.4.2   utf8_1.2.3       stringi_1.7.12  
+    ## [37] munsell_0.5.0
