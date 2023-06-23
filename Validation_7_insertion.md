@@ -138,23 +138,30 @@ totfit <- clufrac*clufit + genfrac*genfit
 p<-(clufrac*clufit)/totfit
 }
 
-# Create a scatterplot
-g_scatter_av_TEs <- ggplot(df2, aes(x = sampleid, y = avcli)) +
-  geom_point() +  # Create a scatterplot
-  ggtitle("Average Cluster Insertions vs Insertion Bias") +
+# Convert sampleid to numeric
+df2$sampleid <- as.numeric(as.character(df2$sampleid))
+
+# Create data frame with bias, theoretical values, and observed values
+df_expected_vs_observed <- data.frame(
+  bias = df2$sampleid,
+  pc = pc(df2$sampleid, 0.03),
+  avcli = df2$avcli
+)
+
+# Multiply pc values by a factor of 100
+df_expected_vs_observed$pc <- df_expected_vs_observed$pc * 100
+
+# Plot expected and observed values
+g_expected_vs_observed <- ggplot(df_expected_vs_observed, aes(x = bias)) +
+  geom_line(aes(y = pc, color = "Expected")) +
+  geom_point(aes(y = avcli, color = "Observed")) +
+  ggtitle("Expected vs Observed Values") +
   ylab("Average Cluster Insertions") +
   xlab("Insertion Bias") +
-  theme(legend.position = "none",
-        axis.text.x = element_text(size = 14, angle = 45, hjust = 1),
-        axis.text.y = element_text(size = 14),
-        axis.title.x = element_text(size = 14),
-        axis.title.y = element_text(size = 14),
-        strip.text = element_text(size = 14),
-        plot.title = element_text(hjust = 0.5)) +
-  scale_x_discrete(labels = labels)
+  scale_color_manual(values = c("Expected" = "blue", "Observed" = "red"))
 
 # Display the plot
-g_scatter_av_TEs
+print(g_expected_vs_observed)
 ```
 
 ![](Validation_7_insertion_files/figure-gfm/data-plotting-1.png)<!-- -->
