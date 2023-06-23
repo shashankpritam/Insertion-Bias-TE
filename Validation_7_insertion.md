@@ -164,7 +164,7 @@ g_expected_vs_observed <- ggplot(df_expected_vs_observed, aes(x = bias)) +
 print(g_expected_vs_observed)
 ```
 
-![](Validation_7_insertion_files/figure-gfm/data-plotting-1.png)<!-- -->
+![](/images/Validation_7_insertion_files/figure-gfm/data-plotting-1.png)<!-- -->
 
 This part includes plotting the data.
 
@@ -188,7 +188,7 @@ g_avtes <- ggplot(df_avtes, aes(x = bias)) +
 print(g_avtes)
 ```
 
-![](Validation_7_insertion_files/figure-gfm/data-plotting1-1.png)<!-- -->
+![](/images/Validation_7_insertion_files/figure-gfm//data-plotting1-1.png)<!-- -->
 
 # Conclusion
 
