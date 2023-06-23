@@ -1,21 +1,21 @@
-Invade: 16:04:11 Welcome to InvadeGo InsBias 0.1.3
-Invade: 16:04:11 Will use current time as seed: 1687536251641891204
-Invade: 16:04:11 parsing genome definition mb:1,1,1,1,1
-Invade: 16:04:11 parsed genome definition, will use: [1000000 1000000 1000000 1000000 1000000]
-Invade: 16:04:11 parsing cluster definition kb:30,30,30,30,30
-Invade: 16:04:11 parsed piRNA cluster definitions, will use: [30000 30000 30000 30000 30000]
-Invade: 16:04:11 parsing recombination rates 0,0,0,0,0
-Invade: 16:04:11 Parsed recombination rate; will proceed with a recombination rate of [0 0 0 0 0] cM/Mb for the different chormosomes
-Invade: 16:04:11 Setting up environment; genome, piRNA cluster, reference regions, trigger sites, paramutable sites and the recombination rate
-Invade: 16:04:11 Will use piRNA clusters [{0 29999} {1000000 1029999} {2000000 2029999} {3000000 3029999} {4000000 4029999}]
-Invade: 16:04:11 Will use non-piRNA clusters [{30000 999999} {1030000 1999999} {2030000 2999999} {3030000 3999999} {4030000 4999999}]
-Invade: 16:04:11 Setting up jumper
-Invade: 16:04:11 Setting up fitness function
-Invade: 16:04:11 Setting up output manager
-Invade: 16:04:11 Commencing simulations
-# args: --N 100000 --gen 1 --genome mb:1,1,1,1,1 --cluster kb:30,30,30,30,30 --rr 0,0,0,0,0 --rep 1 --basepop 1000(50) --steps 1 --sampleid b50
-# version 0.1.3, seed: 1687536251641891204
+Invade: 19:28:37 Welcome to InvadeGo InsBias 0.1.3
+Invade: 19:28:37 Will use current time as seed: 1687548517630673117
+Invade: 19:28:37 parsing genome definition mb:1,1,1,1,1
+Invade: 19:28:37 parsed genome definition, will use: [1000000 1000000 1000000 1000000 1000000]
+Invade: 19:28:37 parsing cluster definition kb:30,30,30,30,30
+Invade: 19:28:37 parsed piRNA cluster definitions, will use: [30000 30000 30000 30000 30000]
+Invade: 19:28:37 parsing recombination rates 0,0,0,0,0
+Invade: 19:28:37 Parsed recombination rate; will proceed with a recombination rate of [0 0 0 0 0] cM/Mb for the different chormosomes
+Invade: 19:28:37 Setting up environment; genome, piRNA cluster, reference regions, trigger sites, paramutable sites and the recombination rate
+Invade: 19:28:37 Will use piRNA clusters [{0 29999} {1000000 1029999} {2000000 2029999} {3000000 3029999} {4000000 4029999}]
+Invade: 19:28:37 Will use non-piRNA clusters [{30000 999999} {1030000 1999999} {2030000 2999999} {3030000 3999999} {4030000 4999999}]
+Invade: 19:28:37 Setting up jumper
+Invade: 19:28:37 Setting up fitness function
+Invade: 19:28:37 Setting up output manager
+Invade: 19:28:37 Commencing simulations
+# args: --N 1000 --gen 1 --genome mb:1,1,1,1,1 --cluster kb:30,30,30,30,30 --rr 0,0,0,0,0 --rep 1 --basepop 100000(50) --steps 1 --sampleid b50
+# version 0.1.3, seed: 1687548517630673117
 # rep	gen	popstat	|	fwte	avw	minw	avtes	avpopfreq	fixed	|	phase	fwcli	avcli	fixcli	|	avbias	3tot	3cluster	|	sampleids
-1	0	ok	|	0.01	1.00	1.00	0.01	0.00	0	|	rapi	0.00	0.00	0	|	50.0	0.01(50)	0.00(50)	|	b50	
-1	1	ok	|	0.01	1.00	1.00	0.01	0.00	0	|	rapi	0.00	0.00	0	|	50.0	0.01(50)	0.00(50)	|	b50	
-Invade: 16:04:12 Done - thank you for using InvadeGo InsBias
+1	0	ok	|	1.00	1.00	1.00	100.00	0.00	0	|	shot	1.00	8.54	0	|	50.0	100.00(50)	8.54(50)	|	b50	
+1	1	ok	|	1.00	1.00	1.00	99.97	0.00	0	|	shot	1.00	8.54	0	|	50.0	99.97(50)	8.54(50)	|	b50	
+Invade: 19:28:37 Done - thank you for using InvadeGo InsBias

@@ -24,7 +24,7 @@ mkdir -p $folder
 for j in $(seq -100 10 100)
 do
     # Set basepop directly to "1000;j"
-    basepop="1000($j)"
+    basepop="100000($j)"
 
     # Assign current counter value to sampleid with descriptive prefix
     if [ $j -ge 0 ]
@@ -35,7 +35,7 @@ do
     fi
 
     # Run the command and write the output to a file named after the sampleid
-    $tool --N 100000 --gen $gen --genome $genome --cluster $cluster --rr $rr --rep $rep --basepop "$basepop" --steps $steps --sampleid $sampleid > "$folder/result_${sampleid}.out"
+    $tool --N 1000 --gen $gen --genome $genome --cluster $cluster --rr $rr --rep $rep --basepop "$basepop" --steps $steps --sampleid $sampleid > "$folder/result_${sampleid}.out"
 done
 
 cat result_*.out | grep -v "^Invade" | grep -v "^#" > combined_results.out
