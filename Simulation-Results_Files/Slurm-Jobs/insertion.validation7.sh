@@ -11,7 +11,7 @@
 tool="./main"
 genome="mb:1,1,1,1,1"
 cluster="kb:30,30,30,30,30"
-rep=1
+rep=100
 gen=1
 steps=1
 folder="Simulation-Results/Insertion-Bias/validation_7"
