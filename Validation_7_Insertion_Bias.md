@@ -32,7 +32,7 @@ version: invadego 0.1.3
 | 90  | b90 | 1687986806594066852 |
 | 100  | b100 | 1687986827704107589 |
 
-'''{bash}
+```{bash}
 
 tool="./main"
 genome="mb:1,1,1,1,1"
@@ -64,8 +64,7 @@ do
 done
 
 cat result_*.out | grep -v "^Invade" | grep -v "^#" > combined_results.out
-
-'''
+```
 
 Load and Clean Data
 
