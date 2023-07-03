@@ -272,8 +272,7 @@ fig.write_image("../../images/2023_06_29_Validation_7b.png")
 
 ![Validation Plot B](images/2023_06_29_Validation_7b.png)
 
-This plot is same as before except the Mean of all obeserved Average Cluster Insertion for all 100 replicate is plotted. 
-
+This plot visualizes the mean of Average Cluster Insertion across various Insertion Bias levels, with error bars indicating standard deviation. Unlike previous plot's individual data points, this representation provides a concise summary of the data (mean), making it easier to discern overall trends and reducing the impact of outliers. The expected values are depicted by a dashed red line.
 
 ```python
 import plotly.graph_objects as go
