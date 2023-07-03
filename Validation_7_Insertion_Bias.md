@@ -177,6 +177,12 @@ fig = go.Figure(data=[scatter, line], layout=layout)
 fig.write_image("../../images/2023_06_29_Validation_7a.png")
 ```
 
+
+
+    This box plot represents the distribution of average TE (Transposable Elements) insertions across different insertion bias levels for all replicates. The x-axis shows the different Insertion Bias levels ranging from -100 to 100. The y-axis represents the average TE insertions for each bias level. Each box on the plot provides a summary of the average TE insertions for a specific bias level, where the box represents the interquartile range (IQR), the line inside the box is the median, and the whiskers represent the range of the data.
+
+    The box plots summarize the data's central tendency, dispersion, and skewness by displaying the distribution's quartiles. Outliers, defined as data points that fall outside of the 1.5 * IQR range, are represented as individual points.
+
 ![Validation Plot A](images/2023_06_29_Validation_7a.png)
 
 
@@ -266,7 +272,17 @@ fig.write_image("../../images/2023_06_29_Validation_7b.png")
 
 ```
 
-![Validation Plot](images/2023_06_29_Validation_7b.png)
+
+    This scatter plot illustrates the relationship between average TE (Transposable Elements) insertions (y-axis) and insertion bias (x-axis) for all replicates. The x-axis represents the Insertion Bias varying from -100 to 100. The y-axis depicts the average TE insertions for each bias level. Each data point on the graph represents the average number of TE insertions for a specific bias level across all replicates.
+
+    The scatter plot gives a sense of the relationship between average TE insertions and insertion bias. The distribution and density of the points can provide insight into patterns and variability in the data.
+
+
+![Validation Plot B](images/2023_06_29_Validation_7b.png)
+
+
+
+
 
 
 ```python
@@ -326,7 +342,15 @@ fig.write_image("../../images/2023_06_29_Validation_7c.png")
 
 ```
 
-![Validation Plot](images/2023_06_29_Validation_7c.png)
+
+
+
+    This scatter plot illustrates the relationship between average TE (Transposable Elements) insertions (y-axis) and insertion bias (x-axis) for a single replicate. The x-axis represents the Insertion Bias varying from -100 to 100. The y-axis depicts the average TE insertions for each bias level. Each data point on the graph represents the average TE insertions for a specific bias level for replicate 1. 
+
+    This plot will visualize how the average TE insertions change with different insertion bias levels. However, given that the plot represents data from only one replicate, it might only partially capture the variability across multiple experimental replicates.
+
+
+![Validation Plot C](images/2023_06_29_Validation_7c.png)
 
 
 ```python
@@ -393,4 +417,18 @@ fig = go.Figure(data=[scatter], layout=layout)
 fig.write_image("../../images/2023_06_29_Validation_7d.png")
 ```
 
+    This scatter plot represents all replicates' mean average TE insertions (y-axis) against the insertion bias (x-axis). The plot includes error bars, which visually represent the variability in the data by displaying the standard deviation for the average TE insertions at each bias level. 
+
+    The x-axis represents the Insertion Bias, which ranges from -100 to 100. The y-axis depicts the mean of the average TE insertions for each bias level. Each data point on the graph represents the mean average TE insertions for a specific bias level across all replicates, with the error bars representing the standard deviation.
+
+    This plot provides a more comprehensive view of the data by considering the mean values across all replicates and accounting for the variability by including error bars. It helps understand the overall trend and variability in average TE insertions across different insertion bias levels.
+
+
 ![Validation Plot](images/2023_06_29_Validation_7d.png)
+
+# Conclusion
+
+The validation matches our expectations and the insertion is working as
+expected.
+
+
