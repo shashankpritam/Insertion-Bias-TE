@@ -179,6 +179,7 @@ fig.write_image("../../images/2023_06_29_Validation_7a.png")
 
 
 ![Validation Plot A](images/2023_06_29_Validation_7a.png)
+
 The distribution of average TE (Transposable Elements) insertions across different insertion bias levels for all replicates. The x-axis shows the different Insertion Bias levels ranging from -100 to 100. The y-axis represents the average TE insertions in the piRNA Cluster (Blue Dots for Observed Value and Orange line for Expected value) for each bias level. 
 
 
@@ -270,6 +271,7 @@ fig.write_image("../../images/2023_06_29_Validation_7b.png")
 
 
 ![Validation Plot B](images/2023_06_29_Validation_7b.png)
+
 This plot is same as before except the Mean of all obeserved Average Cluster Insertion for all 100 replicate is plotted. 
 
 
@@ -332,6 +334,7 @@ fig.write_image("../../images/2023_06_29_Validation_7c.png")
 
 
 ![Validation Plot C](images/2023_06_29_Validation_7c.png)
+
 Average TE insertions (y-axis) and insertion bias (x-axis) for a single replicate [['rep'] == 1]. The x-axis represents the Insertion Bias varying from -100 to 100. The y-axis depicts the average TE insertions for each bias level. Each data point on the graph represents the average TE insertions for a specific bias level for replicate 1.
 
 ```python
