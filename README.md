@@ -28,7 +28,7 @@ Result and Data related to Invadego validation and simulation.
 * [Validation_4_recombination.md](./Validation_4_recombination.md)
 * [Validation_5_insertion-bias.md](./Validation_5_bias.md)
 * [Validation_6_Selection.md](./Validation_6_Selection.md)
-* [Validation_7 Insertion.md](./Validation_7_insertion.md)
+* [Validation_7 Insertion.md](./Validation_7_Insertion_Bias.md)
 * [README.md](./README.md)
 
     <img src="images/animation.gif" alt="animation.gif" center/>
