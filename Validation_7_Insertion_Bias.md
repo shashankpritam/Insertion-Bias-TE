@@ -183,7 +183,7 @@ fig.write_image("../../images/2023_06_29_Validation_7a.png")
 
 
 
-![Validation Plot A](images/2023_06_29_Validation_7a.png)
+![Validation Plot A](images/2023_06_29_Validation_7a.png "Average Cluster Insertion/Expected Value vs Insertion Bias")
 
 The distribution of average TE (Transposable Elements) insertions across different insertion bias levels for all replicates. The x-axis shows the different Insertion Bias levels ranging from -100 to 100. The y-axis represents the average TE insertions in the piRNA Cluster (Blue Dots for Observed Value and Orange line for Expected value) for each bias level. 
 
@@ -277,7 +277,7 @@ fig.write_image("../../images/2023_06_29_Validation_7b.png")
 
 
 
-![Validation Plot B](images/2023_06_29_Validation_7b.png)
+![Validation Plot B](images/2023_06_29_Validation_7b.png "Average Cluster Insertion (Mean values with SD) across Insertion Bias")
 
 This plot visualizes the mean of Average Cluster Insertion across various Insertion Bias levels, with error bars indicating standard deviation. Unlike previous plot's individual data points, this representation provides a concise summary of the data (mean), making it easier to discern overall trends and reducing the impact of outliers. The expected values are depicted by a dashed red line.
 
@@ -342,7 +342,7 @@ fig.write_image("../../images/2023_06_29_Validation_7c.png")
 
 
 
-![Validation Plot C](images/2023_06_29_Validation_7c.png)
+![Validation Plot C](images/2023_06_29_Validation_7c.png "Average TE Insertions")
 
 Average TE insertions (y-axis) and insertion bias (x-axis) for a single replicate <!-- [['rep'] == 1] -->. The x-axis represents the Insertion Bias varying from -100 to 100. The y-axis depicts the average TE insertions for each bias level. Each data point on the graph represents the average TE insertions for a specific bias level for replicate 1.
 
@@ -415,7 +415,7 @@ fig.write_image("../../images/2023_06_29_Validation_7d.png")
 
 
 
-![Validation Plot](images/2023_06_29_Validation_7d.png)
+![Validation Plot D](images/2023_06_29_Validation_7d.png "Average TE Insertions mean values across bias")
 
 
 All replicates' mean average TE insertions (y-axis) against the insertion bias (x-axis). The plot includes error bars, which visually represent the variability in the data by displaying the standard deviation for the average TE insertions at each bias level. 
