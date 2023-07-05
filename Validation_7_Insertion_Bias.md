@@ -73,9 +73,6 @@ cat result_*.out | grep -v "^Invade" | grep -v "^#" > combined_results.out
 
 ```python
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import numpy as np
 import plotly.graph_objects as go
 
 
@@ -190,9 +187,6 @@ The distribution of average TE (Transposable Elements) insertions across differe
 #### Figure 2
 
 ```python
-import plotly.graph_objects as go
-import pandas as pd
-
 # Convert sampleid to numeric
 df2['sampleid'] = pd.to_numeric(df2['sampleid'])
 
@@ -284,8 +278,6 @@ This plot visualizes the mean of Average Cluster Insertion across various Insert
 #### Figure 3
 
 ```python
-import plotly.graph_objects as go
-
 # Convert sampleid to numeric
 df2['sampleid'] = pd.to_numeric(df2['sampleid'])
 
@@ -349,8 +341,6 @@ Average TE insertions (y-axis) and insertion bias (x-axis) for a single replicat
 #### Figure 4
 
 ```python
-import plotly.graph_objects as go
-
 # Calculate mean and standard deviation of avtes
 df_summary_2 = df2.groupby('sampleid')['avtes'].agg(['mean', 'std']).reset_index()
 df_summary_2.columns = ['sampleid', 'mean_avtes', 'sd_avtes']
