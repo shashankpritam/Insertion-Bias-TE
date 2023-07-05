@@ -32,6 +32,8 @@ version: invadego 0.1.3
 | 90  | b90 | 1687986806594066852 |
 | 100  | b100 | 1687986827704107589 |
 
+## Bash Command for Simulation
+
 ```{bash}
 
 tool="./main"
