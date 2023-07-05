@@ -109,6 +109,7 @@ for col in numeric_columns:
 
 ## Plot Data
 
+#### Figure 1 
 
 ```python
 # Define your function
@@ -180,12 +181,13 @@ fig.write_image("../../images/2023_06_29_Validation_7a.png")
 ```
 
 
-#### Figure 1
+
 
 ![Validation Plot A](images/2023_06_29_Validation_7a.png)
 
 The distribution of average TE (Transposable Elements) insertions across different insertion bias levels for all replicates. The x-axis shows the different Insertion Bias levels ranging from -100 to 100. The y-axis represents the average TE insertions in the piRNA Cluster (Blue Dots for Observed Value and Orange line for Expected value) for each bias level. 
 
+#### Figure 2
 
 ```python
 import plotly.graph_objects as go
@@ -273,11 +275,13 @@ fig.write_image("../../images/2023_06_29_Validation_7b.png")
 
 ```
 
-#### Figure 2
+
 
 ![Validation Plot B](images/2023_06_29_Validation_7b.png)
 
 This plot visualizes the mean of Average Cluster Insertion across various Insertion Bias levels, with error bars indicating standard deviation. Unlike previous plot's individual data points, this representation provides a concise summary of the data (mean), making it easier to discern overall trends and reducing the impact of outliers. The expected values are depicted by a dashed red line.
+
+#### Figure 3
 
 ```python
 import plotly.graph_objects as go
@@ -336,11 +340,13 @@ fig.write_image("../../images/2023_06_29_Validation_7c.png")
 
 ```
 
-#### Figure 3
+
 
 ![Validation Plot C](images/2023_06_29_Validation_7c.png)
 
 Average TE insertions (y-axis) and insertion bias (x-axis) for a single replicate <!-- [['rep'] == 1] -->. The x-axis represents the Insertion Bias varying from -100 to 100. The y-axis depicts the average TE insertions for each bias level. Each data point on the graph represents the average TE insertions for a specific bias level for replicate 1.
+
+#### Figure 4
 
 ```python
 import plotly.graph_objects as go
@@ -406,7 +412,7 @@ fig = go.Figure(data=[scatter], layout=layout)
 fig.write_image("../../images/2023_06_29_Validation_7d.png")
 ```
 
-#### Figure 4
+
 
 
 ![Validation Plot](images/2023_06_29_Validation_7d.png)
@@ -414,7 +420,6 @@ fig.write_image("../../images/2023_06_29_Validation_7d.png")
 
 All replicates' mean average TE insertions (y-axis) against the insertion bias (x-axis). The plot includes error bars, which visually represent the variability in the data by displaying the standard deviation for the average TE insertions at each bias level. 
 The x-axis represents the Insertion Bias, which ranges from -100 to 100. The y-axis depicts the mean of the average TE insertions for each bias level. Each data point on the graph represents the mean average TE insertions for a specific bias level across all replicates, with the error bars representing the standard deviation.
-
 
 
 # Summary of average cluster insertion statistics
@@ -439,7 +444,7 @@ df2 = df[df['gen'] == 0][numeric_columns].sort_values('sampleid')
 df2['pc'] = df2['sampleid'].apply(lambda x: pc(x, 0.03))
 ```
   
-The last column, deviation\_pc is calculated as the devaiation of mean\_cli from pc as:  
+The last column, deviation_pc is calculated as the devaiation of mean_cli from pc as:  
   
 ```python
 df_summary['deviation_pc'] = df_summary['mean_cli'] - df_summary['pc']
@@ -489,6 +494,6 @@ df_summary['deviation_pc'] = df_summary['mean_cli'] - df_summary['pc']
 # Conclusion
 
 The validation matches our expectations and the insertion is working as
-expected.
+expected and the the simulation successfully incorporates the user-defined TE insertions as specified.
 
 
