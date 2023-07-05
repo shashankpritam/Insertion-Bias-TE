@@ -66,7 +66,7 @@ done
 cat result_*.out | grep -v "^Invade" | grep -v "^#" > combined_results.out
 ```
 
-Load and Clean Data
+## Load and Clean Data
 
 
 ```python
@@ -105,7 +105,7 @@ for col in numeric_columns:
     df[col] = pd.to_numeric(df[col], errors='coerce')
 ```
 
-Plot Data
+## Plot Data
 
 
 ```python
@@ -177,6 +177,8 @@ fig = go.Figure(data=[scatter, line], layout=layout)
 fig.write_image("../../images/2023_06_29_Validation_7a.png")
 ```
 
+
+#### Figure 1
 
 ![Validation Plot A](images/2023_06_29_Validation_7a.png)
 
@@ -269,6 +271,7 @@ fig.write_image("../../images/2023_06_29_Validation_7b.png")
 
 ```
 
+#### Figure 2
 
 ![Validation Plot B](images/2023_06_29_Validation_7b.png)
 
@@ -331,6 +334,7 @@ fig.write_image("../../images/2023_06_29_Validation_7c.png")
 
 ```
 
+#### Figure 3
 
 ![Validation Plot C](images/2023_06_29_Validation_7c.png)
 
@@ -399,6 +403,9 @@ fig = go.Figure(data=[scatter], layout=layout)
 # Export as png
 fig.write_image("../../images/2023_06_29_Validation_7d.png")
 ```
+
+#### Figure 4
+
 
 ![Validation Plot](images/2023_06_29_Validation_7d.png)
 
