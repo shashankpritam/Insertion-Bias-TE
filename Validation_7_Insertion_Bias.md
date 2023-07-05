@@ -402,12 +402,13 @@ fig.write_image("../../images/2023_06_29_Validation_7d.png")
 
 ![Validation Plot](images/2023_06_29_Validation_7d.png)
 
+
 All replicates' mean average TE insertions (y-axis) against the insertion bias (x-axis). The plot includes error bars, which visually represent the variability in the data by displaying the standard deviation for the average TE insertions at each bias level. 
 The x-axis represents the Insertion Bias, which ranges from -100 to 100. The y-axis depicts the mean of the average TE insertions for each bias level. Each data point on the graph represents the mean average TE insertions for a specific bias level across all replicates, with the error bars representing the standard deviation.
 
 
 
-### Summary of average cluster insertion statistics
+# Summary of average cluster insertion statistics
 
 Across the 21 insertion bias values (sampleid 0 to 20), the mean of `cli` is calculated for all 100 replications. The standard deviation is also calculated. We have another column named `pc` which is the theoretical value of average cluster insertion for given insertion bias with 3% cluster size. It was calculated as follows:
 
