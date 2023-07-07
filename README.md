@@ -1,8 +1,6 @@
 # Invadego: Insertion-Bias Module
 
-This repository contains the results and data associated with the validation and simulation processes of Invadego's Insertion-Bias module. The module focuses on analyzing insertion biases in the simulation.
-
-<img src="images/animation.gif" alt="animation.gif" center/>
+This repository contains the results and data associated with the validation and simulation processes of Invadego's Insertion-Bias module.
 
 **Invadego Version:** 0.1.3
 
@@ -43,3 +41,5 @@ This repository contains the results and data associated with the validation and
 
 
 Feel free to explore the repository for more details on the validation and simulation results.
+
+        <img src="images/animation.gif" alt="animation.gif" center/>
