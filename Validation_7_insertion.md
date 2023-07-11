@@ -140,10 +140,6 @@ df2$pc <- sapply(df2$sampleid, function(x) pc(x, 0.03))
 #### Figure 1 A
 
 ``` r
-# Load required libraries
-library(ggplot2)
-library(dplyr)
-
 ggplot(df2, aes(x = sampleid)) +
     geom_point(aes(y = avcli), color = "#003f5c") +
     geom_line(aes(y = pc), color = "#ffa600") +
@@ -165,39 +161,58 @@ Observed Value and Orange line for Expected value) for each bias level.
 #### Figure 1 B
 
 ``` r
-# Load required libraries
-library(ggplot2)
-library(dplyr)
-
 # Filter out the group with sampleid = 100 and -100
 df_filtered <- df2 %>%
   filter(!(sampleid %in% c(-100, 100)))
 
-# Subtract 'pc' from 'avcli'
-df_filtered$avcli_trans <- as.numeric(df_filtered$avcli) - as.numeric(df_filtered$pc)
-df_filtered$avcli_trans <- 100 * df_filtered$avcli_trans
+# Subtract 'pc' from 'avcli' and force as numeric
+df_filtered$TE_insertions <- as.numeric(as.character(df_filtered$avcli)) - as.numeric(as.character(df_filtered$pc))
+df_filtered$TE_insertions <- 100 * df_filtered$TE_insertions
 
-# Convert 'sampleid' to a factor
-df_filtered$sampleid <- as.factor(df_filtered$sampleid)
-write.csv(df_filtered, "df_filtered.csv", row.names = FALSE)
+# Convert 'sampleid' to factor
+df_filtered$insertion_bias <- as.factor(df_filtered$sampleid)
+
+# Create a boxplot
+boxplot(df_filtered$TE_insertions ~ df_filtered$insertion_bias, col=terrain.colors(length(levels(df_filtered$insertion_bias))), 
+        main="Variability in Cluster Insertion Across 100 Replications", 
+        xlab="Insertion Bias Levels", 
+        ylab="Cluster Insertion Variability Across 100 Replications")
+
+# Add data points
+mylevels <- levels(df_filtered$insertion_bias)
+levelProportions <- summary(df_filtered$insertion_bias)/nrow(df_filtered)
+for(i in 1:length(mylevels)){
+  thislevel <- mylevels[i]
+  thisvalues <- df_filtered[df_filtered$insertion_bias==thislevel, "TE_insertions"]
+   
+  # Ensure thisvalues is a numeric vector
+  thisvalues <- unlist(thisvalues)
+  
+  # Take the x-axis indices and add a jitter, proportional to the N in each level
+  myjitter <- jitter(rep(i, length(thisvalues)), amount=levelProportions[i]/2)
+  
+  points(myjitter, thisvalues, pch=20, col=rgb(0,0,0,.9)) 
+}
 ```
 
-``` r
-filter_df <- read.csv('df_filtered.csv', header = TRUE, sep = ",", stringsAsFactors = FALSE)
+![](Validation_7_insertion_files/figure-gfm/plot-av-cli-transfo-1.png)<!-- -->
 
-# Create the boxplot
-ggplot(filter_df, aes(group = sampleid, x = sampleid, y = as.numeric(avcli_trans))) +
-  geom_boxplot() +
-  ggtitle("Transformed Average Cluster Insertion across Insertion Bias") +
-  xlab("Insertion Bias") +
-  ylab("Transformed Average Cluster Insertion / Expected Value") +
-  coord_cartesian(ylim = c(-50, 50)) + # adjust limits as needed
-  theme_minimal() +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  scale_x_discrete(labels = filter_df$sampleid)  # Add labels to the x-axis
-```
+The plot displays the variability in Transposable Elements (TE)
+insertions across different levels of Insertion Bias, using data from
+100 replications. To calculate the ‘TE_insertions’ values plotted on the
+y-axis, the ‘avcli’ column was subtracted from the ‘pc’ column in the
+original dataset. This difference was then multiplied by 100 to express
+the relative difference as a percentage:
 
-![](Validation_7_insertion_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+$$TE_(insertions) = 100 * (pc - avcli)$$
+
+The ‘Insertion Bias’ variable, represented on the x-axis, corresponds to
+the ‘sampleid’ column. It was converted to a factor variable to
+accommodate the categorical nature of this variable. The boxplot
+summarizes the distribution of ‘TE_insertions’ for each level of
+‘Insertion Bias’. Each boxplot indicates the median, interquartile
+range, and potential outliers. The individual data points overlaid on
+the boxplots represent the variability in TE insertions.
 
 #### Figure 2 A
 
