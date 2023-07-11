@@ -137,9 +137,13 @@ df2$pc <- sapply(df2$sampleid, function(x) pc(x, 0.03))
 
 ## Plot Data
 
-#### Figure 1
+#### Figure 1 A
 
 ``` r
+# Load required libraries
+library(ggplot2)
+library(dplyr)
+
 ggplot(df2, aes(x = sampleid)) +
     geom_point(aes(y = avcli), color = "#003f5c") +
     geom_line(aes(y = pc), color = "#ffa600") +
@@ -158,7 +162,44 @@ different Insertion Bias levels ranging from -100 to 100. The y-axis
 represents the average TE insertions in the piRNA Cluster (Blue Dots for
 Observed Value and Orange line for Expected value) for each bias level.
 
-#### Figure 2
+#### Figure 1 B
+
+``` r
+# Load required libraries
+library(ggplot2)
+library(dplyr)
+
+# Filter out the group with sampleid = 100 and -100
+df_filtered <- df2 %>%
+  filter(!(sampleid %in% c(-100, 100)))
+
+# Subtract 'pc' from 'avcli'
+df_filtered$avcli_trans <- as.numeric(df_filtered$avcli) - as.numeric(df_filtered$pc)
+df_filtered$avcli_trans <- 100 * df_filtered$avcli_trans
+
+# Convert 'sampleid' to a factor
+df_filtered$sampleid <- as.factor(df_filtered$sampleid)
+write.csv(df_filtered, "df_filtered.csv", row.names = FALSE)
+```
+
+``` r
+filter_df <- read.csv('df_filtered.csv', header = TRUE, sep = ",", stringsAsFactors = FALSE)
+
+# Create the boxplot
+ggplot(filter_df, aes(group = sampleid, x = sampleid, y = as.numeric(avcli_trans))) +
+  geom_boxplot() +
+  ggtitle("Transformed Average Cluster Insertion across Insertion Bias") +
+  xlab("Insertion Bias") +
+  ylab("Transformed Average Cluster Insertion / Expected Value") +
+  coord_cartesian(ylim = c(-50, 50)) + # adjust limits as needed
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_x_discrete(labels = filter_df$sampleid)  # Add labels to the x-axis
+```
+
+![](Validation_7_insertion_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+
+#### Figure 2 A
 
 ``` r
 # Calculate mean_cli, sd_meancli, pc, and deviation_pc
@@ -171,12 +212,12 @@ df_summary <- df2 %>%
 
 # Create scatter plot with error bars
 ggplot(df_summary, aes(x = sampleid)) +
-    geom_point(aes(y = mean_cli), color = "blue") +
-    geom_errorbar(aes(ymin = mean_cli - sd_meancli, ymax = mean_cli + sd_meancli), width = .2, color = "blue") +
-    geom_line(aes(y = pc), color = "red") +
-    labs(title = "Average Cluster Insertion across Insertion Bias",
+    geom_point(aes(y = mean_cli), color = "#003f5c") +
+    geom_errorbar(aes(ymin = mean_cli - sd_meancli, ymax = mean_cli + sd_meancli), width = .2, color = "003f5c") +
+    geom_line(aes(y = pc), color = "#ffa600") +
+    labs(title = "Observed and Expected Average Cluster Insertion across Insertion Bias",
          x = "Insertion Bias",
-         y = "Average Cluster Insertion") +
+         y = "Mean of Average Cluster Insertion") +
     theme_minimal() +
     theme(plot.title = element_text(hjust = 0.5))
 ```
@@ -190,6 +231,43 @@ representation provides a concise summary of the data (mean), making it
 easier to discern overall trends and reducing the impact of outliers.
 The expected values are depicted by a dashed red line.
 
+#### Figure 2 B
+
+``` r
+# Transform the 'mean_cli' and 'sd_meancli' by taking log10 to visualize better.
+# We add a small constant to avoid log(0) and handle negative values.
+# Apply a logarithmic transformation to 'mean_cli', 'sd_meancli', and 'pc'
+df_summary$log_mean_cli <- log10(df_summary$mean_cli + 0.0001)
+df_summary$log_sd_meancli <- log10(df_summary$sd_meancli + 0.0001)
+df_summary$log_pc <- log10(df_summary$pc + 0.0001)
+
+# Create scatter plot with error bars
+p <- ggplot(df_summary, aes(x = sampleid)) +
+    geom_point(aes(y = log_mean_cli), color = "blue") +
+    geom_errorbar(aes(ymin = log_mean_cli - log_sd_meancli, ymax = log_mean_cli + log_sd_meancli), width = .2, color = "#008080") +
+    geom_line(aes(y = log_pc), color = "orange") +
+    labs(title = "Observed and Expected Average Cluster Insertion across Insertion Bias",
+         x = "Insertion Bias",
+         y = "Log-transformed Mean of Average Cluster Insertion") +
+    theme_minimal() +
+    theme(plot.title = element_text(hjust = 0.5))
+
+# Print the plot
+print(p)
+```
+
+![](Validation_7_insertion_files/figure-gfm/mean_av_cli-1.png)<!-- -->
+
+Figure 3 presents the same data as Figure 2, but with a logarithmic
+transformation applied to the y-values. The transformation is performed
+to better visualize the standard deviation, which is relatively small
+compared to the mean values. By using the log scale, we can more easily
+see the variability in the data (shown by the error bars) and the
+deviation of the observed values (blue points) from the expected values
+(red line). This plot provides a more detailed understanding of the
+distribution of the data and the nature of the discrepancies between the
+observed and expected values.
+
 #### Figure 3
 
 ``` r
@@ -199,7 +277,7 @@ df_rep1 <- df2[df2$rep == 1, ]
 # Create scatter plot
 ggplot(df_rep1, aes(x = sampleid, y = avtes)) +
     geom_point(color = "#003f5c") +
-    labs(title = "Avtes",
+    labs(title = "Average Transposable Element Insertions",
          x = "Insertion Bias",
          y = "Average TE Insertions") +
     theme_minimal() +
@@ -226,7 +304,7 @@ df_summary_2 <- df2 %>%
 # Create scatter plot with error bars
 ggplot(df_summary_2, aes(x = sampleid)) +
     geom_point(aes(y = mean_avtes), color = "blue") +
-    geom_errorbar(aes(ymin = mean_avtes - sd_avtes, ymax = mean_avtes + sd_avtes), width = .2, color = "blue") +
+    geom_errorbar(aes(ymin = mean_avtes - sd_avtes, ymax = mean_avtes + sd_avtes), width = .2, color = "#008080") +
     labs(title = "Average TE Insertions across Insertion Bias",
          x = "Insertion Bias",
          y = "Average TE Insertions") +
