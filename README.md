@@ -1,4 +1,5 @@
 # Invadego: Insertion-Bias Module
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_-_Drosophila_melanogaster.svg" alt="Fly" style="width: 32px; height: 32px;">
 
 This repository contains the results and data associated with the validation and simulation processes of Invadego's Insertion-Bias module.
 
@@ -32,7 +33,7 @@ This repository contains the results and data associated with the validation and
    
     h. [validation_6](./Simulation-Results_Files/validation_6)
    
-    i. [validation_7](./Simulation-Results_Files/validation_7.1)
+    i. [validation_7](./Simulation-Results_Files/validation_7)
 
 10. [archives](./archives)
 11. [.gitattributes](./.gitattributes)
