@@ -32,7 +32,7 @@ This repository contains the results and data associated with the validation and
    
     h. [validation_6](./Simulation-Results_Files/validation_6)
    
-    i. [validation_7](./Simulation-Results_Files/validation_7.1)
+    i. [validation_7](./Simulation-Results_Files/validation_7)
 
 10. [archives](./archives)
 11. [.gitattributes](./.gitattributes)
@@ -43,3 +43,6 @@ This repository contains the results and data associated with the validation and
 Feel free to explore the repository for more details on the validation and simulation results.
 
 <img src="images/animation.gif" alt="animation.gif" center/>
+
+
+![Fly](https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_-_Drosophila_melanogaster.svg)
