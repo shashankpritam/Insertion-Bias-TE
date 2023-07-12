@@ -169,7 +169,7 @@ png(filename = "images/Validation_7_1B.png", width = 800, height = 600)
 
 # Boxplot
 boxplot(df_filtered$TE_insertions ~ df_filtered$insertion_bias, 
-        col=rainbow(length(levels(df_filtered$insertion_bias))), 
+        border = rgb(0.1, 0.1, 0.7, 0.5),
         main="Variability in Cluster Insertion Across 100 Replications", 
         xlab="Insertion Bias", 
         ylab="TE Cluster Insertion Variability Across 100 Replications")
@@ -188,7 +188,7 @@ for(i in 1:length(mylevels)){
   myjitter <- jitter(rep(i, length(thisvalues)), amount=levelProportions[i]/2)
   
   # Use smaller points
-  points(myjitter, thisvalues, pch=20, cex=0.9, col=rgb(0,0,0,.6)) 
+  points(myjitter, thisvalues, pch=20, cex=0.9, col=rgb(0,0.2,0.25,0.6)) 
 }
 
 # Close the plot file
