@@ -1,12 +1,10 @@
-# Invadego: Insertion-Bias Module
-<img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_-_Drosophila_melanogaster.svg" alt="Fly" style="width: 32px; height: 32px;">
+# InvadeGo: Insertion-Bias Module <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_-_Drosophila_melanogaster.svg" alt="Fly" style="width: 32px; height: 32px;">
 
 This repository contains the results and data associated with the validation and simulation processes of Invadego's Insertion-Bias module.
 
-**Invadego Version:** 0.1.3
+**InvadeGo Version:** 0.1.3
 
 ## Directory Structure
-
 
 1. [Validation_1_invasion.md](./Validation_1_invasion.md)
 2. [Validation_2_drift.md](./Validation_2_drift.md)
