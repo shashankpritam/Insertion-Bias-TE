@@ -87,19 +87,8 @@ column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "
 
 # Load DataFrame with column names
 df <- read_delim('Simulation-Results_Files/validation_7/combined_results.out', delim='\t', col_names = column_names)
-```
 
-    ## Rows: 4200 Columns: 22
-    ## ── Column specification ────────────────────────────────────────────────────────
-    ## Delimiter: "\t"
-    ## chr  (9): popstat, spacer_1, spacer_2, phase, spacer_3, 3tot, 3cluster, spac...
-    ## dbl (12): rep, gen, fwte, avw, min_w, avtes, avpopfreq, fixed, fwcli, avcli,...
-    ## lgl  (1): X22
-    ## 
-    ## ℹ Use `spec()` to retrieve the full column specification for this data.
-    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
-``` r
 # Define replacement dictionary
 replace_dict <- c("mb100" = "-100","mb90" = "-90", "mb80" = "-80", "mb70" = "-70", "mb60" = "-60",
                 "mb50" = "-50", "mb40" = "-40", "mb30" = "-30", "mb20" = "-20",
@@ -140,14 +129,17 @@ df2$pc <- sapply(df2$sampleid, function(x) pc(x, 0.03))
 #### Figure 1 A
 
 ``` r
-ggplot(df2, aes(x = sampleid)) +
-    geom_point(aes(y = avcli), color = "#003f5c") +
-    geom_line(aes(y = pc), color = "#ffa600") +
-    labs(title = "Average Cluster Insertion across Insertion Bias",
-         x = "Insertion Bias",
-         y = "Average Cluster Insertion / Expected Value") +
-    theme_minimal() +
-    theme(plot.title = element_text(hjust = 0.5))
+a <- ggplot(df2, aes(x = sampleid)) +
+  geom_point(aes(y = avcli), color = "#003f5c") +
+  geom_line(aes(y = pc), color = "#ffa600") +
+  labs(title = "Average Cluster Insertion across Insertion Bias",
+       x = "Insertion Bias",
+       y = "Average Cluster Insertion / Expected Value") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggsave(filename = "images/Validation_7_1A.png", plot = a, width = 10, height = 10, units = "in")
+print(a)
 ```
 
 ![](Validation_7_insertion_files/figure-gfm/plot-av-cli-1.png)<!-- -->
@@ -172,11 +164,15 @@ df_filtered$TE_insertions <- 100 * df_filtered$TE_insertions
 # Convert 'sampleid' to factor
 df_filtered$insertion_bias <- as.factor(df_filtered$sampleid)
 
-# Create a boxplot
-boxplot(df_filtered$TE_insertions ~ df_filtered$insertion_bias, col=terrain.colors(length(levels(df_filtered$insertion_bias))), 
+# Create a new plot file with larger dimensions
+png(filename = "images/Validation_7_1B.png", width = 800, height = 600)
+
+# Boxplot
+boxplot(df_filtered$TE_insertions ~ df_filtered$insertion_bias, 
+        col=rainbow(length(levels(df_filtered$insertion_bias))), 
         main="Variability in Cluster Insertion Across 100 Replications", 
-        xlab="Insertion Bias Levels", 
-        ylab="Cluster Insertion Variability Across 100 Replications")
+        xlab="Insertion Bias", 
+        ylab="TE Cluster Insertion Variability Across 100 Replications")
 
 # Add data points
 mylevels <- levels(df_filtered$insertion_bias)
@@ -191,11 +187,16 @@ for(i in 1:length(mylevels)){
   # Take the x-axis indices and add a jitter, proportional to the N in each level
   myjitter <- jitter(rep(i, length(thisvalues)), amount=levelProportions[i]/2)
   
-  points(myjitter, thisvalues, pch=20, col=rgb(0,0,0,.9)) 
+  # Use smaller points
+  points(myjitter, thisvalues, pch=20, cex=0.9, col=rgb(0,0,0,.6)) 
 }
+
+# Close the plot file
+invisible(dev.off())
 ```
 
-![](Validation_7_insertion_files/figure-gfm/plot-av-cli-transfo-1.png)<!-- -->
+<img src="images/Validation_7_1B.png"
+style="display: block; margin: 0 auto" width="800" height="600" />
 
 The plot displays the variability in Transposable Elements (TE)
 insertions across different levels of Insertion Bias, using data from
@@ -204,7 +205,7 @@ y-axis, the ‘avcli’ column was subtracted from the ‘pc’ column in the
 original dataset. This difference was then multiplied by 100 to express
 the relative difference as a percentage:
 
-$$TE_(insertions) = 100 * (pc - avcli)$$
+$$TE_{insertions} = 100 * (avcli- pc)$$
 
 The ‘Insertion Bias’ variable, represented on the x-axis, corresponds to
 the ‘sampleid’ column. It was converted to a factor variable to
@@ -226,15 +227,17 @@ df_summary <- df2 %>%
            deviation_pc = mean_cli - pc)
 
 # Create scatter plot with error bars
-ggplot(df_summary, aes(x = sampleid)) +
-    geom_point(aes(y = mean_cli), color = "#003f5c") +
-    geom_errorbar(aes(ymin = mean_cli - sd_meancli, ymax = mean_cli + sd_meancli), width = .2, color = "003f5c") +
-    geom_line(aes(y = pc), color = "#ffa600") +
-    labs(title = "Observed and Expected Average Cluster Insertion across Insertion Bias",
-         x = "Insertion Bias",
-         y = "Mean of Average Cluster Insertion") +
-    theme_minimal() +
-    theme(plot.title = element_text(hjust = 0.5))
+c <- ggplot(df_summary, aes(x = sampleid)) +
+  geom_point(aes(y = mean_cli), color = "#003f5c") +
+  geom_errorbar(aes(ymin = mean_cli - sd_meancli, ymax = mean_cli + sd_meancli), width = .2, color = "003f5c") +
+  geom_line(aes(y = pc), color = "#ffa600") +
+  labs(title = "Observed and Expected Average Cluster Insertion across Insertion Bias",
+       x = "Insertion Bias",
+       y = "Mean of Average Cluster Insertion") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave(filename = "images/Validation_7_1C.png", plot = c, width = 10, height = 10, units = "in")
+print(c)
 ```
 
 ![](Validation_7_insertion_files/figure-gfm/plot-mean-cli-1.png)<!-- -->
@@ -257,7 +260,7 @@ df_summary$log_sd_meancli <- log10(df_summary$sd_meancli + 0.0001)
 df_summary$log_pc <- log10(df_summary$pc + 0.0001)
 
 # Create scatter plot with error bars
-p <- ggplot(df_summary, aes(x = sampleid)) +
+d <- ggplot(df_summary, aes(x = sampleid)) +
     geom_point(aes(y = log_mean_cli), color = "blue") +
     geom_errorbar(aes(ymin = log_mean_cli - log_sd_meancli, ymax = log_mean_cli + log_sd_meancli), width = .2, color = "#008080") +
     geom_line(aes(y = log_pc), color = "orange") +
@@ -268,7 +271,9 @@ p <- ggplot(df_summary, aes(x = sampleid)) +
     theme(plot.title = element_text(hjust = 0.5))
 
 # Print the plot
-print(p)
+
+ggsave(filename = "images/Validation_7_1D.png", plot = d, width = 10, height = 10, units = "in")
+print(d)
 ```
 
 ![](Validation_7_insertion_files/figure-gfm/mean_av_cli-1.png)<!-- -->
@@ -290,13 +295,16 @@ observed and expected values.
 df_rep1 <- df2[df2$rep == 1, ]
 
 # Create scatter plot
-ggplot(df_rep1, aes(x = sampleid, y = avtes)) +
-    geom_point(color = "#003f5c") +
-    labs(title = "Average Transposable Element Insertions",
-         x = "Insertion Bias",
-         y = "Average TE Insertions") +
-    theme_minimal() +
-    theme(plot.title = element_text(hjust = 0.5))
+e <- ggplot(df_rep1, aes(x = sampleid, y = avtes)) +
+  geom_point(color = "#003f5c") +
+  labs(title = "Average Transposable Element Insertions",
+       x = "Insertion Bias",
+       y = "Average TE Insertions") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggsave(filename = "images/Validation_7_1E.png", plot = e, width = 10, height = 10, units = "in")
+print(e)
 ```
 
 ![](Validation_7_insertion_files/figure-gfm/plot-avtes-1.png)<!-- -->
@@ -317,7 +325,7 @@ df_summary_2 <- df2 %>%
               sd_avtes = sd(avtes, na.rm = TRUE))
 
 # Create scatter plot with error bars
-ggplot(df_summary_2, aes(x = sampleid)) +
+f <- ggplot(df_summary_2, aes(x = sampleid)) +
     geom_point(aes(y = mean_avtes), color = "blue") +
     geom_errorbar(aes(ymin = mean_avtes - sd_avtes, ymax = mean_avtes + sd_avtes), width = .2, color = "#008080") +
     labs(title = "Average TE Insertions across Insertion Bias",
@@ -325,6 +333,9 @@ ggplot(df_summary_2, aes(x = sampleid)) +
          y = "Average TE Insertions") +
     theme_minimal() +
     theme(plot.title = element_text(hjust = 0.5))
+
+ggsave(filename = "images/Validation_7_1F.png", plot = a, width = 10, height = 10, units = "in")
+print(f)
 ```
 
 ![](Validation_7_insertion_files/figure-gfm/plot-mean-avtes-1.png)<!-- -->
