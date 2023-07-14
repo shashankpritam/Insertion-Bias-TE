@@ -191,6 +191,8 @@ for(i in 1:length(mylevels)){
   points(myjitter, thisvalues, pch=20, cex=0.9, col=rgb(0,0.2,0.25,0.6)) 
 }
 
+
+
 # Close the plot file
 invisible(dev.off())
 ```
