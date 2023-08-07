@@ -1,0 +1,74 @@
+---
+author: Shashank Pritam
+listing: default
+title: "Simulation Storm"
+toc: true
+number-sections: true
+highlight-style: pygments
+format: 
+  gfm: 
+    code-fold: true
+    html-math-method: katex
+---
+
+## Introduction
+
+With this simulation we wanted to understand the role of insertion bias
+on minimum fitness during a TEs invasion.
+
+### Initial conditions:
+
+A population of 1000, 5 chromosomes of size 10 Mb
+
+Every dot in the red to green gradient is a simulation at generation
+5000, or less if it failed. If it failed due to the extinction of the
+population the dot will be white, if it failed because all TEs were
+removed from the population it will be grey.
+
+## Materials & Methods
+
+version: invadego0.1.3
+
+### Commands for the simulation:
+
+The simulations were generated using the code from:
+
+-   simstorm_para_vs_selection
+-   simstorm_para_vs_clusters
+
+### Visualization in R
+
+#### Setting the environment
+```{r}
+library(tidyverse)
+library(RColorBrewer)
+library(ggplot2)
+library(patchwork)
+theme_set(theme_bw())
+```
+
+
+#### Data loading and parsing
+```{r}
+# Define column names
+column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq",
+                "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3",
+                "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
+
+# Load DataFrame with column names
+df <- read_delim('/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/07thAug23at0626PM/combined.txt', delim='\t', col_names = column_names)
+
+
+# Convert the columns to numeric
+numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq",
+                   "fixed", "fwcli", "avcli", "fixcli",
+                   "avbias", "sampleid")
+
+df[numeric_columns] <- lapply(df[numeric_columns], function(x) as.numeric(as.character(x)))
+
+```
+
+#### Visualization:
+```{r}
+print(df, n = Inf)
+```
