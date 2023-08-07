@@ -111,7 +111,6 @@ commandlist = run_cluster_negsel(args.invade, args.count, args.output)
 
 # Submit Jobs
 def submit_job_max_len(commandlist, max_processes):
-    import subprocess
     sleep_time = 10.0
     processes = list()
     for command in commandlist:
