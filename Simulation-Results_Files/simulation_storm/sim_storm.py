@@ -1,3 +1,4 @@
+# Imports
 import argparse
 import random
 import time
@@ -5,8 +6,10 @@ import math
 import os
 import subprocess
 
+# Path where the main is currently in my system
 invade_path = os.path.join("/Users", "shashankpritam", "github", "invadego-insertionbias", "main")
 
+# Parser info
 parser = argparse.ArgumentParser(description="""           
 Description
 -----------
@@ -15,7 +18,7 @@ Description
     | ||  \| |\ \ / / _ \ | | | |  _|| |  _| | | |
     | || |\  | \ V / ___ \| |_| | |__| |_| | |_| |
     |___|_| \_|  \_/_/   \_\____/|_____\____|\___/ 
-    
+
     Simulation Storm""",
     formatter_class=argparse.RawDescriptionHelpFormatter,
     epilog="""
@@ -32,23 +35,30 @@ Authors
 """)
 
 
+# Get current time
 def current_milli_time():
     return round(time.time() * 1000)
 
+# Generate random bias in range of (-100, 100)
 def get_rand_bias():
     return random.randint(-100, 100)
 
+# The basic command line input for invadego which will have some parameters appended later on
 def get_basis(invade):
     return f'{invade} -no-x-cluins --N 1000 --gen 5000 --genome mb:10,10,10,10,10 --x 0.01 --rr 4,4,4,4,4 --rep 1 --u 0.2 --steps 5000 --silent'
 
+# Removing irrelavant lines from putput files
 def get_filter():
     return """|grep -v "^Invade"|grep -v "^#" """
 
+# Getting random cluter insertions values in the range of (3% to 97%)
 def get_rand_clusters():
     r = random.randint(300, 9700)
     #r = math.floor(10**random.uniform(3.69899,5.69899))
     return f"{r},{r},{r},{r},{r}"
 
+
+# TE invasion that is stopped by cluster insertions and neg selection against TEs
 def run_cluster_negsel(invade, count, output):
     """
     TE invasion that is stopped by cluster insertions and neg selection against TEs
@@ -63,11 +73,13 @@ def run_cluster_negsel(invade, count, output):
         commandlist.append(command)
     return commandlist
 
+# The default directory is dynamic and depends on the time this scipt is invoked
 def get_default_output_directory():
     current_time = time.strftime("%dth%b%yat%I%M%p", time.gmtime())
     return os.path.join("/Users", "shashankpritam", "github", "Insertion-Bias-TE", "Simulation-Results_Files", "simulation_storm", current_time)
 
 
+# Parser arguments
 parser = argparse.ArgumentParser()
 
 parser.add_argument("--number", type=int, dest="count", default=100, help="the number of simulations")
@@ -97,6 +109,7 @@ commandlist = run_cluster_negsel(args.invade, args.count, args.output)
 
 """
 
+# Submit Jobs
 def submit_job_max_len(commandlist, max_processes):
     import subprocess
     sleep_time = 10.0
@@ -111,6 +124,17 @@ def submit_job_max_len(commandlist, max_processes):
     while len(processes) > 0:
         time.sleep(sleep_time)
         processes = [proc for proc in processes if proc.poll() is None]
- 
+
+
+# This is the "main"
 submit_job_max_len(commandlist, max_processes=args.threads)
+
+
+# Cat 🐈 all the files together:
+with open("combined2.txt", "w") as outfile:
+    for i in range(100):
+        filename = f"{get_default_output_directory()}/{i}.txt"
+        subprocess.run(["cat", filename], stdout=outfile)
+
+# Sign of completion of the job.
 print("Done")
