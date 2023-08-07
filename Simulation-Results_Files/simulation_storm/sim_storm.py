@@ -131,10 +131,10 @@ submit_job_max_len(commandlist, max_processes=args.threads)
 
 
 # Cat 🐈 all the files together:
-with open("combined2.txt", "w") as outfile:
+with open(f"{get_default_output_directory()}/combined.txt", "w") as outfile:
     for i in range(100):
         filename = f"{get_default_output_directory()}/{i}.txt"
         subprocess.run(["cat", filename], stdout=outfile)
-
+        
 # Sign of completion of the job.
 print("Done")
