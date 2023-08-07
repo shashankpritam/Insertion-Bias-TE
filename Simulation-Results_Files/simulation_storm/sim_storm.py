@@ -13,10 +13,10 @@ invade_path = os.path.join("/Users", "shashankpritam", "github", "invadego-inser
 parser = argparse.ArgumentParser(description="""           
 Description
 -----------
-    ___ _   ___     ___    ____  _____ ____  ___  
+     ___ _   ___     ___    ____  _____ ____  ___  
     |_ _| \ | \ \   / / \  |  _ \| ____/ ___|/ _ \ 
-    | ||  \| |\ \ / / _ \ | | | |  _|| |  _| | | |
-    | || |\  | \ V / ___ \| |_| | |__| |_| | |_| |
+     | ||  \| |\ \ / / _ \ | | | |  _|| |  _| | | |
+     | || |\  | \ V / ___ \| |_| | |__| |_| | |_| |
     |___|_| \_|  \_/_/   \_\____/|_____\____|\___/ 
 
     Simulation Storm""",
