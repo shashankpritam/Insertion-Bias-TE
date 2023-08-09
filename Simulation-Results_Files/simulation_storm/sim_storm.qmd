@@ -44,31 +44,44 @@ library(tidyverse)
 library(RColorBrewer)
 library(ggplot2)
 library(patchwork)
+library(dplyr)
 theme_set(theme_bw())
 ```
 
 
 #### Data loading and parsing
 ```{r}
-# Define column names
-column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq",
-                "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3",
-                "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
 
-# Load DataFrame with column names
+# Define and load DataFrame with column names
+column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
 df <- read_delim('/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/07thAug23at0626PM/combined.txt', delim='\t', col_names = column_names)
 
-
-# Convert the columns to numeric
-numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq",
-                   "fixed", "fwcli", "avcli", "fixcli",
-                   "avbias", "sampleid")
-
-df[numeric_columns] <- lapply(df[numeric_columns], function(x) as.numeric(as.character(x)))
-
+# Convert specific columns to numeric
+numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "fwcli", "avcli", "fixcli", "avbias", "sampleid")
+df[numeric_columns] <- lapply(df[numeric_columns], as.numeric)
 ```
 
 #### Visualization:
 ```{r}
-print(df, n = Inf)
+# Define color gradient functions
+color.gradient <- function(x, colors=c("#D7191C","#FDAE61","#A6D96A","#1A9641"), colsteps=100) { colorRampPalette(colors) (colsteps) [ findInterval(x, seq(min(df$min_w),1.0, length.out=colsteps)) ] }
+
+# Assign colors based on the 'min_w' column
+df$col <- color.gradient(df$min_w)
+df[df$popstat == "fail-0",]$col <- "grey"
+df$col <- as.factor(df$col)
+
+# Create and plot the ggplot object
+g_avbias_selection <- ggplot(df, aes(x = avbias/10, y = sampleid, color = col)) +
+  scale_color_manual(values = levels(df$col)) +
+  geom_point(alpha = 0.7, size = 0.8) +
+  scale_y_log10() +
+  ylab("Negative selection coefficient") +
+  xlab("Average Bias as [%]") +
+  geom_hline(aes(yintercept = 0.001), linetype = "dashed", size = 1) +
+  theme(legend.position = "none", panel.background = element_rect(fill="grey90"))
+
+plot(g_avbias_selection)
+
+
 ```
