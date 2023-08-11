@@ -127,7 +127,7 @@ def submit_job_max_len(commandlist, max_processes):
     processes = list()
     for command in commandlist:
         if not args.silent:
-            print(f'Running process {len(processes)+1}. \nSubmitting {command}')
+            print(f'Running process. \nSubmitting {command}')
         processes.append(subprocess.Popen(command, shell=True, stdout=None))
         while len(processes) >= max_processes:
             time.sleep(sleep_time)
