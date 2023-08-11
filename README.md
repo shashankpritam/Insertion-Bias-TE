@@ -6,6 +6,12 @@ This repository contains the results and data associated with the validation and
 
 ## Directory Structure
 
+### Simulation
+
+a. [Simulation Storm](./Simulation%20Storm.md)
+
+### Validation
+
 1. [Validation_1_invasion.md](./Validation_1_invasion.md)
 2. [Validation_2_drift.md](./Validation_2_drift.md)
 3. [Validation_3_clusters.md](./Validation_3_clusters.md)
