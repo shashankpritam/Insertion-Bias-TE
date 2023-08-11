@@ -11,6 +11,8 @@ This repository contains the results and data associated with the validation and
 a. [Simulation Storm](./Simulation%20Storm.md)
 
 ### Validation
+<details>
+  <summary>Click to expand!</summary>
 
 1. [Validation_1_invasion.md](./Validation_1_invasion.md)
 2. [Validation_2_drift.md](./Validation_2_drift.md)
@@ -38,6 +40,8 @@ a. [Simulation Storm](./Simulation%20Storm.md)
     h. [validation_6](./Simulation-Results_Files/validation_6)
    
     i. [validation_7](./Simulation-Results_Files/validation_7)
+   
+</details>
 
 10. [archives](./archives)
 11. [.gitattributes](./.gitattributes)
