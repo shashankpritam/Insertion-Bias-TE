@@ -131,7 +131,7 @@ df_gen_5000 <- df[df$gen == 5000,]
 g_avbias_phase <- ggplot(df_gen_5000, aes(x = avbias, y = phase, color = phase)) + # Updated the y-axis to phase
   geom_point(alpha = 0.7, size = 0.8) +
   ylab("Phase") + # Updated y-axis label
-  xlab("Average Bias as [%]") +
+  xlab("Average Bias") +
   labs(title = "Phase vs Average Bias at gen 5000",
        subtitle = "Different phases represented by colors",
        caption = "As avbias increases the rapid invasion phase is predominant") +
@@ -145,3 +145,42 @@ plot(g_avbias_phase)
 </details>
 
 ![](sim_storm_files/figure-commonmark/unnamed-chunk-3-1.png)
+
+<details>
+<summary>Code</summary>
+
+``` r
+# Plot for min_w vs avbias
+plot_min_w <- ggplot(df_gen_5000, aes(x = avbias, y = min_w)) +
+  geom_point(alpha = 0.7, size = 0.8) +
+  ylab("min_w") +
+  xlab("Average Bias") +
+  labs(title = "min_w vs Average Bias at gen 5000") +
+  theme_minimal()
+
+# Plot for avtes vs avbias
+plot_avtes <- ggplot(df_gen_5000, aes(x = avbias, y = avtes)) +
+  geom_point(alpha = 0.7, size = 0.8) +
+  ylab("avtes") +
+  xlab("Average Bias") +
+  labs(title = "avtes vs Average Bias at gen 5000") +
+  theme_minimal()
+
+# Plot for avpopfreq vs avbias
+plot_avpopfreq <- ggplot(df_gen_5000, aes(x = avbias, y = avpopfreq)) +
+  geom_point(alpha = 0.7, size = 0.8) +
+  ylab("avpopfreq") +
+  xlab("Average Bias") +
+  labs(title = "avpopfreq vs Average Bias at gen 5000") +
+  theme_minimal()
+
+# Combine the plots
+combined_plot <- plot_min_w / plot_avtes / plot_avpopfreq
+
+# Display the combined plot
+plot(combined_plot)
+```
+
+</details>
+
+![](sim_storm_files/figure-commonmark/unnamed-chunk-4-1.png)
