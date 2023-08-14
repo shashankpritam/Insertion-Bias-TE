@@ -82,17 +82,17 @@ theme_set(theme_bw())
 ``` r
 # Define and load DataFrame with column names
 column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
-df <- read_delim('/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/07thAug23at0626PM/combined.txt', delim='\t', col_names = column_names)
+df <- read_delim('/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/11thAug23at083124PM/combined.txt', delim='\t', col_names = column_names)
 ```
 
 </details>
 
-    Rows: 200 Columns: 26
+    Rows: 20000 Columns: 22
     ── Column specification ────────────────────────────────────────────────────────
     Delimiter: "\t"
     chr  (8): popstat, spacer_1, spacer_2, phase, spacer_3, 3tot, 3cluster, spac...
-    dbl (17): rep, gen, fwte, avw, min_w, avtes, avpopfreq, fixed, fwcli, avcli,...
-    lgl  (1): X26
+    dbl (13): rep, gen, fwte, avw, min_w, avtes, avpopfreq, fixed, fwcli, avcli,...
+    lgl  (1): X22
 
     ℹ Use `spec()` to retrieve the full column specification for this data.
     ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
@@ -123,30 +123,25 @@ df[df$popstat == "fail-0",]$col <- "grey"
 df$col <- as.factor(df$col)
 
 # Create and plot the ggplot object
-g_avbias_selection <- ggplot(df, aes(x = avbias/10, y = sampleid, color = col)) +
-  scale_color_manual(values = levels(df$col)) +
+# Subset the data for gen 5000
+df_gen_5000 <- df[df$gen == 5000,]
+
+# Plot the ggplot object
+
+g_avbias_phase <- ggplot(df_gen_5000, aes(x = avbias, y = phase, color = phase)) + # Updated the y-axis to phase
   geom_point(alpha = 0.7, size = 0.8) +
-  scale_y_log10() +
-  ylab("Negative selection coefficient") +
+  ylab("Phase") + # Updated y-axis label
   xlab("Average Bias as [%]") +
-  geom_hline(aes(yintercept = 0.001), linetype = "dashed", size = 1) +
-  theme(legend.position = "none", panel.background = element_rect(fill="grey90"))
+  labs(title = "Phase vs Average Bias at gen 5000",
+       subtitle = "Different phases represented by colors",
+       caption = "As avbias increases the rapid invasion phase is predominant") +
+  theme_minimal() +
+  theme(legend.position = "bottom", panel.background = element_rect(fill="grey90"))
+
+# Display the plot
+plot(g_avbias_phase)
 ```
 
 </details>
-
-    Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-    ℹ Please use `linewidth` instead.
-
-<details>
-<summary>Code</summary>
-
-``` r
-plot(g_avbias_selection)
-```
-
-</details>
-
-    Warning: Removed 30 rows containing missing values (`geom_point()`).
 
 ![](sim_storm_files/figure-commonmark/unnamed-chunk-3-1.png)
