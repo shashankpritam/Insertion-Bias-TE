@@ -7,7 +7,7 @@ import os
 import subprocess
 
 # Path where the main is currently in my system
-invade_path = os.path.join("/Users", "shashankpritam", "github", "invadego-insertionbias", "main")
+invade_path = os.path.join("./main")
 
 # Parser info
 parser = argparse.ArgumentParser(description="""           
@@ -47,7 +47,7 @@ def get_rand_bias():
 # The default directory is dynamic and depends on the time this scipt is invoked
 def get_default_output_directory():
     current_time = time.strftime("%dth%b%yat%I%M%S%p", time.gmtime())
-    default_output_directory = os.path.join("/Users", "shashankpritam", "github", "Insertion-Bias-TE", "Simulation-Results_Files", "simulation_storm", current_time)
+    default_output_directory = os.path.join(current_time)
 
     if not os.path.exists(default_output_directory):
         os.makedirs(default_output_directory)
@@ -84,7 +84,8 @@ def get_filter():
 
 # Getting random cluter insertions values in the range of (3% to 97%)
 def get_rand_clusters():
-    r = random.randint(300, 9700)
+    r = 300
+    #r = random.randint(300, 9700)
     #r = math.floor(10**random.uniform(3.69899,5.69899))
     return f"{r},{r},{r},{r},{r}"
 
@@ -115,9 +116,9 @@ commandlist = run_cluster_negsel(args.invade, args.count, args.output)
 
 # args: -no-x-cluins --N 1000 --gen 5000 --genome mb:10,10,10,10,10 --x 0.01 --rr 4,4,4,4,4 --rep 1 --u 0.2 --steps 5000 --silent --basepop 100(64) --cluster kb:1440,1440,1440,1440,1440 --replicate-offset 99 --seed 1691432303242 --sampleid 1440,1440,1440,1440,1440
 # version 0.1.3, seed: 1691432303242
-# rep	gen	popstat	|	fwte	avw	minw	avtes	avpopfreq	fixed	|	phase	fwcli	avcli	fixcli	|	avbias	3tot	3cluster	|	sampleids
-# 99	0	ok	|	0.10	1.00	1.00	0.10	0.00	0	|	rapi	0.05	0.05	0	|	64.0	0.10(64)	0.05(64)	|	1440	1440	1440	1440	1440
-# 99	5000	ok	|	1.00	1.00	0.97	4.37	0.73	1	|	inac	1.00	4.37	1	|	64.0	4.37(64)	4.37(64)	|	1440	1440	1440	1440	1440
+# rep   gen     popstat |       fwte    avw     minw    avtes   avpopfreq       fixed   |       phase   fwcli   avcli   fixcli  |       avbias  3tot    3cluster        |       sampleids
+# 99    0       ok      |       0.10    1.00    1.00    0.10    0.00    0       |       rapi    0.05    0.05    0       |       64.0    0.10(64)        0.05(64)        |       1440    1440    1440   1440     1440
+# 99    5000    ok      |       1.00    1.00    0.97    4.37    0.73    1       |       inac    1.00    4.37    1       |       64.0    4.37(64)        4.37(64)        |       1440    1440    1440   1440     1440
 
 """
 
