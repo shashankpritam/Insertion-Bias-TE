@@ -1,30 +1,20 @@
 # Simulation Storm
 Shashank Pritam
 
-- [<span class="toc-section-number">1</span>
-  Introduction](#introduction)
-  - [<span class="toc-section-number">1.1</span> Initial
-    conditions:](#initial-conditions)
-- [<span class="toc-section-number">2</span> Materials &
-  Methods](#materials-methods)
-  - [<span class="toc-section-number">2.1</span> Commands for the
-    simulation:](#commands-for-the-simulation)
-  - [<span class="toc-section-number">2.2</span> Visualization in
-    R](#visualization-in-r)
-  - [<span class="toc-section-number">2.3</span> Plot 1: Phase vs
-    Average Bias at gen 5000](#plot-1-phase-vs-average-bias-at-gen-5000)
-  - [<span class="toc-section-number">2.4</span> Plot 2: min_w, avtes
-    and avpopfreq vs
-    avbias](#plot-2-min_w-avtes-and-avpopfreq-vs-avbias)
-  - [<span class="toc-section-number">2.5</span> Plot 3: Plot for min_w,
-    avtes and avpopfreq vs avbias with phase as a
-    factor](#plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor)
-  - [<span class="toc-section-number">2.6</span> Plot 4: min_w, avtes,
-    avpopfreq vs Average Bias at gen
-    5000](#plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000)
-  - [<span class="toc-section-number">2.7</span> Plot 5: min_w, avtes,
-    avpopfreq vs Average Bias at gen 5000 with phase as a
-    factor](#plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor)
+- [Simulation Storm](#simulation-storm)
+  - [Introduction](#introduction)
+    - [Initial conditions:](#initial-conditions)
+  - [Materials \& Methods](#materials--methods)
+    - [Commands for the simulation:](#commands-for-the-simulation)
+    - [Visualization in R](#visualization-in-r)
+      - [Setting the environment](#setting-the-environment)
+      - [Data loading and parsing](#data-loading-and-parsing)
+      - [Visualization:](#visualization)
+    - [Plot 1: Phase vs Average Bias at gen 5000](#plot-1-phase-vs-average-bias-at-gen-5000)
+    - [Plot 2: min\_w, avtes and avpopfreq vs avbias](#plot-2-min_w-avtes-and-avpopfreq-vs-avbias)
+    - [Plot 3: Plot for min\_w, avtes and avpopfreq vs avbias with phase as a factor](#plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor)
+    - [Plot 4: min\_w, avtes, avpopfreq vs Average Bias at gen 5000](#plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000)
+    - [Plot 5: min\_w, avtes, avpopfreq vs Average Bias at gen 5000 with phase as a factor](#plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor)
 
 ## Introduction
 
@@ -35,10 +25,7 @@ on minimum fitness during a TEs invasion.
 
 A population of 1000, 5 chromosomes of size 10 Mb
 
-Every dot in the red to green gradient is a simulation at generation
-5000, or less if it failed. If it failed due to the extinction of the
-population the dot will be white, if it failed because all TEs were
-removed from the population it will be grey.
+<del> Every dot in the red to green gradient is a simulation at generation 5000, or less if it failed. If it failed due to the extinction of the population the dot will be white, if it failed because all TEs were removed from the population it will be grey.
 
 ## Materials & Methods
 
