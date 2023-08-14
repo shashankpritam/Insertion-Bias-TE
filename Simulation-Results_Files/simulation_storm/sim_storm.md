@@ -11,6 +11,12 @@ Shashank Pritam
     simulation:](#commands-for-the-simulation)
   - [<span class="toc-section-number">2.2</span> Visualization in
     R](#visualization-in-r)
+  - [<span class="toc-section-number">2.3</span> Plot 1: Phase vs
+    Average Bias at gen 5000](#plot-1-phase-vs-average-bias-at-gen-5000)
+  - [<span class="toc-section-number">2.4</span> Plot 2](#plot-2)
+  - [<span class="toc-section-number">2.5</span> Plot 3: min_w, avtes,
+    avpopfreq vs Average Bias at gen
+    5000](#plot-3-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000)
 
 ## Introduction
 
@@ -125,13 +131,24 @@ df$col <- as.factor(df$col)
 # Create and plot the ggplot object
 # Subset the data for gen 5000
 df_gen_5000 <- df[df$gen == 5000,]
+```
 
-# Plot the ggplot object
+</details>
 
-g_avbias_phase <- ggplot(df_gen_5000, aes(x = avbias, y = phase, color = phase)) + # Updated the y-axis to phase
+### Plot 1: Phase vs Average Bias at gen 5000
+
+Here we are plotting the phase of the simulation or experiment against
+the average bias in TE insertion at generation 5000. The different
+phases are color-coded.
+
+<details>
+<summary>Code</summary>
+
+``` r
+g_avbias_phase <- ggplot(df_gen_5000, aes(x = avbias, y = phase, color = phase)) +
   geom_point(alpha = 0.7, size = 0.8) +
-  ylab("Phase") + # Updated y-axis label
-  xlab("Average Bias") +
+  ylab("Phase of Simulation/Experiment") +
+  xlab("Average Bias in TE Insertion") +
   labs(title = "Phase vs Average Bias at gen 5000",
        subtitle = "Different phases represented by colors",
        caption = "As avbias increases the rapid invasion phase is predominant") +
@@ -144,7 +161,11 @@ plot(g_avbias_phase)
 
 </details>
 
-![](sim_storm_files/figure-commonmark/unnamed-chunk-3-1.png)
+![](sim_storm_files/figure-commonmark/unnamed-chunk-4-1.png)
+
+### Plot 2
+
+Plot for min_w, avtes and avpopfreq vs avbias
 
 <details>
 <summary>Code</summary>
@@ -183,4 +204,52 @@ plot(combined_plot)
 
 </details>
 
-![](sim_storm_files/figure-commonmark/unnamed-chunk-4-1.png)
+![](sim_storm_files/figure-commonmark/unnamed-chunk-5-1.png)
+
+### Plot 3: min_w, avtes, avpopfreq vs Average Bias at gen 5000
+
+Here we are plotting different attributes of the population related to
+TEs against the average bias in TE insertion at generation 5000. Three
+separate plots are combined into one for a concise visualization.
+
+<details>
+<summary>Code</summary>
+
+``` r
+# Subset the data for gen 5000
+df_gen_5000 <- df[df$gen == 5000,]
+
+# Plot for fwcli vs avbias
+plot_fwcli <- ggplot(df_gen_5000, aes(x = avbias, y = fwcli)) +
+  geom_point(alpha = 0.7, size = 0.8) +
+  ylab("fwcli") +
+  xlab("Average Bias") +
+  labs(title = "Fitness Weight of Cluster Insertions vs Average Bias at gen 5000") +
+  theme_minimal()
+
+# Plot for avcli vs avbias
+plot_avcli <- ggplot(df_gen_5000, aes(x = avbias, y = avcli)) +
+  geom_point(alpha = 0.7, size = 0.8) +
+  ylab("avcli") +
+  xlab("Average Bias") +
+  labs(title = "Average Number of Cluster Insertions vs Average Bias at gen 5000") +
+  theme_minimal()
+
+# Plot for fixcli vs avbias
+plot_fixcli <- ggplot(df_gen_5000, aes(x = avbias, y = fixcli)) +
+  geom_point(alpha = 0.7, size = 0.8) +
+  ylab("fixcli") +
+  xlab("Average Bias") +
+  labs(title = "Number of Fixed Cluster Insertions vs Average Bias at gen 5000") +
+  theme_minimal()
+
+# Combine the plots
+combined_plot <- plot_fwcli / plot_avcli / plot_fixcli
+
+# Display the combined plot
+plot(combined_plot)
+```
+
+</details>
+
+![](sim_storm_files/figure-commonmark/unnamed-chunk-6-1.png)
