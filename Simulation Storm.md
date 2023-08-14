@@ -330,7 +330,7 @@ plot(g_avbias_phase)
 
 </details>
 
-![](sim_storm_files/figure-commonmark/unnamed-chunk-5-1.png)
+![](Simulation-Results_Files/simulation_storm/sim_storm_files/figure-commonmark/unnamed-chunk-5-1.png)
 
 ### Plot 2: min_w, avtes and avpopfreq vs avbias
 
@@ -378,7 +378,7 @@ plot(combined_plot)
 
 </details>
 
-![](sim_storm_files/figure-commonmark/unnamed-chunk-6-1.png)
+![](Simulation-Results_Files/simulation_storm/sim_storm_files/figure-commonmark/unnamed-chunk-6-1.png)
 
 ### Plot 3: Plot for min_w, avtes and avpopfreq vs avbias with phase as a factor
 
@@ -422,7 +422,7 @@ plot(combined_plot)
 
 </details>
 
-![](sim_storm_files/figure-commonmark/unnamed-chunk-7-1.png)
+![](Simulation-Results_Files/simulation_storm/sim_storm_files/figure-commonmark/unnamed-chunk-7-1.png)
 
 ### Plot 4: min_w, avtes, avpopfreq vs Average Bias at gen 5000
 
@@ -470,7 +470,7 @@ plot(combined_plot_2)
 
 </details>
 
-![](sim_storm_files/figure-commonmark/unnamed-chunk-8-1.png)
+![](Simulation-Results_Files/simulation_storm/sim_storm_files/figure-commonmark/unnamed-chunk-8-1.png)
 
 ### Plot 5: min_w, avtes, avpopfreq vs Average Bias at gen 5000 with phase as a factor
 
@@ -511,4 +511,4 @@ plot(combined_plot)
 
 </details>
 
-![](sim_storm_files/figure-commonmark/unnamed-chunk-9-1.png)
+![](Simulation-Results_Files/simulation_storm/sim_storm_files/figure-commonmark/unnamed-chunk-9-1.png)
