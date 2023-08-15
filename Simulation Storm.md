@@ -4,6 +4,7 @@ Shashank Pritam
 - [Simulation Storm](#simulation-storm)
   - [Introduction](#introduction)
     - [Initial conditions:](#initial-conditions)
+      - [Simulation 1](#simulation-1)
   - [Materials \& Methods](#materials--methods)
     - [Commands for the simulation:](#commands-for-the-simulation)
     - [Visualization in R](#visualization-in-r)
@@ -21,11 +22,35 @@ Shashank Pritam
 With this simulation we wanted to understand the role of insertion bias
 on minimum fitness during a TEs invasion.
 
+
+
+
+
 ### Initial conditions:
 
-A population of 1000, 5 chromosomes of size 10 Mb
+#### Simulation 1
 
-<del> Every dot in the red to green gradient is a simulation at generation 5000, or less if it failed. If it failed due to the extinction of the population the dot will be white, if it failed because all TEs were removed from the population it will be grey.
+
+
+|       | Parameter                          | Description & Value                                               |
+|-------|------------------------------------|-------------------------------------------------------------------|
+|   1   | Number of simulations              | 10,000                                                            |
+|   2   | Number of threads                  | 4                                                                 |
+|   3   | Output directory                   | 11thAug23at083124PM                                               |
+|   4   | Invade path                        | ./main                                                            |
+|   5   | Number of replications (`--rep`)   | 1                                                                 |
+|   6   | Mutation rate (`--u`)              | 0.1                                                               |
+|   7   | Number of steps (`--steps`)        | 5000                                                              |
+|   8   | Population size (`--N`)            | 1000                                                              |
+|   9   | Number of generations (`--gen`)    | 5000                                                              |
+|  10   | Silent mode                        | False                                                             |
+|  11   | Chromosome configuration           | 5 chromosomes of size 10 Mb with 300kb cluster each              |
+|  12   | Recombination rate (`--rr`)        | 4cM/Mb for each chromosome (e.g., `4,4,4,4`)                     |
+|  13   | Negative effect (`--x`)            | Negative effect of a TE insertion: fitness w = 1-xn where n is... |
+|  14   | Cluster insertions (`--no-x-cluins`)| Switch; no negative effect for cluster insertions (x=0)           |
+
+
+
 
 ## Materials & Methods
 
