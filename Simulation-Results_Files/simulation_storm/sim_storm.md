@@ -35,9 +35,7 @@ on minimum fitness during a TEs invasion.
 
 A population of 1000, 5 chromosomes of size 10 Mb
 
-<del>
-
-Every dot in the red to green gradient is a simulation at generation
+<del> Every dot in the red to green gradient is a simulation at generation
 5000, or less if it failed. If it failed due to the extinction of the
 population the dot will be white, if it failed because all TEs were
 removed from the population it will be grey.
