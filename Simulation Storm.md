@@ -44,10 +44,10 @@ on minimum fitness during a TEs invasion.
 |   8   | Population size (`--N`)            | 1000                                                              |
 |   9   | Number of generations (`--gen`)    | 5000                                                              |
 |  10   | Silent mode                        | False                                                             |
-|  11   | Chromosome configuration           | 5 chromosomes of size 10 Mb with 300kb cluster each              |
-|  12   | Recombination rate (`--rr`)        | 4cM/Mb for each chromosome (e.g., `4,4,4,4`)                     |
-|  13   | Negative effect (`--x`)            | Negative effect of a TE insertion: fitness w = 1-xn where n is... |
-|  14   | Cluster insertions (`--no-x-cluins`)| Switch; no negative effect for cluster insertions (x=0)           |
+|  11   | Chromosome configuration           | 5 chromosomes of size 10 Mb with 300kb cluster each               |
+|  12   | Recombination rate (`--rr`)        | 4cM/Mb for each chromosome (`4,4,4,4`)                            |
+|  13   | Negative effect (`--x`)            | 0.01                                                              |
+|  14   | Cluster insertions (`--no-x-cluins`)| Switch; no negative effect for cluster insertions (x=0)          |
 
 
 
