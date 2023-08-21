@@ -13,16 +13,10 @@ Shashank Pritam
     R](#visualization-in-r)
   - [<span class="toc-section-number">2.3</span> Plot 1: Phase vs
     Average Bias at gen 5000](#plot-1-phase-vs-average-bias-at-gen-5000)
-  - [<span class="toc-section-number">2.4</span> Plot 2: min_w, avtes
-    and avpopfreq vs
-    avbias](#plot-2-min_w-avtes-and-avpopfreq-vs-avbias)
-  - [<span class="toc-section-number">2.5</span> Plot 3: Plot for min_w,
+  - [<span class="toc-section-number">2.4</span> Plot 3: Plot for min_w,
     avtes and avpopfreq vs avbias with phase as a
     factor](#plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor)
-  - [<span class="toc-section-number">2.6</span> Plot 4: min_w, avtes,
-    avpopfreq vs Average Bias at gen
-    5000](#plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000)
-  - [<span class="toc-section-number">2.7</span> Plot 5: min_w, avtes,
+  - [<span class="toc-section-number">2.5</span> Plot 5: min_w, avtes,
     avpopfreq vs Average Bias at gen 5000 with phase as a
     factor](#plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor)
 
@@ -162,54 +156,6 @@ plot(g_avbias_phase)
 
 ![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-4-1.png)
 
-### Plot 2: min_w, avtes and avpopfreq vs avbias
-
-Here we are plotting the parameters min_w, avtes and avpopfreq against
-the average bias in TE insertion at generation 5000. The different
-phases are color-coded.
-
-<details>
-<summary>Code</summary>
-
-``` r
-# Plot for min_w vs avbias
-plot_min_w <- ggplot(df_gen_5000, aes(x = avbias, y = min_w)) +
-  geom_point(alpha = 0.7, size = 0.8) +
-  ylab("min_w") +
-  xlab("Average Bias") +
-  labs(title = "Minimum Fitness (min_w) vs Average Bias at gen 5000",
-       subtitle = "min_w: Minimum Fitness among Population") +
-  theme_minimal()
-
-# Plot for avtes vs avbias
-plot_avtes <- ggplot(df_gen_5000, aes(x = avbias, y = avtes)) +
-  geom_point(alpha = 0.7, size = 0.8) +
-  ylab("avtes") +
-  xlab("Average Bias") +
-  labs(title = "Average TE Count (avtes) vs Average Bias at gen 5000",
-       subtitle = "avtes: Average Number of TE Insertions") +
-  theme_minimal()
-
-# Plot for avpopfreq vs avbias
-plot_avpopfreq <- ggplot(df_gen_5000, aes(x = avbias, y = avpopfreq)) +
-  geom_point(alpha = 0.7, size = 0.8) +
-  ylab("avpopfreq") +
-  xlab("Average Bias") +
-  labs(title = "Average Population Frequency (avpopfreq) vs Average Bias at gen 5000",
-       subtitle = "avpopfreq: Average Frequency of TE in Population") +
-  theme_minimal()
-
-# Combine the plots
-combined_plot <- plot_min_w / plot_avtes / plot_avpopfreq
-
-# Display the combined plot
-plot(combined_plot)
-```
-
-</details>
-
-![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-5-1.png)
-
 ### Plot 3: Plot for min_w, avtes and avpopfreq vs avbias with phase as a factor
 
 <details>
@@ -252,55 +198,7 @@ plot(combined_plot)
 
 </details>
 
-![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-6-1.png)
-
-### Plot 4: min_w, avtes, avpopfreq vs Average Bias at gen 5000
-
-Here we are plotting different attributes of the population related to
-TEs against the average bias in TE insertion at generation 5000. Three
-separate plots are combined into one for a concise visualization.
-
-<details>
-<summary>Code</summary>
-
-``` r
-# Subset the data for gen 5000
-df_gen_5000 <- df[df$gen == 5000,]
-
-# Plot for fwcli vs avbias
-plot_fwcli <- ggplot(df_gen_5000, aes(x = avbias, y = fwcli)) +
-  geom_point(alpha = 0.7, size = 0.8) +
-  ylab("fwcli") +
-  xlab("Average Bias") +
-  labs(title = "Fitness Weight of Cluster Insertions vs Average Bias at gen 5000") +
-  theme_minimal()
-
-# Plot for avcli vs avbias
-plot_avcli <- ggplot(df_gen_5000, aes(x = avbias, y = avcli)) +
-  geom_point(alpha = 0.7, size = 0.8) +
-  ylab("avcli") +
-  xlab("Average Bias") +
-  labs(title = "Average Number of Cluster Insertions vs Average Bias at gen 5000") +
-  theme_minimal()
-
-# Plot for fixcli vs avbias
-plot_fixcli <- ggplot(df_gen_5000, aes(x = avbias, y = fixcli)) +
-  geom_point(alpha = 0.7, size = 0.8) +
-  ylab("fixcli") +
-  xlab("Average Bias") +
-  labs(title = "Number of Fixed Cluster Insertions vs Average Bias at gen 5000") +
-  theme_minimal()
-
-# Combine the plots
-combined_plot_2 <- plot_fwcli / plot_avcli / plot_fixcli
-
-# Display the combined plot
-plot(combined_plot_2)
-```
-
-</details>
-
-![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-7-1.png)
+![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-5-1.png)
 
 ### Plot 5: min_w, avtes, avpopfreq vs Average Bias at gen 5000 with phase as a factor
 
@@ -341,4 +239,4 @@ plot(combined_plot)
 
 </details>
 
-![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-8-1.png)
+![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-6-1.png)
