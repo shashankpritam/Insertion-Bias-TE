@@ -4,40 +4,37 @@ Shashank Pritam
 - [<span class="toc-section-number">1</span>
   Introduction](#introduction)
   - [<span class="toc-section-number">1.1</span> Initial
-    conditions:](#initial-conditions)
+    conditions](#initial-conditions)
 - [<span class="toc-section-number">2</span> Materials &
   Methods](#materials-methods)
   - [<span class="toc-section-number">2.1</span> Commands for the
-    simulation:](#commands-for-the-simulation)
-  - [<span class="toc-section-number">2.2</span> Visualization in
-    R](#visualization-in-r)
-  - [<span class="toc-section-number">2.3</span> Plot 1: Phase vs
-    Average Bias at gen 5000](#plot-1-phase-vs-average-bias-at-gen-5000)
-  - [<span class="toc-section-number">2.4</span> Plot 3: Plot for min_w,
-    avtes and avpopfreq vs avbias with phase as a
-    factor](#plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor)
-  - [<span class="toc-section-number">2.5</span> Plot 5: min_w, avtes,
-    avpopfreq vs Average Bias at gen 5000 with phase as a
-    factor](#plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor)
+    simulation](#commands-for-the-simulation)
+- [<span class="toc-section-number">3</span> Visualization in
+  R](#visualization-in-r)
+  - [<span class="toc-section-number">3.1</span> Data
+    Loading](#data-loading)
+  - [<span class="toc-section-number">3.2</span> Plot 1](#plot-1)
+  - [<span class="toc-section-number">3.3</span> Plot 2](#plot-2)
 
 ## Introduction
 
-With this simulation we wanted to understand the role of insertion bias
-on minimum fitness during a TEs invasion.
+What is the impact of insertion bias on the minimum fitness of a
+population during the invasion of transposable elements (TEs), within
+the parameter space of bias and cluster size?
 
-### Initial conditions:
+### Initial conditions
 
 ## Materials & Methods
 
 version: invadego0.1.3
 
-### Commands for the simulation:
+### Commands for the simulation
 
 The simulations were generated using the code from:
 
 - [sim_storm.py](sim_storm.py)
 
-### Visualization in R
+## Visualization in R
 
 #### Setting the environment
 
@@ -53,9 +50,9 @@ library(tidyverse)
     ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
     ✔ dplyr     1.1.2     ✔ readr     2.1.4
     ✔ forcats   1.0.0     ✔ stringr   1.5.0
-    ✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+    ✔ ggplot2   3.4.3     ✔ tibble    3.2.1
     ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
-    ✔ purrr     1.0.1     
+    ✔ purrr     1.0.2     
     ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
     ✖ dplyr::filter() masks stats::filter()
     ✖ dplyr::lag()    masks stats::lag()
@@ -108,7 +105,7 @@ df[numeric_columns] <- lapply(df[numeric_columns], as.numeric)
 
 </details>
 
-#### Visualization:
+### Data Loading
 
 <details>
 <summary>Code</summary>
@@ -129,114 +126,29 @@ df_gen_5000 <- df[df$gen == 5000,]
 
 </details>
 
-### Plot 1: Phase vs Average Bias at gen 5000
-
-Here we are plotting the phase of the simulation or experiment against
-the average bias in TE insertion at generation 5000. The different
-phases are color-coded.
+### Plot 1
 
 <details>
 <summary>Code</summary>
 
 ``` r
-g_avbias_phase <- ggplot(df_gen_5000, aes(x = avbias, y = phase, color = phase)) +
+# Plot avbias vs sampleid (Cluster Size) with min_w as color
+g_avbias_cluster_size <- ggplot(df_gen_5000, aes(x = avbias, y = sampleid, color = min_w)) +
   geom_point(alpha = 0.7, size = 0.8) +
-  ylab("Phase of Invasion") +
+  ylab("Cluster Size") +
   xlab("Average Bias in TE Insertion") +
-  labs(title = "Phase vs Average Bias at gen 5000",
-       subtitle = "Different phases represented by colors") +
+  labs(title = "Cluster Size vs Average Bias at gen 5000",
+       subtitle = "Different min_w values represented by colors") +
+  scale_color_gradient(name = "min_w") +
   theme_minimal() +
   theme(legend.position = "bottom", panel.background = element_rect(fill="grey90"))
 
 # Display the plot
-plot(g_avbias_phase)
+plot(g_avbias_cluster_size)
 ```
 
 </details>
 
 ![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-4-1.png)
 
-### Plot 3: Plot for min_w, avtes and avpopfreq vs avbias with phase as a factor
-
-<details>
-<summary>Code</summary>
-
-``` r
-# Plot for min_w vs avbias
-plot_min_w <- ggplot(df_gen_5000, aes(x = avbias, y = min_w, color = phase)) +
-  geom_point(alpha = 0.7, size = 0.8) +
-  ylab("min_w") +
-  xlab("Average Bias") +
-  labs(title = "Minimum Fitness (min_w) vs Average Bias at gen 5000",
-       subtitle = "min_w: Minimum Fitness among Population") +
-  theme_minimal()
-
-# Plot for avtes vs avbias
-plot_avtes <- ggplot(df_gen_5000, aes(x = avbias, y = avtes, color = phase)) +
-  geom_point(alpha = 0.7, size = 0.8) +
-  ylab("avtes") +
-  xlab("Average Bias") +
-  labs(title = "Average TE Count (avtes) vs Average Bias at gen 5000",
-       subtitle = "avtes: Average Number of TE Insertions") +
-  theme_minimal()
-
-# Plot for avpopfreq vs avbias
-plot_avpopfreq <- ggplot(df_gen_5000, aes(x = avbias, y = avpopfreq, color = phase)) +
-  geom_point(alpha = 0.7, size = 0.8) +
-  ylab("avpopfreq") +
-  xlab("Average Bias") +
-  labs(title = "Average Population Frequency (avpopfreq) vs Average Bias at gen 5000",
-       subtitle = "avpopfreq: Average Frequency of TE in Population") +
-  theme_minimal()
-
-# Combine the plots
-combined_plot <- plot_min_w / plot_avtes / plot_avpopfreq
-
-# Display the combined plot
-plot(combined_plot)
-```
-
-</details>
-
-![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-5-1.png)
-
-### Plot 5: min_w, avtes, avpopfreq vs Average Bias at gen 5000 with phase as a factor
-
-<details>
-<summary>Code</summary>
-
-``` r
-# Plot for fwcli vs avbias
-plot_fwcli <- ggplot(df_gen_5000, aes(x = avbias, y = fwcli, color = phase)) +
-  geom_point(alpha = 0.7, size = 0.8) +
-  ylab("fwcli") +
-  xlab("Average Bias") +
-  labs(title = "Fitness Weight of Cluster Insertions vs Average Bias at gen 5000") +
-  theme_minimal()
-
-# Plot for avcli vs avbias
-plot_avcli <- ggplot(df_gen_5000, aes(x = avbias, y = avcli, color = phase)) +
-  geom_point(alpha = 0.7, size = 0.8) +
-  ylab("avcli") +
-  xlab("Average Bias") +
-  labs(title = "Average Number of Cluster Insertions vs Average Bias at gen 5000") +
-  theme_minimal()
-
-# Plot for fixcli vs avbias
-plot_fixcli <- ggplot(df_gen_5000, aes(x = avbias, y = fixcli, color = phase)) +
-  geom_point(alpha = 0.7, size = 0.8) +
-  ylab("fixcli") +
-  xlab("Average Bias") +
-  labs(title = "Number of Fixed Cluster Insertions vs Average Bias at gen 5000") +
-  theme_minimal()
-
-# Combine the plots
-combined_plot <- plot_fwcli / plot_avcli / plot_fixcli
-
-# Display the combined plot
-plot(combined_plot)
-```
-
-</details>
-
-![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-6-1.png)
+### Plot 2
