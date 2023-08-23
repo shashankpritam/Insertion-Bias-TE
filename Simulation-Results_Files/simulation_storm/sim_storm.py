@@ -85,7 +85,10 @@ def get_filter():
 # Getting random cluter insertions values in the range of (3% to 97%)
 def get_rand_clusters():
     #r = random.randint(300, 9700)
-    r = math.floor(10**random.uniform(3.69899,5.69899))
+    lower_limit = 0  # Lower bound
+    upper_limit = math.log10(1e+7)  # Upper bound
+    r = math.floor(10**random.uniform(lower_limit, upper_limit))
+    #r = math.floor(10**random.uniform(3.69899,5.69899))
     return f"{r},{r},{r},{r},{r}"
 
 
