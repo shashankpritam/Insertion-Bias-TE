@@ -2,20 +2,6 @@
 
 Shashank Pritam
 
-<<<<<<< HEAD
-=======
--   [[1](#introduction)]{.toc-section-number}[ Introduction](#introduction)
-    -   [[1.1](#initial-conditions)]{.toc-section-number}[ Initial conditions:](#initial-conditions)
--   [[2](#materials-methods)]{.toc-section-number}[ Materials & Methods](#materials-methods)
-    -   [[2.1](#commands-for-the-simulation)]{.toc-section-number}[ Commands for the simulation:](#commands-for-the-simulation)
-    -   [[2.2](#visualization-in-r)]{.toc-section-number}[ Visualization in R](#visualization-in-r)
-    -   [[2.3](#plot-1-phase-vs-average-bias-at-gen-5000)]{.toc-section-number}[ Plot 1: Phase vs Average Bias at gen 5000](#plot-1-phase-vs-average-bias-at-gen-5000)
-    -   [[2.4](#plot-2-min_w-avtes-and-avpopfreq-vs-avbias)]{.toc-section-number}[ Plot 2: min_w, avtes and avpopfreq vs avbias](#plot-2-min_w-avtes-and-avpopfreq-vs-avbias)
-    -   [[2.5](#plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor)]{.toc-section-number}[ Plot 3: Plot for min_w, avtes and avpopfreq vs avbias with phase as a factor](#plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor)
-    -   [[2.6](#plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000)]{.toc-section-number}[ Plot 4: min_w, avtes, avpopfreq vs Average Bias at gen 5000](#plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000)
-    -   [[2.7](#plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor)]{.toc-section-number}[ Plot 5: min_w, avtes, avpopfreq vs Average Bias at gen 5000 with phase as a factor](#plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor)
->>>>>>> main
-
 ## Introduction {#introduction}
 
 With this simulation we wanted to understand the role of insertion bias on minimum fitness during a TEs invasion.
