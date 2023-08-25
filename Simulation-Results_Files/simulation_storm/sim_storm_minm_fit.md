@@ -152,3 +152,29 @@ plot(g_avbias_cluster_size)
 ![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-4-1.png)
 
 ### Plot 2
+
+<details>
+<summary>Code</summary>
+
+``` r
+library(ggplot2)
+library(tidyverse)
+
+plot_3d_surface <- df_gen_5000 %>%
+  ggplot(aes(x = avbias, y = sampleid, z = min_w)) +
+  geom_tile(aes(fill = min_w), width = 0.1, height = 0.1) +
+  labs(title = "3D Surface Plot with Fitted Surface",
+       x = "Average Bias in TE Insertion",
+       y = "Sample ID",
+       z = "min_w") +
+  theme_minimal() +
+  theme(panel.grid = element_blank()) +
+  scale_fill_viridis_c()
+
+# Display the 3D surface plot
+print(plot_3d_surface)
+```
+
+</details>
+
+![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-5-1.png)
