@@ -2,16 +2,6 @@
 
 Shashank Pritam
 
--   [[1](#introduction)]{.toc-section-number}[ Introduction](#introduction)
-    -   [[1.1](#initial-conditions)]{.toc-section-number}[ Initial conditions:](#initial-conditions)
--   [[2](#materials-methods)]{.toc-section-number}[ Materials & Methods](#materials-methods)
-    -   [[2.1](#commands-for-the-simulation)]{.toc-section-number}[ Commands for the simulation:](#commands-for-the-simulation)
-    -   [[2.2](#visualization-in-r)]{.toc-section-number}[ Visualization in R](#visualization-in-r)
-    -   [[2.3](#plot-1-phase-vs-average-bias-at-gen-5000)]{.toc-section-number}[ Plot 1: Phase vs Average Bias at gen 5000](#plot-1-phase-vs-average-bias-at-gen-5000)
-    -   [[2.4](#plot-2-min_w-avtes-and-avpopfreq-vs-avbias)]{.toc-section-number}[ Plot 2: min_w, avtes and avpopfreq vs avbias](#plot-2-min_w-avtes-and-avpopfreq-vs-avbias)
-    -   [[2.5](#plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor)]{.toc-section-number}[ Plot 3: Plot for min_w, avtes and avpopfreq vs avbias with phase as a factor](#plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor)
-    -   [[2.6](#plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000)]{.toc-section-number}[ Plot 4: min_w, avtes, avpopfreq vs Average Bias at gen 5000](#plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000)
-    -   [[2.7](#plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor)]{.toc-section-number}[ Plot 5: min_w, avtes, avpopfreq vs Average Bias at gen 5000 with phase as a factor](#plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor)
 
 ## Introduction {#introduction}
 
@@ -314,7 +304,7 @@ df_gen_5000 <- df[df$gen == 5000,]
 
 </details>
 
-### Plot 1: Phase vs Average Bias at gen 5000 {#plot-1-phase-vs-average-bias-at-gen-5000}
+### Plot 1: Phase vs Average Bias at gen 5000
 
 Here we are plotting the phase of the simulation or experiment against the average bias in TE insertion at generation 5000. The different phases are color-coded.
 
@@ -340,7 +330,7 @@ plot(g_avbias_phase)
 
 ![](Simulation-Results_Files/simulation_storm/sim_storm_files/figure-commonmark/unnamed-chunk-5-1.png)
 
-### Plot 2: min_w, avtes and avpopfreq vs avbias {#plot-2-min_w-avtes-and-avpopfreq-vs-avbias}
+### Plot 2: min_w, avtes and avpopfreq vs avbias 
 
 Here we are plotting the parameters min_w, avtes and avpopfreq against the average bias in TE insertion at generation 5000. The different phases are color-coded.
 
@@ -387,7 +377,7 @@ plot(combined_plot)
 
 ![](Simulation-Results_Files/simulation_storm/sim_storm_files/figure-commonmark/unnamed-chunk-6-1.png)
 
-### Plot 3: Plot for min_w, avtes and avpopfreq vs avbias with phase as a factor {#plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor}
+### Plot 3: Plot for min_w, avtes and avpopfreq vs avbias with phase as a factor
 
 <details>
 
@@ -432,7 +422,7 @@ plot(combined_plot)
 
 ![](Simulation-Results_Files/simulation_storm/sim_storm_files/figure-commonmark/unnamed-chunk-7-1.png)
 
-### Plot 4: min_w, avtes, avpopfreq vs Average Bias at gen 5000 {#plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000}
+### Plot 4: min_w, avtes, avpopfreq vs Average Bias at gen 5000
 
 Here we are plotting different attributes of the population related to TEs against the average bias in TE insertion at generation 5000. Three separate plots are combined into one for a concise visualization.
 
@@ -479,7 +469,7 @@ plot(combined_plot_2)
 
 ![](Simulation-Results_Files/simulation_storm/sim_storm_files/figure-commonmark/unnamed-chunk-8-1.png)
 
-### Plot 5: min_w, avtes, avpopfreq vs Average Bias at gen 5000 with phase as a factor {#plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor}
+### Plot 5: min_w, avtes, avpopfreq vs Average Bias at gen 5000 with phase as a factor 
 
 <details>
 
