@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -83,30 +83,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Simulation Storm</h1>
 <p>Shashank Pritam</p>
 <ul>
-<li><a href="#simulation-storm">Simulation Storm</a>
+<li><a href="#introduction"><span class="toc-section-number">1</span> Introduction</a>
 <ul>
-<li><a href="#introduction">Introduction</a>
-<ul>
-<li><a href="#initial-conditions">Initial conditions:</a>
-<ul>
-<li><a href="#simulation-1">Simulation 1</a></li>
+<li><a href="#initial-conditions"><span class="toc-section-number">1.1</span> Initial conditions:</a></li>
 </ul></li>
-</ul></li>
-<li><a href="#materials--methods">Materials &amp; Methods</a>
+<li><a href="#materials-methods"><span class="toc-section-number">2</span> Materials &amp; Methods</a>
 <ul>
-<li><a href="#commands-for-the-simulation">Commands for the simulation:</a></li>
-<li><a href="#visualization-in-r">Visualization in R</a>
-<ul>
-<li><a href="#setting-the-environment">Setting the environment</a></li>
-<li><a href="#data-loading-and-parsing">Data loading and parsing</a></li>
-<li><a href="#visualization">Visualization:</a></li>
-</ul></li>
-<li><a href="#plot-1-phase-vs-average-bias-at-gen-5000">Plot 1: Phase vs Average Bias at gen 5000</a></li>
-<li><a href="#plot-2-min_w-avtes-and-avpopfreq-vs-avbias">Plot 2: min_w, avtes and avpopfreq vs avbias</a></li>
-<li><a href="#plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor">Plot 3: Plot for min_w, avtes and avpopfreq vs avbias with phase as a factor</a></li>
-<li><a href="#plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000">Plot 4: min_w, avtes, avpopfreq vs Average Bias at gen 5000</a></li>
-<li><a href="#plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor">Plot 5: min_w, avtes, avpopfreq vs Average Bias at gen 5000 with phase as a factor</a></li>
-</ul></li>
+<li><a href="#commands-for-the-simulation"><span class="toc-section-number">2.1</span> Commands for the simulation:</a></li>
+<li><a href="#visualization-in-r"><span class="toc-section-number">2.2</span> Visualization in R</a></li>
+<li><a href="#plot-1-phase-vs-average-bias-at-gen-5000"><span class="toc-section-number">2.3</span> Plot 1: Phase vs Average Bias at gen 5000</a></li>
+<li><a href="#plot-2-min_w-avtes-and-avpopfreq-vs-avbias"><span class="toc-section-number">2.4</span> Plot 2: min_w, avtes and avpopfreq vs avbias</a></li>
+<li><a href="#plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor"><span class="toc-section-number">2.5</span> Plot 3: Plot for min_w, avtes and avpopfreq vs avbias with phase as a factor</a></li>
+<li><a href="#plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000"><span class="toc-section-number">2.6</span> Plot 4: min_w, avtes, avpopfreq vs Average Bias at gen 5000</a></li>
+<li><a href="#plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor"><span class="toc-section-number">2.7</span> Plot 5: min_w, avtes, avpopfreq vs Average Bias at gen 5000 with phase as a factor</a></li>
 </ul></li>
 </ul>
 <section id="introduction" class="level2">
@@ -114,95 +103,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>With this simulation we wanted to understand the role of insertion bias on minimum fitness during a TEs invasion.</p>
 <section id="initial-conditions" class="level3">
 <h3 class="anchored" data-anchor-id="initial-conditions">Initial conditions:</h3>
-<section id="simulation-1" class="level4">
-<h4 class="anchored" data-anchor-id="simulation-1">Simulation 1</h4>
-<table class="table">
-<colgroup>
-<col style="width: 6%">
-<col style="width: 32%">
-<col style="width: 60%">
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th>Parameter</th>
-<th>Description &amp; Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>Number of simulations</td>
-<td>10,000</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>Number of threads</td>
-<td>4</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>Output directory</td>
-<td>11thAug23at083124PM</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>Invade path</td>
-<td>./main</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>Number of replications (<code>--rep</code>)</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td>Mutation rate (<code>--u</code>)</td>
-<td>0.1</td>
-</tr>
-<tr class="odd">
-<td>7</td>
-<td>Number of steps (<code>--steps</code>)</td>
-<td>5000</td>
-</tr>
-<tr class="even">
-<td>8</td>
-<td>Population size (<code>--N</code>)</td>
-<td>1000</td>
-</tr>
-<tr class="odd">
-<td>9</td>
-<td>Number of generations (<code>--gen</code>)</td>
-<td>5000</td>
-</tr>
-<tr class="even">
-<td>10</td>
-<td>Silent mode</td>
-<td>False</td>
-</tr>
-<tr class="odd">
-<td>11</td>
-<td>Chromosome configuration</td>
-<td>5 chromosomes of size 10 Mb with 300kb cluster each</td>
-</tr>
-<tr class="even">
-<td>12</td>
-<td>Recombination rate (<code>--rr</code>)</td>
-<td>4cM/Mb for each chromosome (<code>4,4,4,4</code>)</td>
-</tr>
-<tr class="odd">
-<td>13</td>
-<td>Negative effect (<code>--x</code>)</td>
-<td>0.01</td>
-</tr>
-<tr class="even">
-<td>14</td>
-<td>Cluster insertions (<code>--no-x-cluins</code>)</td>
-<td>Switch; no negative effect for cluster insertions (x=0)</td>
-</tr>
-</tbody>
-</table>
-</section>
+<p>A population of 1000, 5 chromosomes of size 10 Mb</p>
+<p>Running Simulations with the following parameters: Number of simulations: 10000 Number of threads: 4 Number of replications (–rep): 1 Mutation rate (–u): 0.2 Number of steps (–steps): 5000 Population size (–N): 1000 Number of generations (–gen): 5000 Silent mode: True</p>
 </section>
 </section>
 <section id="materials-methods" class="level2">
@@ -388,9 +290,9 @@ Code
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.2     ✔ readr     2.1.4
 ✔ forcats   1.0.0     ✔ stringr   1.5.0
-✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ ggplot2   3.4.3     ✔ tibble    3.2.1
 ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
-✔ purrr     1.0.1     
+✔ purrr     1.0.2     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
@@ -414,7 +316,7 @@ Code
 </summary>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define and load DataFrame with column names</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>column_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"rep"</span>, <span class="st">"gen"</span>, <span class="st">"popstat"</span>, <span class="st">"spacer_1"</span>, <span class="st">"fwte"</span>, <span class="st">"avw"</span>, <span class="st">"min_w"</span>, <span class="st">"avtes"</span>, <span class="st">"avpopfreq"</span>, <span class="st">"fixed"</span>, <span class="st">"spacer_2"</span>, <span class="st">"phase"</span>, <span class="st">"fwcli"</span>, <span class="st">"avcli"</span>, <span class="st">"fixcli"</span>, <span class="st">"spacer_3"</span>, <span class="st">"avbias"</span>, <span class="st">"3tot"</span>, <span class="st">"3cluster"</span>, <span class="st">"spacer_4"</span>, <span class="st">"sampleid"</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">'/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/11thAug23at083124PM/combined.txt'</span>, <span class="at">delim=</span><span class="st">'</span><span class="sc">\t</span><span class="st">'</span>, <span class="at">col_names =</span> column_names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">'/home/shashankp/Documents/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/23thAug23at110646PM/combined.txt'</span>, <span class="at">delim=</span><span class="st">'</span><span class="sc">\t</span><span class="st">'</span>, <span class="at">col_names =</span> column_names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <pre><code>Rows: 20000 Columns: 22
 ── Column specification ────────────────────────────────────────────────────────
