@@ -363,9 +363,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define and load DataFrame with column names</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>column_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"rep"</span>, <span class="st">"gen"</span>, <span class="st">"popstat"</span>, <span class="st">"spacer_1"</span>, <span class="st">"fwte"</span>, <span class="st">"avw"</span>, <span class="st">"min_w"</span>, <span class="st">"avtes"</span>, <span class="st">"avpopfreq"</span>, <span class="st">"fixed"</span>, <span class="st">"spacer_2"</span>, <span class="st">"phase"</span>, <span class="st">"fwcli"</span>, <span class="st">"avcli"</span>, <span class="st">"fixcli"</span>, <span class="st">"spacer_3"</span>, <span class="st">"avbias"</span>, <span class="st">"3tot"</span>, <span class="st">"3cluster"</span>, <span class="st">"spacer_4"</span>, <span class="st">"sampleid"</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">'/home/shashankp/Documents/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/23thAug23at110646PM/combined.txt'</span>, <span class="at">delim=</span><span class="st">'</span><span class="sc">\t</span><span class="st">'</span>, <span class="at">col_names =</span> column_names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<<<<<<< HEAD:Simulation-Results_Files/simulation_storm/sim_storm.html~HEAD
 <<<<<<< HEAD:Simulation-Results_Files/simulation_storm/sim_storm.html
 <div class="cell-output cell-output-stderr">
 =======
+=======
+>>>>>>> main:Simulation Storm.html
 </details>
 >>>>>>> main:Simulation Storm.html
 <pre><code>Rows: 20000 Columns: 22
