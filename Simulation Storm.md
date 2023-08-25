@@ -1,53 +1,49 @@
 # Simulation Storm
 Shashank Pritam
 
-- [Simulation Storm](#simulation-storm)
-  - [Introduction](#introduction)
-    - [Initial conditions:](#initial-conditions)
-      - [Simulation 1](#simulation-1)
-  - [Materials \& Methods](#materials--methods)
-    - [Commands for the simulation:](#commands-for-the-simulation)
-    - [Visualization in R](#visualization-in-r)
-      - [Setting the environment](#setting-the-environment)
-      - [Data loading and parsing](#data-loading-and-parsing)
-      - [Visualization:](#visualization)
-    - [Plot 1: Phase vs Average Bias at gen 5000](#plot-1-phase-vs-average-bias-at-gen-5000)
-    - [Plot 2: min\_w, avtes and avpopfreq vs avbias](#plot-2-min_w-avtes-and-avpopfreq-vs-avbias)
-    - [Plot 3: Plot for min\_w, avtes and avpopfreq vs avbias with phase as a factor](#plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor)
-    - [Plot 4: min\_w, avtes, avpopfreq vs Average Bias at gen 5000](#plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000)
-    - [Plot 5: min\_w, avtes, avpopfreq vs Average Bias at gen 5000 with phase as a factor](#plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor)
+- [<span class="toc-section-number">1</span>
+  Introduction](#introduction)
+  - [<span class="toc-section-number">1.1</span> Initial
+    conditions:](#initial-conditions)
+- [<span class="toc-section-number">2</span> Materials &
+  Methods](#materials-methods)
+  - [<span class="toc-section-number">2.1</span> Commands for the
+    simulation:](#commands-for-the-simulation)
+  - [<span class="toc-section-number">2.2</span> Visualization in
+    R](#visualization-in-r)
+  - [<span class="toc-section-number">2.3</span> Plot 1: Phase vs
+    Average Bias at gen 5000](#plot-1-phase-vs-average-bias-at-gen-5000)
+  - [<span class="toc-section-number">2.4</span> Plot 2: min_w, avtes
+    and avpopfreq vs
+    avbias](#plot-2-min_w-avtes-and-avpopfreq-vs-avbias)
+  - [<span class="toc-section-number">2.5</span> Plot 3: Plot for min_w,
+    avtes and avpopfreq vs avbias with phase as a
+    factor](#plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor)
+  - [<span class="toc-section-number">2.6</span> Plot 4: min_w, avtes,
+    avpopfreq vs Average Bias at gen
+    5000](#plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000)
+  - [<span class="toc-section-number">2.7</span> Plot 5: min_w, avtes,
+    avpopfreq vs Average Bias at gen 5000 with phase as a
+    factor](#plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor)
 
 ## Introduction
 
 With this simulation we wanted to understand the role of insertion bias
 on minimum fitness during a TEs invasion.
 
-
-
-
-
 ### Initial conditions:
 
-#### Simulation 1
+A population of 1000, 5 chromosomes of size 10 Mb
 
-
-
-|       | Parameter                          | Description & Value                                               |
-|-------|------------------------------------|-------------------------------------------------------------------|
-|   1   | Number of simulations              | 10,000                                                            |
-|   2   | Number of threads                  | 4                                                                 |
-|   3   | Output directory                   | 11thAug23at083124PM                                               |
-|   4   | Invade path                        | ./main                                                            |
-|   5   | Number of replications (`--rep`)   | 1                                                                 |
-|   6   | Mutation rate (`--u`)              | 0.1                                                               |
-|   7   | Number of steps (`--steps`)        | 5000                                                              |
-|   8   | Population size (`--N`)            | 1000                                                              |
-|   9   | Number of generations (`--gen`)    | 5000                                                              |
-|  10   | Silent mode                        | False                                                             |
-|  11   | Chromosome configuration           | 5 chromosomes of size 10 Mb with 300kb cluster each               |
-|  12   | Recombination rate (`--rr`)        | 4cM/Mb for each chromosome (`4,4,4,4`)                            |
-|  13   | Negative effect (`--x`)            | 0.01                                                              |
-|  14   | Cluster insertions (`--no-x-cluins`)| Switch; no negative effect for cluster insertions (x=0)          |
+Running Simulations with the following parameters:
+Number of simulations: 10000
+Number of threads: 4
+Number of replications (--rep): 1
+Mutation rate (--u): 0.2
+Number of steps (--steps): 5000
+Population size (--N): 1000
+Number of generations (--gen): 5000
+Silent mode: True
 
 
 
@@ -131,7 +127,7 @@ parser.add_argument("--number", type=int, dest="count", default=100, help="the n
 parser.add_argument("--threads", type=int, dest="threads", default=4, help="the threads of simulations")
 parser.add_argument("--output", type=str, dest="output", default=get_default_output_directory(), help="the output directory for simulations")
 parser.add_argument("--invade", type=str, dest="invade", default=invade_path, help="the invade.go")
-parser.add_argument("--rep", type=int, dest="rep", default=1, help="the number of replications")
+parser.add_argument("--rep", type=int, dest="rep", default=1, help="the number of repetitions")
 parser.add_argument("--u", type=float, dest="u", default=0.2, help="the mutation rate")
 parser.add_argument("--steps", type=int, dest="steps", default=5000, help="the number of steps")
 parser.add_argument("--N", type=int, dest="N", default=1000, help="population size")
@@ -241,9 +237,9 @@ library(tidyverse)
     ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
     ✔ dplyr     1.1.2     ✔ readr     2.1.4
     ✔ forcats   1.0.0     ✔ stringr   1.5.0
-    ✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+    ✔ ggplot2   3.4.3     ✔ tibble    3.2.1
     ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
-    ✔ purrr     1.0.1     
+    ✔ purrr     1.0.2     
     ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
     ✖ dplyr::filter() masks stats::filter()
     ✖ dplyr::lag()    masks stats::lag()
@@ -270,7 +266,7 @@ theme_set(theme_bw())
 ``` r
 # Define and load DataFrame with column names
 column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
-df <- read_delim('/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/11thAug23at083124PM/combined.txt', delim='\t', col_names = column_names)
+df <- read_delim('/home/shashankp/Documents/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/23thAug23at110646PM/combined.txt', delim='\t', col_names = column_names)
 ```
 
 </details>

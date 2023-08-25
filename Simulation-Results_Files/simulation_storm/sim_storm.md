@@ -35,7 +35,9 @@ on minimum fitness during a TEs invasion.
 
 A population of 1000, 5 chromosomes of size 10 Mb
 
-<del> Every dot in the red to green gradient is a simulation at generation
+<del>
+
+Every dot in the red to green gradient is a simulation at generation
 5000, or less if it failed. If it failed due to the extinction of the
 population the dot will be white, if it failed because all TEs were
 removed from the population it will be grey.
@@ -229,9 +231,9 @@ library(tidyverse)
     ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
     ✔ dplyr     1.1.2     ✔ readr     2.1.4
     ✔ forcats   1.0.0     ✔ stringr   1.5.0
-    ✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+    ✔ ggplot2   3.4.3     ✔ tibble    3.2.1
     ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
-    ✔ purrr     1.0.1     
+    ✔ purrr     1.0.2     
     ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
     ✖ dplyr::filter() masks stats::filter()
     ✖ dplyr::lag()    masks stats::lag()
@@ -258,7 +260,7 @@ theme_set(theme_bw())
 ``` r
 # Define and load DataFrame with column names
 column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
-df <- read_delim('/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/11thAug23at083124PM/combined.txt', delim='\t', col_names = column_names)
+df <- read_delim('/home/shashankp/Documents/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/23thAug23at110646PM/combined.txt', delim='\t', col_names = column_names)
 ```
 
 </details>
