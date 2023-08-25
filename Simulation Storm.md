@@ -2,11 +2,11 @@
 
 Shashank Pritam
 
-## Introduction {#introduction}
+## Introduction
 
 With this simulation we wanted to understand the role of insertion bias on minimum fitness during a TEs invasion.
 
-### Initial conditions: {#initial-conditions}
+### Initial conditions:
 
 A population of 1000, 5 chromosomes of size 10 Mb
 
@@ -28,11 +28,11 @@ Running Simulations with the following parameters:
 
 -   Silent mode: True
 
-## Materials & Methods {#materials-methods}
+## Materials & Methods
 
 version: invadego0.1.3
 
-### Commands for the simulation: {#commands-for-the-simulation}
+### Commands for the simulation:
 
 The simulations were generated using the code from:
 
