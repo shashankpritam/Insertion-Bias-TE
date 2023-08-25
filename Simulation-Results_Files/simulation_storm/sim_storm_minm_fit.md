@@ -79,12 +79,12 @@ theme_set(theme_bw())
 ``` r
 # Define and load DataFrame with column names
 column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
-df <- read_delim('/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/21thAug23at045659PM/combined.txt', delim='\t', col_names = column_names)
+df <- read_delim('/home/shashankp/Documents/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/23thAug23at110646PM/combined.txt', delim='\t', col_names = column_names)
 ```
 
 </details>
 
-    Rows: 296 Columns: 22
+    Rows: 20000 Columns: 22
     ── Column specification ────────────────────────────────────────────────────────
     Delimiter: "\t"
     chr  (8): popstat, spacer_1, spacer_2, phase, spacer_3, 3tot, 3cluster, spac...
