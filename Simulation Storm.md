@@ -1,33 +1,6 @@
 # Simulation Storm
 
-<<<<<<< HEAD
 Shashank Pritam
-=======
-- [<span class="toc-section-number">1</span>
-  Introduction](#introduction)
-  - [<span class="toc-section-number">1.1</span> Initial
-    conditions:](#initial-conditions)
-- [<span class="toc-section-number">2</span> Materials &
-  Methods](#materials-methods)
-  - [<span class="toc-section-number">2.1</span> Commands for the
-    simulation:](#commands-for-the-simulation)
-  - [<span class="toc-section-number">2.2</span> Visualization in
-    R](#visualization-in-r)
-  - [<span class="toc-section-number">2.3</span> Plot 1: Phase vs
-    Average Bias at gen 5000](#plot-1-phase-vs-average-bias-at-gen-5000)
-  - [<span class="toc-section-number">2.4</span> Plot 2: min_w, avtes
-    and avpopfreq vs
-    avbias](#plot-2-min_w-avtes-and-avpopfreq-vs-avbias)
-  - [<span class="toc-section-number">2.5</span> Plot 3: Plot for min_w,
-    avtes and avpopfreq vs avbias with phase as a
-    factor](#plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor)
-  - [<span class="toc-section-number">2.6</span> Plot 4: min_w, avtes,
-    avpopfreq vs Average Bias at gen
-    5000](#plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000)
-  - [<span class="toc-section-number">2.7</span> Plot 5: min_w, avtes,
-    avpopfreq vs Average Bias at gen 5000 with phase as a
-    factor](#plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor)
->>>>>>> main
 
 -   [[1](#introduction)]{.toc-section-number}[ Introduction](#introduction)
     -   [[1.1](#initial-conditions)]{.toc-section-number}[ Initial conditions:](#initial-conditions)
@@ -42,7 +15,6 @@ Shashank Pritam
 
 ## Introduction {#introduction}
 
-<<<<<<< HEAD
 With this simulation we wanted to understand the role of insertion bias on minimum fitness during a TEs invasion.
 
 ### Initial conditions: {#initial-conditions}
@@ -60,21 +32,6 @@ Running Simulations with the following parameters:
 -   Mutation rate (--u): 0.2
 
 -   Number of steps (--steps): 5000
-=======
-### Initial conditions:
-
-A population of 1000, 5 chromosomes of size 10 Mb
-
-Running Simulations with the following parameters:
-Number of simulations: 10000
-Number of threads: 4
-Number of replications (--rep): 1
-Mutation rate (--u): 0.2
-Number of steps (--steps): 5000
-Population size (--N): 1000
-Number of generations (--gen): 5000
-Silent mode: True
->>>>>>> main
 
 -   Population size (--N): 1000
 
@@ -270,7 +227,6 @@ library(tidyverse)
 
 </details>
 
-<<<<<<< HEAD
 ```         
 ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.2     ✔ readr     2.1.4
@@ -283,18 +239,6 @@ library(tidyverse)
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
-=======
-    ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-    ✔ dplyr     1.1.2     ✔ readr     2.1.4
-    ✔ forcats   1.0.0     ✔ stringr   1.5.0
-    ✔ ggplot2   3.4.3     ✔ tibble    3.2.1
-    ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
-    ✔ purrr     1.0.2     
-    ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-    ✖ dplyr::filter() masks stats::filter()
-    ✖ dplyr::lag()    masks stats::lag()
-    ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
->>>>>>> main
 
 <details>
 
