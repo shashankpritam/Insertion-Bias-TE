@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Shashank Pritam">
 
-<title>simulation-storm</title>
+<title>Simulation Storm</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,70 +58,91 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="Simulation Storm_files/libs/clipboard/clipboard.min.js"></script>
-<script src="Simulation Storm_files/libs/quarto-html/quarto.js"></script>
-<script src="Simulation Storm_files/libs/quarto-html/popper.min.js"></script>
-<script src="Simulation Storm_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="Simulation Storm_files/libs/quarto-html/anchor.min.js"></script>
-<link href="Simulation Storm_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Simulation Storm_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="Simulation Storm_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="Simulation Storm_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Simulation Storm_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="sim_storm_files/libs/clipboard/clipboard.min.js"></script>
+<script src="sim_storm_files/libs/quarto-html/quarto.js"></script>
+<script src="sim_storm_files/libs/quarto-html/popper.min.js"></script>
+<script src="sim_storm_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="sim_storm_files/libs/quarto-html/anchor.min.js"></script>
+<link href="sim_storm_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="sim_storm_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="sim_storm_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="sim_storm_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="sim_storm_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
 
-<body class="fullcontent">
+<body>
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a>
+  <ul class="collapse">
+  <li><a href="#initial-conditions" id="toc-initial-conditions" class="nav-link" data-scroll-target="#initial-conditions"><span class="header-section-number">1.1</span> Initial conditions:</a></li>
+  </ul></li>
+  <li><a href="#materials-methods" id="toc-materials-methods" class="nav-link" data-scroll-target="#materials-methods"><span class="header-section-number">2</span> Materials &amp; Methods</a>
+  <ul class="collapse">
+  <li><a href="#commands-for-the-simulation" id="toc-commands-for-the-simulation" class="nav-link" data-scroll-target="#commands-for-the-simulation"><span class="header-section-number">2.1</span> Commands for the simulation:</a></li>
+  <li><a href="#visualization-in-r" id="toc-visualization-in-r" class="nav-link" data-scroll-target="#visualization-in-r"><span class="header-section-number">2.2</span> Visualization in R</a></li>
+  <li><a href="#plot-1-phase-vs-average-bias-at-gen-5000" id="toc-plot-1-phase-vs-average-bias-at-gen-5000" class="nav-link" data-scroll-target="#plot-1-phase-vs-average-bias-at-gen-5000"><span class="header-section-number">2.3</span> Plot 1: Phase vs Average Bias at gen 5000</a></li>
+  <li><a href="#plot-2-min_w-avtes-and-avpopfreq-vs-avbias" id="toc-plot-2-min_w-avtes-and-avpopfreq-vs-avbias" class="nav-link" data-scroll-target="#plot-2-min_w-avtes-and-avpopfreq-vs-avbias"><span class="header-section-number">2.4</span> Plot 2: min_w, avtes and avpopfreq vs avbias</a></li>
+  <li><a href="#plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor" id="toc-plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor" class="nav-link" data-scroll-target="#plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor"><span class="header-section-number">2.5</span> Plot 3: Plot for min_w, avtes and avpopfreq vs avbias with phase as a factor</a></li>
+  <li><a href="#plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000" id="toc-plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000" class="nav-link" data-scroll-target="#plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000"><span class="header-section-number">2.6</span> Plot 4: min_w, avtes, avpopfreq vs Average Bias at gen 5000</a></li>
+  <li><a href="#plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor" id="toc-plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor" class="nav-link" data-scroll-target="#plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor"><span class="header-section-number">2.7</span> Plot 5: min_w, avtes, avpopfreq vs Average Bias at gen 5000 with phase as a factor</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="sim_storm.md"><i class="bi bi-file-code"></i>Github (GFM)</a></li></ul></div></nav>
+</div>
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Simulation Storm</h1>
+</div>
 
 
-<section id="simulation-storm" class="level1">
-<h1>Simulation Storm</h1>
-<p>Shashank Pritam</p>
-<ul>
-<li><a href="#introduction"><span class="toc-section-number">1</span> Introduction</a>
-<ul>
-<li><a href="#initial-conditions"><span class="toc-section-number">1.1</span> Initial conditions:</a></li>
-</ul></li>
-<li><a href="#materials-methods"><span class="toc-section-number">2</span> Materials &amp; Methods</a>
-<ul>
-<li><a href="#commands-for-the-simulation"><span class="toc-section-number">2.1</span> Commands for the simulation:</a></li>
-<li><a href="#visualization-in-r"><span class="toc-section-number">2.2</span> Visualization in R</a></li>
-<li><a href="#plot-1-phase-vs-average-bias-at-gen-5000"><span class="toc-section-number">2.3</span> Plot 1: Phase vs Average Bias at gen 5000</a></li>
-<li><a href="#plot-2-min_w-avtes-and-avpopfreq-vs-avbias"><span class="toc-section-number">2.4</span> Plot 2: min_w, avtes and avpopfreq vs avbias</a></li>
-<li><a href="#plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor"><span class="toc-section-number">2.5</span> Plot 3: Plot for min_w, avtes and avpopfreq vs avbias with phase as a factor</a></li>
-<li><a href="#plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000"><span class="toc-section-number">2.6</span> Plot 4: min_w, avtes, avpopfreq vs Average Bias at gen 5000</a></li>
-<li><a href="#plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor"><span class="toc-section-number">2.7</span> Plot 5: min_w, avtes, avpopfreq vs Average Bias at gen 5000 with phase as a factor</a></li>
-</ul></li>
-</ul>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Shashank Pritam </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
 <p>With this simulation we wanted to understand the role of insertion bias on minimum fitness during a TEs invasion.</p>
-<section id="initial-conditions" class="level3">
-<h3 class="anchored" data-anchor-id="initial-conditions">Initial conditions:</h3>
+<section id="initial-conditions" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="initial-conditions"><span class="header-section-number">1.1</span> Initial conditions:</h3>
 <p>A population of 1000, 5 chromosomes of size 10 Mb</p>
-<p>Running Simulations with the following parameters: Number of simulations: 10000 Number of threads: 4 Number of replications (–rep): 1 Mutation rate (–u): 0.2 Number of steps (–steps): 5000 Population size (–N): 1000 Number of generations (–gen): 5000 Silent mode: True</p>
+<del>
+<p>Every dot in the red to green gradient is a simulation at generation 5000, or less if it failed. If it failed due to the extinction of the population the dot will be white, if it failed because all TEs were removed from the population it will be grey.</p>
+</del></section>
 </section>
-</section>
-<section id="materials-methods" class="level2">
-<h2 class="anchored" data-anchor-id="materials-methods">Materials &amp; Methods</h2>
+<section id="materials-methods" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="materials-methods"><span class="header-section-number">2</span> Materials &amp; Methods</h2>
 <p>version: invadego0.1.3</p>
-<section id="commands-for-the-simulation" class="level3">
-<h3 class="anchored" data-anchor-id="commands-for-the-simulation">Commands for the simulation:</h3>
+<section id="commands-for-the-simulation" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="commands-for-the-simulation"><span class="header-section-number">2.1</span> Commands for the simulation:</h3>
 <p>The simulations were generated using the code from:</p>
 <ul>
 <li><a href="./Simulation-Results_Files/simulation_storm/sim_storm.py">sim_storm.py</a></li>
 </ul>
-<details>
-<summary>
-Code
-</summary>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports</span></span>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> argparse</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
@@ -275,18 +297,15 @@ Code
 <span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>        </span>
 <span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a><span class="co"># Sign of completion of the job.</span></span>
 <span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Done"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+</div>
 </section>
-<section id="visualization-in-r" class="level3">
-<h3 class="anchored" data-anchor-id="visualization-in-r">Visualization in R</h3>
-<section id="setting-the-environment" class="level4">
-<h4 class="anchored" data-anchor-id="setting-the-environment">Setting the environment</h4>
-<details>
-<summary>
-Code
-</summary>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<section id="visualization-in-r" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="visualization-in-r"><span class="header-section-number">2.2</span> Visualization in R</h3>
+<section id="setting-the-environment" class="level4" data-number="2.2.1">
+<h4 data-number="2.2.1" class="anchored" data-anchor-id="setting-the-environment"><span class="header-section-number">2.2.1</span> Setting the environment</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.2     ✔ readr     2.1.4
 ✔ forcats   1.0.0     ✔ stringr   1.5.0
@@ -297,27 +316,21 @@ Code
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<details>
-<summary>
-Code
-</summary>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+</div>
 </section>
-<section id="data-loading-and-parsing" class="level4">
-<h4 class="anchored" data-anchor-id="data-loading-and-parsing">Data loading and parsing</h4>
-<details>
-<summary>
-Code
-</summary>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define and load DataFrame with column names</span></span>
+<section id="data-loading-and-parsing" class="level4" data-number="2.2.2">
+<h4 data-number="2.2.2" class="anchored" data-anchor-id="data-loading-and-parsing"><span class="header-section-number">2.2.2</span> Data loading and parsing</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define and load DataFrame with column names</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>column_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"rep"</span>, <span class="st">"gen"</span>, <span class="st">"popstat"</span>, <span class="st">"spacer_1"</span>, <span class="st">"fwte"</span>, <span class="st">"avw"</span>, <span class="st">"min_w"</span>, <span class="st">"avtes"</span>, <span class="st">"avpopfreq"</span>, <span class="st">"fixed"</span>, <span class="st">"spacer_2"</span>, <span class="st">"phase"</span>, <span class="st">"fwcli"</span>, <span class="st">"avcli"</span>, <span class="st">"fixcli"</span>, <span class="st">"spacer_3"</span>, <span class="st">"avbias"</span>, <span class="st">"3tot"</span>, <span class="st">"3cluster"</span>, <span class="st">"spacer_4"</span>, <span class="st">"sampleid"</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">'/home/shashankp/Documents/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/23thAug23at110646PM/combined.txt'</span>, <span class="at">delim=</span><span class="st">'</span><span class="sc">\t</span><span class="st">'</span>, <span class="at">col_names =</span> column_names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="cell-output cell-output-stderr">
 <pre><code>Rows: 20000 Columns: 22
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
@@ -327,22 +340,16 @@ lgl  (1): X22
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<details>
-<summary>
-Code
-</summary>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert specific columns to numeric</span></span>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert specific columns to numeric</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>numeric_columns <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"rep"</span>, <span class="st">"gen"</span>, <span class="st">"fwte"</span>, <span class="st">"avw"</span>, <span class="st">"min_w"</span>, <span class="st">"avtes"</span>, <span class="st">"avpopfreq"</span>, <span class="st">"fixed"</span>, <span class="st">"fwcli"</span>, <span class="st">"avcli"</span>, <span class="st">"fixcli"</span>, <span class="st">"avbias"</span>, <span class="st">"sampleid"</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>df[numeric_columns] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(df[numeric_columns], as.numeric)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+</div>
 </section>
-<section id="visualization" class="level4">
-<h4 class="anchored" data-anchor-id="visualization">Visualization:</h4>
-<details>
-<summary>
-Code
-</summary>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define color gradient functions</span></span>
+<section id="visualization" class="level4" data-number="2.2.3">
+<h4 data-number="2.2.3" class="anchored" data-anchor-id="visualization"><span class="header-section-number">2.2.3</span> Visualization:</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define color gradient functions</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>color.gradient <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">colors=</span><span class="fu">c</span>(<span class="st">"#D7191C"</span>,<span class="st">"#FDAE61"</span>,<span class="st">"#A6D96A"</span>,<span class="st">"#1A9641"</span>), <span class="at">colsteps=</span><span class="dv">100</span>) { <span class="fu">colorRampPalette</span>(colors) (colsteps) [ <span class="fu">findInterval</span>(x, <span class="fu">seq</span>(<span class="fu">min</span>(df<span class="sc">$</span>min_w),<span class="fl">1.0</span>, <span class="at">length.out=</span>colsteps)) ] }</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign colors based on the 'min_w' column</span></span>
@@ -353,17 +360,14 @@ Code
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create and plot the ggplot object</span></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset the data for gen 5000</span></span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>df_gen_5000 <span class="ot">&lt;-</span> df[df<span class="sc">$</span>gen <span class="sc">==</span> <span class="dv">5000</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+</div>
 </section>
 </section>
-<section id="plot-1-phase-vs-average-bias-at-gen-5000" class="level3">
-<h3 class="anchored" data-anchor-id="plot-1-phase-vs-average-bias-at-gen-5000">Plot 1: Phase vs Average Bias at gen 5000</h3>
+<section id="plot-1-phase-vs-average-bias-at-gen-5000" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="plot-1-phase-vs-average-bias-at-gen-5000"><span class="header-section-number">2.3</span> Plot 1: Phase vs Average Bias at gen 5000</h3>
 <p>Here we are plotting the phase of the simulation or experiment against the average bias in TE insertion at generation 5000. The different phases are color-coded.</p>
-<details>
-<summary>
-Code
-</summary>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>g_avbias_phase <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df_gen_5000, <span class="fu">aes</span>(<span class="at">x =</span> avbias, <span class="at">y =</span> phase, <span class="at">color =</span> phase)) <span class="sc">+</span></span>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>g_avbias_phase <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df_gen_5000, <span class="fu">aes</span>(<span class="at">x =</span> avbias, <span class="at">y =</span> phase, <span class="at">color =</span> phase)) <span class="sc">+</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Phase of Invasion"</span>) <span class="sc">+</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Average Bias in TE Insertion"</span>) <span class="sc">+</span></span>
@@ -374,17 +378,16 @@ Code
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g_avbias_phase)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<p><img src="Simulation-Results_Files/simulation_storm/sim_storm_files/figure-commonmark/unnamed-chunk-5-1.png" class="img-fluid"></p>
+<div class="cell-output-display">
+<p><img src="sim_storm_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
-<section id="plot-2-min_w-avtes-and-avpopfreq-vs-avbias" class="level3">
-<h3 class="anchored" data-anchor-id="plot-2-min_w-avtes-and-avpopfreq-vs-avbias">Plot 2: min_w, avtes and avpopfreq vs avbias</h3>
+<section id="plot-2-min_w-avtes-and-avpopfreq-vs-avbias" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="plot-2-min_w-avtes-and-avpopfreq-vs-avbias"><span class="header-section-number">2.4</span> Plot 2: min_w, avtes and avpopfreq vs avbias</h3>
 <p>Here we are plotting the parameters min_w, avtes and avpopfreq against the average bias in TE insertion at generation 5000. The different phases are color-coded.</p>
-<details>
-<summary>
-Code
-</summary>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot for min_w vs avbias</span></span>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot for min_w vs avbias</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plot_min_w <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df_gen_5000, <span class="fu">aes</span>(<span class="at">x =</span> avbias, <span class="at">y =</span> min_w)) <span class="sc">+</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"min_w"</span>) <span class="sc">+</span></span>
@@ -416,16 +419,15 @@ Code
 <span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the combined plot</span></span>
 <span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(combined_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<p><img src="Simulation-Results_Files/simulation_storm/sim_storm_files/figure-commonmark/unnamed-chunk-6-1.png" class="img-fluid"></p>
+<div class="cell-output-display">
+<p><img src="sim_storm_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
-<section id="plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor" class="level3">
-<h3 class="anchored" data-anchor-id="plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor">Plot 3: Plot for min_w, avtes and avpopfreq vs avbias with phase as a factor</h3>
-<details>
-<summary>
-Code
-</summary>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot for min_w vs avbias</span></span>
+<section id="plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor" class="level3" data-number="2.5">
+<h3 data-number="2.5" class="anchored" data-anchor-id="plot-3-plot-for-min_w-avtes-and-avpopfreq-vs-avbias-with-phase-as-a-factor"><span class="header-section-number">2.5</span> Plot 3: Plot for min_w, avtes and avpopfreq vs avbias with phase as a factor</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot for min_w vs avbias</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plot_min_w <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df_gen_5000, <span class="fu">aes</span>(<span class="at">x =</span> avbias, <span class="at">y =</span> min_w, <span class="at">color =</span> phase)) <span class="sc">+</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"min_w"</span>) <span class="sc">+</span></span>
@@ -457,17 +459,16 @@ Code
 <span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the combined plot</span></span>
 <span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(combined_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<p><img src="Simulation-Results_Files/simulation_storm/sim_storm_files/figure-commonmark/unnamed-chunk-7-1.png" class="img-fluid"></p>
+<div class="cell-output-display">
+<p><img src="sim_storm_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
-<section id="plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000" class="level3">
-<h3 class="anchored" data-anchor-id="plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000">Plot 4: min_w, avtes, avpopfreq vs Average Bias at gen 5000</h3>
+<section id="plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000" class="level3" data-number="2.6">
+<h3 data-number="2.6" class="anchored" data-anchor-id="plot-4-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000"><span class="header-section-number">2.6</span> Plot 4: min_w, avtes, avpopfreq vs Average Bias at gen 5000</h3>
 <p>Here we are plotting different attributes of the population related to TEs against the average bias in TE insertion at generation 5000. Three separate plots are combined into one for a concise visualization.</p>
-<details>
-<summary>
-Code
-</summary>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset the data for gen 5000</span></span>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset the data for gen 5000</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df_gen_5000 <span class="ot">&lt;-</span> df[df<span class="sc">$</span>gen <span class="sc">==</span> <span class="dv">5000</span>,]</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot for fwcli vs avbias</span></span>
@@ -499,16 +500,15 @@ Code
 <span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the combined plot</span></span>
 <span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(combined_plot_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<p><img src="Simulation-Results_Files/simulation_storm/sim_storm_files/figure-commonmark/unnamed-chunk-8-1.png" class="img-fluid"></p>
+<div class="cell-output-display">
+<p><img src="sim_storm_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
-<section id="plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor" class="level3">
-<h3 class="anchored" data-anchor-id="plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor">Plot 5: min_w, avtes, avpopfreq vs Average Bias at gen 5000 with phase as a factor</h3>
-<details>
-<summary>
-Code
-</summary>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot for fwcli vs avbias</span></span>
+<section id="plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor" class="level3" data-number="2.7">
+<h3 data-number="2.7" class="anchored" data-anchor-id="plot-5-min_w-avtes-avpopfreq-vs-average-bias-at-gen-5000-with-phase-as-a-factor"><span class="header-section-number">2.7</span> Plot 5: min_w, avtes, avpopfreq vs Average Bias at gen 5000 with phase as a factor</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot for fwcli vs avbias</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>plot_fwcli <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df_gen_5000, <span class="fu">aes</span>(<span class="at">x =</span> avbias, <span class="at">y =</span> fwcli, <span class="at">color =</span> phase)) <span class="sc">+</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"fwcli"</span>) <span class="sc">+</span></span>
@@ -537,9 +537,10 @@ Code
 <span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the combined plot</span></span>
 <span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(combined_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<p><img src="Simulation-Results_Files/simulation_storm/sim_storm_files/figure-commonmark/unnamed-chunk-9-1.png" class="img-fluid"></p>
-</section>
+<div class="cell-output-display">
+<p><img src="sim_storm_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 </section>
 
