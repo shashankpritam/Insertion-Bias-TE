@@ -149,6 +149,6 @@ plot(g_avbias_cluster_size)
 
 </details>
 
-![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-4-1.png)
+![](Simulation-Results_Files/simulation_storm/sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-4-1.png)
 
 ### Plot 2
