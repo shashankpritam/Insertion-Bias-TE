@@ -1,4 +1,5 @@
 *.Rmd
+*.qmd
 *.Rproj.user
 *.DS_Store
 *.RData
