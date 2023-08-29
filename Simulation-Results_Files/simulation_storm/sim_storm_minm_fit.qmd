@@ -34,10 +34,7 @@ The simulations were generated using the code from:
 #### Setting the environment
 ```{r}
 library(tidyverse)
-library(RColorBrewer)
 library(ggplot2)
-library(patchwork)
-library(dplyr)
 theme_set(theme_bw())
 ```
 
@@ -71,40 +68,29 @@ df_gen_5000 <- df[df$gen == 5000,]
 
 ### Plot 1
 ```{r}
-# Plot avbias vs sampleid (Cluster Size) with min_w as color
+
 g_avbias_cluster_size <- ggplot(df_gen_5000, aes(x = avbias, y = sampleid, color = min_w)) +
   geom_point(alpha = 0.7, size = 0.8) +
   ylab("Cluster Size") +
   xlab("Average Bias in TE Insertion") +
-  labs(title = "Cluster Size vs Average Bias at gen 5000",
-       subtitle = "Different min_w values represented by colors") +
-  scale_color_gradient(name = "min_w") +
+  labs(
+    title = "Cluster Size vs Average Bias at gen 5000",
+    subtitle = "Different min_w values represented by colors"
+  ) +
+  scale_color_gradient2(
+    name = "min_w",
+    low = "red", 
+    mid = "orange", 
+    high = "blue", 
+    midpoint = median(df_gen_5000$min_w, na.rm = TRUE)
+  ) +
   theme_minimal() +
-  theme(legend.position = "bottom", panel.background = element_rect(fill="grey90"))
+  theme(
+    legend.position = "bottom", 
+    panel.background = element_rect(fill = "grey90")
+  )
 
 # Display the plot
-plot(g_avbias_cluster_size)
-```
-
-### Plot 2
-
-```{r}
-
-library(ggplot2)
-library(tidyverse)
-
-plot_3d_surface <- df_gen_5000 %>%
-  ggplot(aes(x = avbias, y = sampleid, z = min_w)) +
-  geom_tile(aes(fill = min_w), width = 0.1, height = 0.1) +
-  labs(title = "3D Surface Plot with Fitted Surface",
-       x = "Average Bias in TE Insertion",
-       y = "Sample ID",
-       z = "min_w") +
-  theme_minimal() +
-  theme(panel.grid = element_blank()) +
-  scale_fill_viridis_c()
-
-# Display the 3D surface plot
-print(plot_3d_surface)
+print(g_avbias_cluster_size)
 
 ```
