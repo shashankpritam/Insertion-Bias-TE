@@ -14,6 +14,7 @@ Shashank Pritam
   - [<span class="toc-section-number">3.1</span> Data
     Loading](#data-loading)
   - [<span class="toc-section-number">3.2</span> Plot 1](#plot-1)
+- [<span class="toc-section-number">4</span> Conclusion](#conclusion)
 
 ## Introduction
 
@@ -128,16 +129,17 @@ df_gen_5000 <- df[df$gen == 5000,]
 <summary>Code</summary>
 
 ``` r
+# PLotting Minimum Fitness
 g_avbias_cluster_size <- ggplot(df_gen_5000, aes(x = avbias, y = sampleid, color = min_w)) +
   geom_point(alpha = 0.7, size = 0.8) +
-  ylab("Cluster Size") +
+  ylab("Cluster Size (in kb)") +
   xlab("Average Bias in TE Insertion") +
   labs(
-    title = "Cluster Size vs Average Bias at gen 5000",
-    subtitle = "Different min_w values represented by colors"
+    title = "Cluster Size (in kb) vs Average Bias at gen 5000",
+    subtitle = "Different values of minimum fitness of the population represented by colors"
   ) +
   scale_color_gradient2(
-    name = "min_w",
+    name = "Minimum fitness of the population",
     low = "red", 
     mid = "orange", 
     high = "blue", 
@@ -156,3 +158,11 @@ print(g_avbias_cluster_size)
 </details>
 
 ![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-4-1.png)
+
+## Conclusion
+
+It is quite clear that the population fitness increases with cluster
+size and avergae bias. Even with maximum cluster size negative bias
+results in extinction. Similar observation for the bias is also apparent
+from the graph - we need to have minimum cluster size with strong bias
+for the population to survive.
