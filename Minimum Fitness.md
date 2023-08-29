@@ -129,7 +129,7 @@ df_gen_5000 <- df[df$gen == 5000,]
 <summary>Code</summary>
 
 ``` r
-# PLotting Minimum Fitness
+# Plotting Minimum Fitness
 g_avbias_cluster_size <- ggplot(df_gen_5000, aes(x = avbias, y = sampleid, color = min_w)) +
   geom_point(alpha = 0.7, size = 0.8) +
   ylab("Cluster Size (in kb)") +
@@ -158,6 +158,31 @@ print(g_avbias_cluster_size)
 </details>
 
 ![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-4-1.png)
+
+<details>
+<summary>Code</summary>
+
+``` r
+# Scatter plot of min_w vs sampleid with points colored by avbias and a vertical line at 300, on a log scale
+ggplot(df_gen_5000, aes(x = sampleid, y = min_w)) +
+  geom_point(aes(color = avbias), alpha = 0.7, size = 0.8) +
+  scale_color_viridis_c(name = "Average Bias", option = "inferno") +
+  scale_x_log10(
+    name = "Cluster Size (in kb, log scale)",
+    breaks = scales::trans_breaks("log10", function(x) 10^x),
+    labels = scales::trans_format("log10", scales::math_format(10^.x))
+  ) +
+  ylab("Minimum Fitness of the Population") +
+  labs(
+    title = "Minimum Fitness vs Cluster Size (in kb) at gen 5000",
+  ) +
+  theme_minimal() +
+  theme(panel.background = element_rect(fill = "grey90"))
+```
+
+</details>
+
+![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-5-1.png)
 
 ## Conclusion
 
