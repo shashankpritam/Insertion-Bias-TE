@@ -31,7 +31,7 @@ version: invadego0.1.3
 
 The simulations were generated using the code from:
 
-- [sim_storm.py](sim_storm.py)
+- [sim_storm.py](./Simulation-Results_Files/simulation_storm/sim_storm.py)
 
 ## Visualization in R
 
