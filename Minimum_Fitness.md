@@ -176,7 +176,7 @@ grid.draw(plot_grob)
 
 </details>
 
-![minimum_fitness](/Users/shashankpritam/github/Insertion-Bias-TE/images/minimum_fitness.jpg)
+![minimum_fitness](./images/minimum_fitness.jpg)
 
 ## Conclusion
 
