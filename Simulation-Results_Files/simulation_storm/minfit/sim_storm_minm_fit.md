@@ -13,13 +13,13 @@ Shashank Pritam
   R](#visualization-in-r)
   - [<span class="toc-section-number">3.1</span> Data
     Loading](#data-loading)
-  - [<span class="toc-section-number">3.2</span> Plot 1](#plot-1)
+  - [<span class="toc-section-number">3.2</span> Plot](#plot)
+- [<span class="toc-section-number">4</span> Conclusion](#conclusion)
 
 ## Introduction
 
 What is the impact of insertion bias on the minimum fitness of a
-population during the invasion of transposable elements (TEs), within
-the parameter space of bias and cluster size?
+population during the invasion of transposable elements (TEs)?
 
 ### Initial conditions
 
@@ -31,7 +31,7 @@ version: invadego0.1.3
 
 The simulations were generated using the code from:
 
-- [sim_storm.py](./Simulation-Results_Files/simulation_storm/sim_storm.py)
+- [sim_storm.py](./sim_storm.py)
 
 ## Visualization in R
 
@@ -75,7 +75,7 @@ theme_set(theme_bw())
 ``` r
 # Define and load DataFrame with column names
 column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
-df <- read_delim('/home/shashankp/Documents/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/23thAug23at110646PM/combined.txt', delim='\t', col_names = column_names)
+df <- read_delim('./23thAug23at110646PM/combined.txt', delim='\t', col_names = column_names)
 ```
 
 </details>
@@ -122,37 +122,65 @@ df_gen_5000 <- df[df$gen == 5000,]
 
 </details>
 
-### Plot 1
+### Plot
 
 <details>
 <summary>Code</summary>
 
 ``` r
-g_avbias_cluster_size <- ggplot(df_gen_5000, aes(x = avbias, y = sampleid, color = min_w)) +
+# Convert sampleid to % of the genome (given that genome size is 10,000 kb)
+df_gen_5000$sampleid_percent = (df_gen_5000$sampleid / 10000) * 100
+
+# Custom color breaks and colors for fitness
+breaks = c(0.01, 0.1, 0.33, 0.66, 1)
+colors = c("white", "red", "yellow", "lightgreen", "green")
+
+# Update ggplot
+g_avbias_cluster_size <- ggplot(df_gen_5000, aes(x = sampleid_percent, y = avbias, color = min_w)) +
   geom_point(alpha = 0.7, size = 0.8) +
-  ylab("Cluster Size") +
-  xlab("Average Bias in TE Insertion") +
+  ylab("Average Bias in TE Insertion") +
+  xlab("Cluster Size (% of 10 Mb Genome)") +
   labs(
-    title = "Cluster Size vs Average Bias at gen 5000",
-    subtitle = "Different min_w values represented by colors"
+    title = "Cluster Size (% of 10 Mb Genome) vs Average Bias at gen 5000",
+    subtitle = "Different values of minimum fitness of the population represented by colors"
   ) +
-  scale_color_gradient2(
-    name = "min_w",
-    low = "red", 
-    mid = "orange", 
-    high = "blue", 
-    midpoint = median(df_gen_5000$min_w, na.rm = TRUE)
+  scale_color_gradientn(
+    name = "Minimum fitness of the population",
+    breaks = breaks,
+    colors = colors
   ) +
+  scale_x_log10(
+    breaks = c(0.001, 0.01, 0.1, 1, 10),
+    labels = c("0.001%", "0.01%", "0.1%", "1%", "10%")
+  ) +  
   theme_minimal() +
   theme(
     legend.position = "bottom", 
     panel.background = element_rect(fill = "grey90")
   )
 
-# Display the plot
-print(g_avbias_cluster_size)
+# Save the plot
+ggsave(filename = "../../../images/minimum_fitness.jpg", plot = g_avbias_cluster_size, width = 10, height = 6)
+
+# To display the saved image in R (optional)
+# You'll need to load the grid package
+library(grid)
+
+# Read the saved plot into a grob
+plot_grob <- ggplotGrob(g_avbias_cluster_size)
+
+# Draw the grob
+grid.draw(plot_grob)
 ```
 
 </details>
 
 ![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-4-1.png)
+
+## Conclusion
+
+It is quite clear that the population fitness increases with cluster
+size and avergae bias. Even with maximum cluster size negative bias
+results in extinction. Similar observation for the bias is also apparent
+from the graph - we need to have minimum cluster size with strong bias
+for the population to survive.
