@@ -8,7 +8,7 @@ This repository contains the results and data associated with the validation and
 
 ### Simulation
 
-a. [Simulation Storm for Minimum Fitness](./Minimum%20Fitness.md)
+a. [Simulation Storm for Minimum Fitness](./Minimum_Fitness.md)
 
 ### Validation
 <details>
