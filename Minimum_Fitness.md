@@ -163,8 +163,7 @@ g_avbias_cluster_size <- ggplot(df_gen_5000, aes(x = sampleid_percent, y = avbia
 # Save the plot
 ggsave(filename = "../../../images/minimum_fitness.jpg", plot = g_avbias_cluster_size, width = 10, height = 6)
 
-# To display the saved image in R (optional)
-# You'll need to load the grid package
+# To display the saved image in R 
 library(grid)
 
 # Read the saved plot into a grob
