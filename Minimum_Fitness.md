@@ -183,22 +183,10 @@ In the above diagram, we have a fixed transposition rate of 0.2.
 
 Previously, it has been shown by Kofler[2020] that [piRNA Clusters Need a Minimum Size to Control Transposable Element Invasions](https://doi.org/10.1093/gbe/evaa064), and with small sized population, piRNA clusters may need to make up as much as 3% of the genome, given there is a high rate of transposition alongside with recessive TE insertions. 
 
-Here, we observe that the compensation for lower cluster size comes through increased insertion bias. 
+Here, we observe that the compensation for lower cluster size comes through increased insertion bias. The population fitness increases with cluster size and average bias; negative bias results in extinction even with a large cluster size.
 
 
 
-
-
-
+---
 
  <cite><a href="https://doi.org/10.1093/gbe/evaa064">Robert Kofler, "piRNA Clusters Need a Minimum Size to Control Transposable Element Invasions," Genome Biology and Evolution, Volume 12, Issue 5, May 2020, Pages 736–749</a></cite>
-
-
-
-
-
-It is quite clear that the population fitness increases with cluster
-size and avergae bias. Even with maximum cluster size negative bias
-results in extinction. Similar observation for the bias is also apparent
-from the graph - we need to have minimum cluster size with strong bias
-for the population to survive.
