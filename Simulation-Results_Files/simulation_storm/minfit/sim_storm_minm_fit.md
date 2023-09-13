@@ -1,20 +1,19 @@
 # Minimum Fitness
 Shashank Pritam
 
-- [<span class="toc-section-number">1</span>
+- [<span class="toc-section-number">0.1</span>
   Introduction](#introduction)
-  - [<span class="toc-section-number">1.1</span> Initial
+  - [<span class="toc-section-number">0.1.1</span> Initial
     conditions](#initial-conditions)
-- [<span class="toc-section-number">2</span> Materials &
+- [<span class="toc-section-number">0.2</span> Materials &
   Methods](#materials-methods)
-  - [<span class="toc-section-number">2.1</span> Commands for the
+  - [<span class="toc-section-number">0.2.1</span> Commands for the
     simulation](#commands-for-the-simulation)
-- [<span class="toc-section-number">3</span> Visualization in
+- [<span class="toc-section-number">0.3</span> Visualization in
   R](#visualization-in-r)
-  - [<span class="toc-section-number">3.1</span> Data
-    Loading](#data-loading)
-  - [<span class="toc-section-number">3.2</span> Plot](#plot)
-- [<span class="toc-section-number">4</span> Conclusion](#conclusion)
+- [<span class="toc-section-number">1</span> Plot](#plot)
+  - [<span class="toc-section-number">1.1</span>
+    Conclusion](#conclusion)
 
 ## Introduction
 
@@ -35,12 +34,11 @@ The simulations were generated using the code from:
 
 ## Visualization in R
 
-#### Setting the environment
-
 <details>
 <summary>Code</summary>
 
 ``` r
+# Setting the environment
 library(tidyverse)
 ```
 
@@ -63,86 +61,62 @@ library(tidyverse)
 ``` r
 library(ggplot2)
 theme_set(theme_bw())
-```
 
-</details>
-
-#### Data loading and parsing
-
-<details>
-<summary>Code</summary>
-
-``` r
-# Define and load DataFrame with column names
+# Data loading and parsing
 column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
-df <- read_delim('./23thAug23at110646PM/combined.txt', delim='\t', col_names = column_names)
-```
 
-</details>
+df <- read_delim('./23thAug23at110646PM/combined.txt', delim='\t', col_names = column_names, show_col_types = FALSE)
 
-    Rows: 20000 Columns: 22
-    ── Column specification ────────────────────────────────────────────────────────
-    Delimiter: "\t"
-    chr  (8): popstat, spacer_1, spacer_2, phase, spacer_3, 3tot, 3cluster, spac...
-    dbl (13): rep, gen, fwte, avw, min_w, avtes, avpopfreq, fixed, fwcli, avcli,...
-    lgl  (1): X22
 
-    ℹ Use `spec()` to retrieve the full column specification for this data.
-    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-
-<details>
-<summary>Code</summary>
-
-``` r
-# Convert specific columns to numeric
 numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "fwcli", "avcli", "fixcli", "avbias", "sampleid")
 df[numeric_columns] <- lapply(df[numeric_columns], as.numeric)
-```
 
-</details>
-
-### Data Loading
-
-<details>
-<summary>Code</summary>
-
-``` r
-# Define color gradient functions
-color.gradient <- function(x, colors=c("#D7191C","#FDAE61","#A6D96A","#1A9641"), colsteps=100) { colorRampPalette(colors) (colsteps) [ findInterval(x, seq(min(df$min_w),1.0, length.out=colsteps)) ] }
-
-# Assign colors based on the 'min_w' column
-df$col <- color.gradient(df$min_w)
-df[df$popstat == "fail-0",]$col <- "grey"
-df$col <- as.factor(df$col)
-
-# Create and plot the ggplot object
-# Subset the data for gen 5000
-df_gen_5000 <- df[df$gen == 5000,]
-```
-
-</details>
-
-### Plot
-
-<details>
-<summary>Code</summary>
-
-``` r
 # Convert sampleid to % of the genome (given that genome size is 10,000 kb)
-df_gen_5000$sampleid_percent = (df_gen_5000$sampleid / 10000) * 100
+df$sampleid_percent = (df$sampleid / 10000) * 100
 
+# Data Preparation and Plotting
+df_gen_not0 <- df %>% filter(gen != 0)
+df_gen_0 <- df %>% filter(gen == 0)
+
+
+# Join and fill NaN
+df_final <- left_join(df_gen_not0, df_gen_0, by = "rep", suffix = c("", "_from_gen0"))
+
+# Step 2: Fill missing NaN values in the necessary columns
+columns_to_fill <- c("popstat", "avbias", "sampleid", "min_w")
+for (col in columns_to_fill) {
+    df_final[[col]] <- ifelse(is.na(df_final[[col]]), df_final[[paste(col, "_from_gen0", sep = "")]], df_final[[col]])
+}
+
+# Keep only the necessary columns
+df_final <- select(df_final, rep, popstat, avbias, sampleid, min_w)
+
+# Calculate sampleid_percent
+df_final$sampleid_percent <- (df_final$sampleid / 10000) * 100
+```
+
+</details>
+
+# Plot
+
+<details>
+<summary>Code</summary>
+
+``` r
 # Custom color breaks and colors for fitness
 breaks = c(0.01, 0.1, 0.33, 0.66, 1)
 colors = c("white", "red", "yellow", "lightgreen", "green")
 
 # Update ggplot
-g_avbias_cluster_size <- ggplot(df_gen_5000, aes(x = sampleid_percent, y = avbias, color = min_w)) +
+g_avbias_cluster_size <- ggplot(df_final, aes(x = sampleid_percent, y = avbias, color = min_w)) +
   geom_point(alpha = 0.7, size = 0.8) +
   ylab("Average Bias in TE Insertion") +
   xlab("Cluster Size (% of 10 Mb Genome)") +
   labs(
-    title = "Cluster Size (% of 10 Mb Genome) vs Average Bias at gen 5000",
-    subtitle = "Different values of minimum fitness of the population represented by colors"
+    title = "Cluster Size (% of 10 Mb Genome) vs Average Bias",
+    subtitle = "Different values of minimum fitness of the population represented by colors",
+    x = "Cluster Size (% of 10 Mb Genome)",
+    y = "Average Bias in TE Insertion"
   ) +
   scale_color_gradientn(
     name = "Minimum fitness of the population",
@@ -159,23 +133,22 @@ g_avbias_cluster_size <- ggplot(df_gen_5000, aes(x = sampleid_percent, y = avbia
     panel.background = element_rect(fill = "grey90")
   )
 
-# Save the plot
-ggsave(filename = "../../../images/minimum_fitness.jpg", plot = g_avbias_cluster_size, width = 10, height = 6)
-
-# To display the saved image in R (optional)
-# You'll need to load the grid package
-library(grid)
-
-# Read the saved plot into a grob
-plot_grob <- ggplotGrob(g_avbias_cluster_size)
-
-# Draw the grob
-grid.draw(plot_grob)
+g_avbias_cluster_size
 ```
 
 </details>
 
-![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-4-1.png)
+![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-2-1.png)
+
+<details>
+<summary>Code</summary>
+
+``` r
+# Save the plot
+ggsave(filename = "../../../images/minimum_fitness.jpg", plot = g_avbias_cluster_size, width = 10, height = 6)
+```
+
+</details>
 
 ## Conclusion
 
