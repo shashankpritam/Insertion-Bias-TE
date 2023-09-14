@@ -188,7 +188,7 @@ g_avbias_cluster_size
 ggsave(filename = "../../../images/minimum_fitness.jpg", plot = g_avbias_cluster_size, width = 10, height = 6)
 ```
 
-![minimum_fitness](./images/minimum_fitness.jpg)
+ ![minimum_fitness](./images/minimum_fitness.jpg)
 
 </details>
 
