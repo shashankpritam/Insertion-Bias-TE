@@ -205,7 +205,7 @@ categories and values effectively:
 
 For `min_w`, we have used a gradient of colors as follows:
 
-- **White (0.01)**: Represents $min\_w < 0.01$
+- **Dark Red (0.01)**: Represents $min\_w < 0.01$
 - **Red (0.1)**: Represents $min\_w < 0.1$
 - **Yellow (0.33)**: Represents $min\_w < 0.33$
 - **Green (1)**: Represents $min\_w = 11$
