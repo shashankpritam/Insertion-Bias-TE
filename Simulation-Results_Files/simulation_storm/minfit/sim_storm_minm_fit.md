@@ -9,10 +9,20 @@ Shashank Pritam
   Methods](#materials-methods)
   - [<span class="toc-section-number">2.1</span> Commands for the
     simulation](#commands-for-the-simulation)
+  - [<span class="toc-section-number">2.2</span> Parameters
+    -](#parameters--)
 - [<span class="toc-section-number">3</span> Visualization in
   R](#visualization-in-r)
 - [<span class="toc-section-number">4</span> Plotting](#plotting)
-- [<span class="toc-section-number">5</span> Conclusion](#conclusion)
+- [<span class="toc-section-number">5</span> Explaination of the Color
+  Scheme in the Plot](#explaination-of-the-color-scheme-in-the-plot)
+  - [<span class="toc-section-number">5.1</span> Minimum fitness of the
+    population during the invasion - Continuous Variable - `min_w`
+    -](#minimum-fitness-of-the-population-during-the-invasion---continuous-variable---min_w--)
+  - [<span class="toc-section-number">5.2</span> Population status -
+    Categorical Variables -
+    `popstat`](#population-status---categorical-variables---popstat)
+- [<span class="toc-section-number">6</span> Conclusion](#conclusion)
 
 ## Introduction
 
@@ -31,6 +41,40 @@ The simulations were generated using the code from:
 
 - [sim_storm.py](./sim_storm.py)
 
+### Parameters -
+
+Simulations were ran with the following parameters:
+
+- Number of simulations: 10000
+- Number of threads: 4
+- Output directory: \*/invadego/13thSep23at104054PM
+- Invade path: \*/invadego/main
+- Number of replications (–rep): 1
+- Mutation rate (–u): 0.2
+- Number of steps (–steps): 5000
+- Population size (–N): 1000
+- Number of generations (–gen): 5000
+- Negative effect of a TE insertion (–x): 0.01
+- Genome (–genome) mb:10,10,10,10,10
+- Recombination Rate (–rr): 4,4,4,4,4
+- Negative effect of a cluster insertions (-no-x-cluins, i.e, x=0)
+- Silent mode: True
+
+Random Clusters were Generated using this snippet:
+
+<details>
+<summary>Code</summary>
+
+``` python
+def get_rand_clusters(): 
+    lower_limit = 0  # Lower bound
+    upper_limit = math.log10(1e+7)  # Upper bound
+    r = math.floor(10**random.uniform(lower_limit, upper_limit))
+    return f"{r},{r},{r},{r},{r}"
+```
+
+</details>
+
 ## Visualization in R
 
 <details>
@@ -44,7 +88,7 @@ library(tidyverse)
 </details>
 
     ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-    ✔ dplyr     1.1.2     ✔ readr     2.1.4
+    ✔ dplyr     1.1.3     ✔ readr     2.1.4
     ✔ forcats   1.0.0     ✔ stringr   1.5.0
     ✔ ggplot2   3.4.3     ✔ tibble    3.2.1
     ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
@@ -70,7 +114,7 @@ theme_set(theme_bw())
 ### Data loading and parsing
 column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
 
-df <- read_delim('./23thAug23at110646PM/combined.txt', delim='\t', col_names = column_names, show_col_types = FALSE)
+df <- read_delim('./13thSep23at104054PM/combined.txt', delim='\t', col_names = column_names, show_col_types = FALSE)
 
 
 numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "fwcli", "avcli", "fixcli", "avbias", "sampleid")
@@ -95,7 +139,10 @@ for (col in columns_to_fill) {
 df_final <- select(df_final, rep, popstat, avbias, sampleid, min_w)
 
 #### Calculate sampleid_percent
-df_final$sampleid_percent <- (df_final$sampleid / 10000) * 100
+df_final$sampleid_percent <- (df_final$sampleid / 10000000) * 100
+
+### Filter out fail-0 and fail-w
+df_filtered = df_final %>% filter(!popstat %in% c("fail-0", "fail-w"))
 ```
 
 </details>
@@ -110,8 +157,9 @@ df_final$sampleid_percent <- (df_final$sampleid / 10000) * 100
 breaks = c(0.01, 0.1, 0.33, 0.66, 1)
 colors = c("white", "red", "yellow", "lightgreen", "green")
 
-### Update ggplot
-g_avbias_cluster_size <- ggplot(df_final, aes(x = sampleid_percent, y = avbias, color = min_w)) +
+
+### Create a ggplot with the filtered data
+g_avbias_cluster_size <- ggplot(df_filtered, aes(x = sampleid_percent, y = avbias, color = min_w)) +
   geom_point(alpha = 0.7, size = 0.8) +
   ylab("Average Bias in TE Insertion") +
   xlab("Cluster Size (% of 10 Mb Genome)") +
@@ -136,12 +184,19 @@ g_avbias_cluster_size <- ggplot(df_final, aes(x = sampleid_percent, y = avbias, 
     panel.background = element_rect(fill = "grey90")
   )
 
+
+### Adding back fail-0 and fail-w with specific colors
+g_avbias_cluster_size <- g_avbias_cluster_size +
+  geom_point(data = df_final %>% filter(popstat == "fail-0"), aes(x = sampleid_percent, y = avbias), color = "darkgreen", alpha = 0.7, size = 0.8) +
+  geom_point(data = df_final %>% filter(popstat == "fail-w"), aes(x = sampleid_percent, y = avbias), color = "darkgrey", alpha = 0.7, size = 0.8)
+
+### Display the plot
 g_avbias_cluster_size
 ```
 
 </details>
 
-![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-3-1.png)
+![](sim_storm_minm_fit_files/figure-commonmark/unnamed-chunk-4-1.png)
 
 <details>
 <summary>Code</summary>
@@ -152,6 +207,33 @@ ggsave(filename = "../../../images/minimum_fitness.jpg", plot = g_avbias_cluster
 ```
 
 </details>
+
+## Explaination of the Color Scheme in the Plot
+
+The color scheme used in the plot serves to represent different
+categories and values effectively:
+
+### Minimum fitness of the population during the invasion - Continuous Variable - `min_w` -
+
+For `min_w`, we have used a gradient of colors as follows:
+
+- **White (0.01)**: Represents $min\_w < 0.01$
+- **Red (0.1)**: Represents $min\_w < 0.1$
+- **Yellow (0.33)**: Represents $min\_w < 0.33$
+- **Green (1)**: Represents $min\_w = 11$
+
+These colors visually guide the viewer through varying levels of fitness
+from lowest to highest.
+
+### Population status - Categorical Variables - `popstat`
+
+Points where the `popstat` is either “fail-0” or “fail-w”. These are
+represented by:
+
+- **Dark Green (`fail-0`)**: Indicates no TEs are left in the
+  population.
+- **Dark Grey (`fail-w`)**: Indicates that population fitness is too
+  low.
 
 ## Conclusion
 
