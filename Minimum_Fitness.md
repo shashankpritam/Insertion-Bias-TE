@@ -187,10 +187,11 @@ g_avbias_cluster_size
 ### Save the plot
 ggsave(filename = "../../../images/minimum_fitness.jpg", plot = g_avbias_cluster_size, width = 10, height = 6)
 ```
+</details>
 
  ![minimum_fitness](./images/minimum_fitness.jpg)
 
-</details>
+
 
 ## Explaination of the Color Scheme in the Plot
 
