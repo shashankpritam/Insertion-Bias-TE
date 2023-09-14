@@ -78,27 +78,20 @@ def get_rand_clusters():
 ## Visualization in R
 
 <details>
-<summary>Code</summary>
-
+  
+<summary>Setting the environment</summary>
+  
 ``` r
 ### Setting the environment
 library(tidyverse)
-```
-
-</details>
-
-
-<details>
-<summary>Code</summary>
-
-``` r
 library(ggplot2)
 theme_set(theme_bw())
 ```
 
 </details>
+
 <details>
-<summary>Code</summary>
+<summary>Data loading and parsing</summary>
 
 ``` r
 ### Data loading and parsing
@@ -137,7 +130,7 @@ df_filtered = df_final %>% filter(!popstat %in% c("fail-0", "fail-w"))
 
 </details>
 
-## Plotting
+### Plotting
 
 <details>
 <summary>Code</summary>
