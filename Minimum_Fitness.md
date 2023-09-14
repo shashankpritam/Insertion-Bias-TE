@@ -40,7 +40,7 @@ version: invadego0.1.3
 
 The simulations were generated using the code from:
 
-- [sim_storm.py](.Simulation-Results_Files/simulation_storm/minfit/sim_storm.py)
+- [sim_storm.py](./Simulation-Results_Files/simulation_storm/minfit/sim_storm.py)
 
 ### Parameters
 
