@@ -19,7 +19,7 @@ Shashank Pritam
   Scheme in the Plot](#explaination-of-the-color-scheme-in-the-plot)
   - [<span class="toc-section-number">5.1</span> Minimum fitness of the
     population during the invasion - Continuous Variable - `min_w`
-    -](#minimum-fitness-of-the-population-during-the-invasion---continuous-variable---min_w--)
+    -](#minimum-fitness-of-the-population-during-the-invasion---continuous-variable---min_w)
   - [<span class="toc-section-number">5.2</span> Population status -
     Categorical Variables -
     `popstat`](#population-status---categorical-variables---popstat)
