@@ -133,7 +133,7 @@ df_filtered = df_final %>% filter(!popstat %in% c("fail-0", "fail-w"))
 ### Plotting
 
 <details>
-<summary>Code</summary>
+<summary>Plotting</summary>
 
 ``` r
 ### Custom color breaks and colors for fitness
@@ -179,15 +179,16 @@ g_avbias_cluster_size
 
 </details>
 
-![minimum_fitness](./images/minimum_fitness.jpg)
 
 <details>
-<summary>Code</summary>
+<summary>Save the plot</summary>
 
 ``` r
 ### Save the plot
 ggsave(filename = "../../../images/minimum_fitness.jpg", plot = g_avbias_cluster_size, width = 10, height = 6)
 ```
+
+![minimum_fitness](./images/minimum_fitness.jpg)
 
 </details>
 
