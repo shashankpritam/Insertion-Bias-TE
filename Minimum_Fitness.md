@@ -214,7 +214,7 @@ ggsave(filename = "../../../images/minimum_fitness.jpg", plot = g_avbias_cluster
 The color scheme used in the plot serves to represent different
 categories and values effectively:
 
-### Minimum fitness of the population during the invasion - Continuous Variable - `min_w` -
+### Minimum fitness of the population during the invasion - Continuous Variable - `min_w`
 
 For `min_w`, we have used a gradient of colors as follows:
 
