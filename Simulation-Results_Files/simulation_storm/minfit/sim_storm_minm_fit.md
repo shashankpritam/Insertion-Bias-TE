@@ -17,8 +17,8 @@ Shashank Pritam
 - [<span class="toc-section-number">5</span> Explaination of the Color
   Scheme in the Plot](#explaination-of-the-color-scheme-in-the-plot)
   - [<span class="toc-section-number">5.1</span> Minimum fitness of the
-    population during the invasion - Continuous Variable - `min_w`
-    -](#minimum-fitness-of-the-population-during-the-invasion---continuous-variable---min_w--)
+    population during the invasion - Continuous Variable -
+    `min_w`](#minimum-fitness-of-the-population-during-the-invasion---continuous-variable---min_w)
   - [<span class="toc-section-number">5.2</span> Population status -
     Categorical Variables -
     `popstat`](#population-status---categorical-variables---popstat)
@@ -155,12 +155,20 @@ df_filtered = df_final %>% filter(!popstat %in% c("fail-0", "fail-w"))
 ``` r
 ### Custom color breaks and colors for fitness
 breaks = c(0.01, 0.1, 0.33, 0.66, 1)
-colors = c("white", "red", "yellow", "lightgreen", "green")
+colors = c("darkred", "red", "yellow", "lightgreen", "green")
 
 
 ### Create a ggplot with the filtered data
 g_avbias_cluster_size <- ggplot(df_filtered, aes(x = sampleid_percent, y = avbias, color = min_w)) +
-  geom_point(alpha = 0.7, size = 0.8) +
+  geom_point(alpha = 0.7, size = 0.8)
+
+### Adding back fail-0 and fail-w with specific colors
+g_avbias_cluster_size <- g_avbias_cluster_size +
+  geom_point(data = df_final %>% filter(popstat == "fail-0"), aes(x = sampleid_percent, y = avbias), color = "darkgreen", alpha = 0.7, size = 0.8) +
+  geom_point(data = df_final %>% filter(popstat == "fail-w"), aes(x = sampleid_percent, y = avbias), color = "darkgrey", alpha = 0.3, size = 0.75)
+
+### Complete the ggplot
+g_avbias_cluster_size <- g_avbias_cluster_size +
   ylab("Average Bias in TE Insertion") +
   xlab("Cluster Size (% of 10 Mb Genome)") +
   labs(
@@ -183,12 +191,6 @@ g_avbias_cluster_size <- ggplot(df_filtered, aes(x = sampleid_percent, y = avbia
     legend.position = "bottom", 
     panel.background = element_rect(fill = "grey90")
   )
-
-
-### Adding back fail-0 and fail-w with specific colors
-g_avbias_cluster_size <- g_avbias_cluster_size +
-  geom_point(data = df_final %>% filter(popstat == "fail-0"), aes(x = sampleid_percent, y = avbias), color = "darkgreen", alpha = 0.7, size = 0.8) +
-  geom_point(data = df_final %>% filter(popstat == "fail-w"), aes(x = sampleid_percent, y = avbias), color = "darkgrey", alpha = 0.7, size = 0.8)
 
 ### Display the plot
 g_avbias_cluster_size
@@ -213,7 +215,7 @@ ggsave(filename = "../../../images/minimum_fitness.jpg", plot = g_avbias_cluster
 The color scheme used in the plot serves to represent different
 categories and values effectively:
 
-### Minimum fitness of the population during the invasion - Continuous Variable - `min_w` -
+### Minimum fitness of the population during the invasion - Continuous Variable - `min_w`
 
 For `min_w`, we have used a gradient of colors as follows:
 
