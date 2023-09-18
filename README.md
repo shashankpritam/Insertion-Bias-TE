@@ -8,8 +8,9 @@ This repository contains the results and data associated with the validation and
 
 ### Simulation
 
-a. [Simulation Storm for Minimum Fitness](./Minimum_Fitness.md)
-b. [Simulation Storm for Variable Population](./Population_Size.md)
+a.  [Simulation Storm for Minimum Fitness](./Minimum_Fitness.md)
+
+b.  [Simulation Storm for Variable Population](./Population_Size.md)
 
 ### Validation
 <details>
