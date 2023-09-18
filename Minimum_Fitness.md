@@ -11,10 +11,9 @@ Shashank Pritam
     Parameters](#parameters)
 - [<span class="toc-section-number">3</span> Visualization in
   R](#visualization-in-r)
-  - [<span class="toc-section-number">3.1</span> Setting the
-    environment](#setting-the-environment)
-  - [<span class="toc-section-number">3.2</span> Function to Load
-    Data](#function-to-load-data)
+  - [<span class="toc-section-number">3.1</span> Set the environment by
+    loading modules](#set-the-environment-by-loading-modules)
+  - [<span class="toc-section-number">3.2</span> Load Data](#load-data)
   - [<span class="toc-section-number">3.3</span> ggplot function to Plot
     Data](#ggplot-function-to-plot-data)
   - [<span class="toc-section-number">3.4</span> Create the
@@ -79,39 +78,20 @@ def get_rand_clusters():
 
 ## Visualization in R
 
-### Setting the environment
+### Set the environment by loading modules
 
 <details>
 <summary>Code</summary>
 
 ``` r
 library(tidyverse)
-```
-
-</details>
-
-    ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-    ✔ dplyr     1.1.3     ✔ readr     2.1.4
-    ✔ forcats   1.0.0     ✔ stringr   1.5.0
-    ✔ ggplot2   3.4.3     ✔ tibble    3.2.1
-    ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
-    ✔ purrr     1.0.2     
-    ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-    ✖ dplyr::filter() masks stats::filter()
-    ✖ dplyr::lag()    masks stats::lag()
-    ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-
-<details>
-<summary>Code</summary>
-
-``` r
 library(ggplot2)
 theme_set(theme_bw())
 ```
 
 </details>
 
-### Function to Load Data
+### Load Data
 
 <details>
 <summary>Code</summary>
