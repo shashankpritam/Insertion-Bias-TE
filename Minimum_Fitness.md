@@ -18,14 +18,12 @@ Shashank Pritam
     Data](#ggplot-function-to-plot-data)
   - [<span class="toc-section-number">3.4</span> Create the
     plots](#create-the-plots)
-- [<span class="toc-section-number">4</span> Explaination of the Color
-  Scheme in the Plot](#explaination-of-the-color-scheme-in-the-plot)
-  - [<span class="toc-section-number">4.1</span> Minimum fitness of the
-    population during the invasion - Continuous Variable -
-    `min_w`](#minimum-fitness-of-the-population-during-the-invasion---continuous-variable---min_w)
-  - [<span class="toc-section-number">4.2</span> Population status -
-    Categorical Variables -
-    `popstat`](#population-status---categorical-variables---popstat)
+- [<span class="toc-section-number">4</span> Color Scheme in the
+  Plot](#color-scheme-in-the-plot)
+  - [<span class="toc-section-number">4.1</span> Variable -
+    `min_w`](#variable---min_w)
+  - [<span class="toc-section-number">4.2</span> Variables -
+    `popstat`](#variables---popstat)
 - [<span class="toc-section-number">5</span> Conclusion](#conclusion)
 
 ## Introduction
@@ -51,9 +49,9 @@ Simulations were ran with the following parameters:
 - Number of simulations: 10000
 - Number of threads: 4
 - Number of replications (–rep): 1
-- Transposition rate (–u): 0.2
+- Transposition rate (–u): Variable
 - Number of steps (–steps): 5000
-- Population size (–N): Varying
+- Population size (–N): 1000
 - Number of generations (–gen): 5000
 - Negative effect of a TE insertion (–x): 0.01
 - Genome (–genome) mb:10,10,10,10,10
@@ -187,7 +185,7 @@ plot_data <- function(df_list) {
 <summary>Code</summary>
 
 ``` r
-# Save the final plots
+# Save the final plot
 plot1 <- plot_data(df1)
 ggsave(filename = "images/minimum_fitness_u01.jpg", plot = plot1, width = 10, height = 6)
 plot1
@@ -210,12 +208,12 @@ plot2
 
 ![](Minimum_Fitness_files/figure-commonmark/unnamed-chunk-5-2.png)
 
-## Explaination of the Color Scheme in the Plot
+## Color Scheme in the Plot
 
 The color scheme used in the plot serves to represent different
 categories and values effectively:
 
-### Minimum fitness of the population during the invasion - Continuous Variable - `min_w`
+### Variable - `min_w`
 
 For `min_w`, we have used a gradient of colors as follows:
 
@@ -227,7 +225,7 @@ For `min_w`, we have used a gradient of colors as follows:
 These colors visually guide the viewer through varying levels of fitness
 from lowest to highest.
 
-### Population status - Categorical Variables - `popstat`
+### Variables - `popstat`
 
 Points where the `popstat` is either “fail-0” or “fail-w”. These are
 represented by:
