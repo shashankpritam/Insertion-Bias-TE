@@ -52,9 +52,9 @@ Simulations were ran with the following parameters:
 - Number of simulations: 10000
 - Number of threads: 4
 - Number of replications (–rep): 1
-- Transposition rate (–u): Variable
+- Transposition rate (–u): 0.2
 - Number of steps (–steps): 5000
-- Population size (–N): 1000
+- Population size (–N): Varying
 - Number of generations (–gen): 5000
 - Negative effect of a TE insertion (–x): 0.01
 - Genome (–genome) mb:10,10,10,10,10
