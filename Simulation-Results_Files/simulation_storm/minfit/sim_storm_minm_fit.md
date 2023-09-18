@@ -114,7 +114,7 @@ theme_set(theme_bw())
 ### Data loading and parsing
 column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
 
-df <- read_delim('./13thSep23at104054PM/combined.txt', delim='\t', col_names = column_names, show_col_types = FALSE)
+df <- read_delim('./14thSep23at113630PM/combined.txt', delim='\t', col_names = column_names, show_col_types = FALSE)
 
 
 numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "fwcli", "avcli", "fixcli", "avbias", "sampleid")
@@ -205,7 +205,7 @@ g_avbias_cluster_size
 
 ``` r
 ### Save the plot
-ggsave(filename = "../../../images/minimum_fitness.jpg", plot = g_avbias_cluster_size, width = 10, height = 6)
+ggsave(filename = "../../../images/minimum_fitness_u01.jpg", plot = g_avbias_cluster_size, width = 10, height = 6)
 ```
 
 </details>
