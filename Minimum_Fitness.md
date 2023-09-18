@@ -3,14 +3,12 @@ Shashank Pritam
 
 - [<span class="toc-section-number">1</span>
   Introduction](#introduction)
-  - [<span class="toc-section-number">1.1</span> Initial
-    conditions](#initial-conditions)
 - [<span class="toc-section-number">2</span> Materials &
   Methods](#materials-methods)
   - [<span class="toc-section-number">2.1</span> Commands for the
     simulation](#commands-for-the-simulation)
-  - [<span class="toc-section-number">2.2</span> Parameters
-    -](#parameters--)
+  - [<span class="toc-section-number">2.2</span>
+    Parameters](#parameters)
 - [<span class="toc-section-number">3</span> Visualization in
   R](#visualization-in-r)
   - [<span class="toc-section-number">3.1</span> Setting the
@@ -33,10 +31,9 @@ Shashank Pritam
 
 ## Introduction
 
-What is the impact of insertion bias on the minimum fitness of a
-population during the invasion of transposable elements (TEs)?
-
-### Initial conditions
+In this simulation we explore the question - What is the impact of
+insertion bias on the minimum fitness of a population during the
+invasion of transposable elements (TEs)?
 
 ## Materials & Methods
 
@@ -48,7 +45,7 @@ The simulations were generated using the code from:
 
 - [sim_storm.py](./Simulation-Results_Files/simulation_storm/minfit/sim_storm.py)
 
-### Parameters -
+### Parameters
 
 Simulations were ran with the following parameters:
 
@@ -210,13 +207,9 @@ plot_data <- function(df_list) {
 <summary>Code</summary>
 
 ``` r
+# Save the final plots
 plot1 <- plot_data(df1)
-plot2 <- plot_data(df2)
-
-# Save the final plot
 ggsave(filename = "images/minimum_fitness_u01.jpg", plot = plot1, width = 10, height = 6)
-ggsave(filename = "images/minimum_fitness_u02.jpg", plot = plot2, width = 10, height = 6)
-
 plot1
 ```
 
@@ -228,6 +221,8 @@ plot1
 <summary>Code</summary>
 
 ``` r
+plot2 <- plot_data(df2)
+ggsave(filename = "images/minimum_fitness_u02.jpg", plot = plot2, width = 10, height = 6)
 plot2
 ```
 
@@ -264,15 +259,18 @@ represented by:
 
 ## Conclusion
 
-In the above diagram, we have a fixed transposition rate of 0.2.
-Previously, it has been shown by Kofler\[2020\] that piRNA Clusters Need
-a Minimum Size to Control Transposable Element Invasions, and with small
-sized population, piRNA clusters may need to make up as much as 3% of
-the genome, given there is a high rate of transposition alongside with
-recessive TE insertions. Here, we observe that the compensation for
-lower cluster size comes through increased insertion bias. The
-population fitness increases with cluster size and average bias;
-negative bias results in extinction even with a large cluster size.
+According to Kofler\[2020\], piRNA clusters require a minimum size to
+control transposable element invasions. These clusters may comprise up
+to 3% of the genome in small populations, especially with high
+transposition rates and recessive TE insertions. Here, we observe that
+the compensation for lower cluster size comes through increased
+insertion bias into the piRNA clusters. The population fitness increases
+with cluster size and average bias; negative bias results in extinction
+even with a large cluster size.
+
+Another noticeable thing from the plot is that the change in
+transposition rate has little effect on population fitness if they have
+an appropriate cluster size with a strong enough bias.
 
 ------------------------------------------------------------------------
 
