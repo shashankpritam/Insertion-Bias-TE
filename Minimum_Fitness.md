@@ -192,7 +192,11 @@ ggsave(filename = "../../../images/minimum_fitness.jpg", plot = g_avbias_cluster
 ```
 </details>
 
+### Minimum Fitness at transposition rate u = 0.02
+
 ![Minimum Fitness at transposition rate u = 0.02](./images/minimum_fitness.jpg)
+
+### Minimum Fitness at transposition rate u = 0.01
 
 ![Minimum Fitness at transposition rate u = 0.01](./images/minimum_fitness_u01.jpg)
  
