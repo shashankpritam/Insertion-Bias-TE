@@ -23,29 +23,32 @@ b.  [Simulation Storm for Variable Population](./Population_Size.md)
 5. [Validation_5_insertion-bias.md](./Validation_5_bias.md)
 6. [Validation_6_Selection.md](./Validation_6_Selection.md)
 7. [Validation_7_Insertion.md](./Validation_7_insertion.md)
-
+</details>
 
 ### Data
 
+<details>
+  <summary>Click to expand!</summary>
+  
 1. [Simulation-Results_Files](./Simulation-Results_Files)
 
-    a. [Slurm-Jobs](./Simulation-Results_Files/Slurm-Jobs)
+-    [Slurm-Jobs](./Simulation-Results_Files/Slurm-Jobs)
    
-    b. [validation_1](./Simulation-Results_Files/validation_1)
+      i. [validation_1](./Simulation-Results_Files/validation_1)
    
-    c. [validation_2](./Simulation-Results_Files/validation_2)
+      i. [validation_2](./Simulation-Results_Files/validation_2)
    
-    d. [validation_3](./Simulation-Results_Files/validation_3)
+      i. [validation_3](./Simulation-Results_Files/validation_3)
    
-    e. [validation_4](./Simulation-Results_Files/validation_4)
+      i. [validation_4](./Simulation-Results_Files/validation_4)
    
-    f. [validation_5.1](./Simulation-Results_Files/validation_5.1)
+      i. [validation_5.1](./Simulation-Results_Files/validation_5.1)
    
-    g. [validation_5.2](./Simulation-Results_Files/validation_5.2)
+      i. [validation_5.2](./Simulation-Results_Files/validation_5.2)
    
-    h. [validation_6](./Simulation-Results_Files/validation_6)
+      i. [validation_6](./Simulation-Results_Files/validation_6)
    
-    i. [validation_7](./Simulation-Results_Files/validation_7)
+      i. [validation_7](./Simulation-Results_Files/validation_7)
    
 </details>
 
