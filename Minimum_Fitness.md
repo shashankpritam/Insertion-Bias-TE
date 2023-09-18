@@ -192,10 +192,10 @@ ggsave(filename = "../../../images/minimum_fitness.jpg", plot = g_avbias_cluster
 ```
 </details>
 
- ![minimum_fitness](./images/minimum_fitness.jpg)
+![Minimum Fitness at transposition rate u = 0.02](./images/minimum_fitness.jpg)
 
-
-
+![Minimum Fitness at transposition rate u = 0.01](./images/minimum_fitness_u01.jpg)
+ 
 ## Explaination of the Color Scheme in the Plot
 
 The color scheme used in the plot serves to represent different
