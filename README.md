@@ -13,28 +13,26 @@ a.  [Simulation Storm for Minimum Fitness](./Minimum_Fitness.md)
 b.  [Simulation Storm for Variable Population](./Population_Size.md)
 
 ### Validation
-<details>
-  <summary>Click to expand!</summary>
 
-1. [Validation_1_invasion.md](./Validation_1_invasion.md)
-2. [Validation_2_drift.md](./Validation_2_drift.md)
-3. [Validation_3_clusters.md](./Validation_3_clusters.md)
-4. [Validation_4_recombination.md](./Validation_4_recombination.md)
-5. [Validation_5_insertion-bias.md](./Validation_5_bias.md)
-6. [Validation_6_Selection.md](./Validation_6_Selection.md)
-7. [Validation_7_Insertion.md](./Validation_7_insertion.md)
-</details>
+1. [Validation 1 Invasion](./Validation_1_invasion.md)
+2. [Validation 2 Drift](./Validation_2_drift.md)
+3. [Validation 3 Clusters](./Validation_3_clusters.md)
+4. [Validation 4 Recombination](./Validation_4_recombination.md)
+5. [Validation 5 Insertion-bias](./Validation_5_bias.md)
+6. [Validation 6 Selection](./Validation_6_Selection.md)
+7. [Validation 7 Insertion](./Validation_7_insertion.md)
+   
 
 ### Data
 
-<details>
-  <summary>Click to expand!</summary>
   
 A. [Simulation Results Files](./Simulation-Results_Files)
 
 -  [Slurm Job Scripts and Simulation Data](./Simulation-Results_Files/Slurm-Jobs)
 
-#### Validation Data
+<details>
+  <summary>Validation Data!</summary>
+
 
 1. [validation_1](./Simulation-Results_Files/validation_1)
    
@@ -55,9 +53,8 @@ A. [Simulation Results Files](./Simulation-Results_Files)
 </details>
 
 i.  [archives](./archives)
-ii.  [.gitattributes](./.gitattributes)
-iii.  [.gitignore](./.gitignore)
-iv.  [README.md](./README.md)
+
+ii.  [README.md](./README.md)
 
 
 Feel free to explore the repository for more details on the validation and simulation results.
