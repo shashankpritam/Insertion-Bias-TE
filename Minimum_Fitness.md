@@ -187,10 +187,10 @@ plot_data <- function(df_list) {
 ``` r
 # Save the final plot
 plot1 <- plot_data(df1)
-ggsave(filename = "images/minimum_fitness_u01.jpg", plot = plot1, width = 10, height = 6)
+ggsave(filename = "images/minimum_fitness_u02.jpg", plot = plot1, width = 10, height = 6)
 
 plot2 <- plot_data(df2)
-ggsave(filename = "images/minimum_fitness_u02.jpg", plot = plot2, width = 10, height = 6)
+ggsave(filename = "images/minimum_fitness_u01.jpg", plot = plot2, width = 10, height = 6)
 ```
 
 </details>
