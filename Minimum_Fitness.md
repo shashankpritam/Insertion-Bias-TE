@@ -188,25 +188,15 @@ plot_data <- function(df_list) {
 # Save the final plot
 plot1 <- plot_data(df1)
 ggsave(filename = "images/minimum_fitness_u01.jpg", plot = plot1, width = 10, height = 6)
-plot1
-```
 
-</details>
-
-![](Minimum_Fitness_files/figure-commonmark/unnamed-chunk-5-1.png)
-
-<details>
-<summary>Code</summary>
-
-``` r
 plot2 <- plot_data(df2)
 ggsave(filename = "images/minimum_fitness_u02.jpg", plot = plot2, width = 10, height = 6)
-plot2
 ```
 
 </details>
 
-![](Minimum_Fitness_files/figure-commonmark/unnamed-chunk-5-2.png)
+![Minimum Fitness at u = 0.1](images/minimum_fitness_u01.jpg) ![Minimum
+Fitness at u = 0.2](images/minimum_fitness_u02.jpg)
 
 ## Color Scheme in the Plot
 
