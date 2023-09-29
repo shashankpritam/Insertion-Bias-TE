@@ -144,11 +144,12 @@ df2 <- load_data('Simulation-Results_Files/simulation_storm/minfit/14thSep23at11
 
 ``` r
 plot_data <- function(df_list) {
-  df_final = df_list$df_final
-  df_filtered = df_list$df_filtered
+  df_final = df_list$df_final %>% filter(sampleid_percent > 0.001)
+  df_cluster_filtered = df_list$df_filtered %>% filter(sampleid_percent > 0.001)
+
   breaks <- c(0.01, 0.1, 0.33, 0.66, 1)
   colors <- c("darkred", "red", "yellow", "lightgreen", "green")
-  plot <- ggplot(df_filtered, aes(x = sampleid_percent, y = avbias, color = min_w)) +
+  plot <- ggplot(df_cluster_filtered, aes(x = sampleid_percent, y = avbias, color = min_w)) +
     geom_point(alpha = 0.7, size = 0.8) +
     geom_point(data = df_final %>% filter(popstat == "fail-0"), aes(x = sampleid_percent, y = avbias), color = "darkgreen", alpha = 0.7, size = 0.8) +
     geom_point(data = df_final %>% filter(popstat == "fail-w"), aes(x = sampleid_percent, y = avbias), color = "darkgrey", alpha = 0.3, size = 0.75) +
