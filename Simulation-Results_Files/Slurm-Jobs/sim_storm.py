@@ -134,7 +134,7 @@ Number of threads: {args.threads}
 Output directory: {args.output}
 Invade path: {args.invade}
 Number of replications (--rep): {args.rep}
-Mutation rate (--u): {args.u}
+Transposition rate (--u): {args.u}
 Number of steps (--steps): {args.steps}
 Population size (--N): {args.N}
 Number of generations (--gen): {args.gen}
