@@ -154,7 +154,7 @@ submit_job_max_len(commandlist, max_processes=args.threads)
 
 
 # Cat 🐈 all the files together:
-with open(f"{args.output}/combined.txt", "wb") as outfile:
+with open(f"{output_directory}/combined.txt", "wb") as outfile:
     for i in range(args.count):
         filename = f"{args.output}/{i}.txt"
         with open(filename, 'rb') as infile:
