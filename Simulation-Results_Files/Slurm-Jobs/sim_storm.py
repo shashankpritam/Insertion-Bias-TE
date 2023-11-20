@@ -6,9 +6,10 @@ import math
 import os
 import subprocess
 import shutil
+from pathlib import Path
 
 # Path where the main is currently in my system
-invade_path = os.path.join("/mmfs1/thunder/home/shashank.pritam/shashank_simulations/invadego", "main")
+invade_path = os.path.join(".", "main")
 
 # Parser info
 parser = argparse.ArgumentParser(description="""           
@@ -45,15 +46,21 @@ def get_rand_bias():
     return random.randint(-100, 100)
 
 
-def get_default_output_directory():
+def get_default_output_directory(output_dir=None):
+    if output_dir is not None:
+        return output_dir
+
     current_time = time.strftime("%dth%b%yat%I%M%S%p", time.gmtime())
-    base_path = "/mmfs1/thunder/home/shashank.pritam/shashank_simulations/invadego"
-    default_output_directory = os.path.join(base_path, current_time)
+    base_path = Path.cwd()
+    default_output_directory = base_path / current_time
 
-    if not os.path.exists(default_output_directory):
-        os.makedirs(default_output_directory)
+    try:
+        default_output_directory.mkdir(parents=True, exist_ok=True)
+    except Exception as e:
+        print(f"Failed to create directory {default_output_directory}: {e}")
+        return None
 
-    return default_output_directory
+    return str(default_output_directory)
 
 
 # Parser arguments
@@ -61,7 +68,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("--number", type=int, dest="count", default=100, help="the number of simulations")
 parser.add_argument("--threads", type=int, dest="threads", default=4, help="the threads of simulations")
-parser.add_argument("--output", type=str, dest="output", default=get_default_output_directory(), help="the output directory for simulations")
+parser.add_argument("--output", type=str, dest="output", default=None, help="the output directory for simulations")
 parser.add_argument("--invade", type=str, dest="invade", default=invade_path, help="the invade.go")
 parser.add_argument("--rep", type=int, dest="rep", default=1, help="the number of replications")
 parser.add_argument("--u", type=float, dest="u", default=0.2, help="transposition rate; probability that a TE generates a novel copy")
@@ -106,9 +113,9 @@ def run_cluster_negsel(invade, count, output):
         commandlist.append(command)
     return commandlist
 
-
 # Construct the command list
-commandlist = run_cluster_negsel(args.invade, args.count, args.output)
+output_directory = get_default_output_directory(args.output)
+commandlist = run_cluster_negsel(args.invade, args.count, output_directory)
 
 
 # Submit Jobs
@@ -155,4 +162,3 @@ with open(f"{args.output}/combined.txt", "wb") as outfile:
 
 # Sign of completion of the job.
 print("Done")
-
