@@ -14,6 +14,14 @@ Shashank Pritam
   - [<span class="toc-section-number">3.1</span> Set the environment by
     loading modules](#set-the-environment-by-loading-modules)
   - [<span class="toc-section-number">3.2</span> Load Data](#load-data)
+- [<span class="toc-section-number">4</span> Results: Phase Length
+  Plots](#results-phase-length-plots)
+  - [<span class="toc-section-number">4.1</span> Rapi Phase
+    Length](#rapi-phase-length)
+  - [<span class="toc-section-number">4.2</span> Shot Phase
+    Length](#shot-phase-length)
+  - [<span class="toc-section-number">4.3</span> Inac Phase
+    Length](#inac-phase-length)
 
 ## Introduction
 
@@ -83,75 +91,96 @@ theme_set(theme_bw())
 <summary>Code</summary>
 
 ``` r
-library(tidyverse)
-
 # Define column names and numeric columns
 column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
 numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "fwcli", "avcli", "fixcli", "avbias", "sampleid")
 
 # Set the folder path where your txt files are stored
 folder_path <- "Simulation-Results_Files/simulation_storm/phaselen/20thNov23at091514PM"
+images_path <- "images"
 
 # Read all files into one data frame
-all_data <- map_df(0:9999, ~read_delim(file.path(folder_path, paste0(.x, ".txt")), 
-                                       delim = '\t', 
-                                       col_names = column_names, 
-                                       show_col_types = FALSE))
+all_data <- map_df(0:99, ~read_delim(file.path(folder_path, paste0(.x, ".txt")), 
+                                     delim = '\t', 
+                                     col_names = column_names, 
+                                     show_col_types = FALSE))
 
 # Convert columns to numeric where necessary
 all_data[numeric_columns] <- lapply(all_data[numeric_columns], as.numeric)
 
-# Separate data frames for each phase
-data_rapi <- all_data %>% filter(phase == "rapi")
-data_shot <- all_data %>% filter(phase == "shot")
-data_inac <- all_data %>% filter(phase == "inac")
-
-# Function to plot data for a phase
-plot_phase <- function(data, phase_name) {
+# Process data for each phase and calculate sampleid_percent
+process_data <- function(data, phase_name) {
     data %>% 
-        group_by(sampleid) %>%
+        filter(phase == phase_name) %>%
+        mutate(sampleid_percent = (sampleid / 10000) * 100) %>%
+        filter(sampleid_percent != 0) %>%
+        group_by(sampleid, sampleid_percent) %>%
         summarize(phase_length = n(), 
-                  mean_avbias = mean(avbias, na.rm = TRUE)) %>%
-        ggplot(aes(x = sampleid, y = phase_length, color = mean_avbias)) +
-        geom_point() +
-        scale_color_gradient(low = "blue", high = "orange") +
-        labs(title = paste("Phase:", phase_name), 
-             x = "Pirna Cluster Size", 
-             y = "Phase Length") +
-        theme_minimal()
+                  mean_avbias = mean(avbias, na.rm = TRUE), .groups = 'keep') 
 }
 
+print(process_data(all_data, "rapi"))
+```
+
+</details>
+
+    # A tibble: 71 × 4
+    # Groups:   sampleid, sampleid_percent [71]
+       sampleid sampleid_percent phase_length mean_avbias
+          <dbl>            <dbl>        <int>       <dbl>
+     1        1             0.01          766        57.9
+     2        2             0.02          268       -39.3
+     3        3             0.03          263       -18.6
+     4        4             0.04          540        29.4
+     5        5             0.05          168        57.0
+     6        6             0.06          102        90  
+     7        8             0.08          110        13  
+     8       10             0.1            72       -37  
+     9       11             0.11           98        13  
+    10       12             0.12           45       -89  
+    # ℹ 61 more rows
+
+<details>
+<summary>Code</summary>
+
+``` r
 # Plot for each phase
-plot_rapi <- plot_phase(data_rapi, "rapi")
-plot_shot <- plot_phase(data_shot, "shot")
-plot_inac <- plot_phase(data_inac, "inac")
+plot_rapi <- ggplot(process_data(all_data, "rapi"), aes(x = sampleid_percent, y = phase_length, color = mean_avbias)) +
+             geom_point() +
+             scale_color_gradient(low = "blue", high = "orange") +
+             labs(title = "Phase: rapi", x = "Pirna Cluster Size Percent", y = "Phase Length") +
+             theme_minimal()
 
-# Display the plots
-plot_rapi
+plot_shot <- ggplot(process_data(all_data, "shot"), aes(x = sampleid_percent, y = phase_length, color = mean_avbias)) +
+             geom_point() +
+             scale_color_gradient(low = "blue", high = "orange") +
+             labs(title = "Phase: shot", x = "Pirna Cluster Size Percent", y = "Phase Length") +
+             theme_minimal()
+
+plot_inac <- ggplot(process_data(all_data, "inac"), aes(x = sampleid_percent, y = phase_length, color = mean_avbias)) +
+             geom_point() +
+             scale_color_gradient(low = "blue", high = "orange") +
+             labs(title = "Phase: inac", x = "Pirna Cluster Size Percent", y = "Phase Length") +
+             theme_minimal()
+
+# Save the plots
+ggsave(filename = file.path(images_path, "phase_length_rapi.jpg"), plot = plot_rapi, width = 10, height = 8, dpi = 600)
+ggsave(filename = file.path(images_path, "phase_length_shot.jpg"), plot = plot_shot, width = 10, height = 8, dpi = 600)
+ggsave(filename = file.path(images_path, "phase_length_inac.jpg"), plot = plot_inac, width = 10, height = 8, dpi = 600)
 ```
 
 </details>
 
-![](PhaseLength_files/figure-commonmark/unnamed-chunk-3-1.png)
+## Results: Phase Length Plots
 
-<details>
-<summary>Code</summary>
+### Rapi Phase Length
 
-``` r
-plot_shot
-```
+![Rapi Phase Length](images/phase_length_rapi.jpg)
 
-</details>
+### Shot Phase Length
 
-![](PhaseLength_files/figure-commonmark/unnamed-chunk-3-2.png)
+![Shot Phase Length](images/phase_length_shot.jpg)
 
-<details>
-<summary>Code</summary>
+### Inac Phase Length
 
-``` r
-plot_inac
-```
-
-</details>
-
-![](PhaseLength_files/figure-commonmark/unnamed-chunk-3-3.png)
+![Inac Phase Length](images/phase_length_inac.jpg)
