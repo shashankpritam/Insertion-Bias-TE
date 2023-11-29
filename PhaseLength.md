@@ -15,20 +15,20 @@ Shashank Pritam
     loading modules](#set-the-environment-by-loading-modules)
   - [<span class="toc-section-number">3.2</span> Load Data and Plot
     Result](#load-data-and-plot-result)
-- [<span class="toc-section-number">4</span> Result: Phase Counts vs
-  Average Bias](#result-phase-counts-vs-average-bias)
+- [<span class="toc-section-number">4</span> Result: Phase Length vs
+  Average Bias](#result-phase-length-vs-average-bias)
   - [<span class="toc-section-number">4.1</span> Rapid Phase Count vs
     Average Bias](#rapid-phase-count-vs-average-bias)
   - [<span class="toc-section-number">4.2</span> Shotgun Phase Count vs
     Average Bias](#shotgun-phase-count-vs-average-bias)
   - [<span class="toc-section-number">4.3</span> Inactive Phase Count vs
     Average Bias](#inactive-phase-count-vs-average-bias)
-- [<span class="toc-section-number">5</span> Result: Phase Counts vs
-  piRNA Cluster Size](#result-phase-counts-vs-pirna-cluster-size)
+- [<span class="toc-section-number">5</span> Result: Phase Count vs
+  piRNA Cluster Size](#result-phase-count-vs-pirna-cluster-size)
   - [<span class="toc-section-number">5.1</span> Rapid Phase Count vs
     piRNA Cluster Size](#rapid-phase-count-vs-pirna-cluster-size)
   - [<span class="toc-section-number">5.2</span> Shotgun Phase Count vs
-    Sampleid](#shotgun-phase-count-vs-sampleid)
+    piRNA Cluster Size](#shotgun-phase-count-vs-pirna-cluster-size)
   - [<span class="toc-section-number">5.3</span> Inactive Phase Count vs
     piRNA Cluster Size](#inactive-phase-count-vs-pirna-cluster-size)
 
@@ -105,7 +105,7 @@ combined_file_path <- "Simulation-Results_Files/simulation_storm/phaselen/20thNo
 
 # Define column names and numeric columns
 column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
-numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "fwcli", "avcli", "fixcli", "avbias", "sampleid")
+numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "fwcli", "avcli", "fixcli", "avbias", "sampleid", "sampleid_percent")
 
 # Read the combined data
 all_data <- read_delim(combined_file_path, delim = '\t', col_names = column_names, show_col_types = FALSE) %>%
@@ -116,30 +116,34 @@ all_data[numeric_columns] <- lapply(all_data[numeric_columns], as.numeric)
 
 # Count phases for each combination of avbias and sampleid
 phase_counts <- all_data %>%
-                group_by(avbias, sampleid, phase) %>%
+                group_by(avbias, sampleid_percent, phase) %>%
                 summarize(phase_count = n(), .groups = 'drop')
 
-# Function to create plots
-# Function to create plots
-create_plot <- function(data, phase_name, x_label, y_label) {
-    ggplot(data %>% filter(phase == phase_name), aes(x = avbias, y = phase_count)) +
-    geom_point(aes(color = sampleid), size = 3) +
-    scale_color_viridis_c() +
-    labs(title = paste(phase_name, "Phase Count vs", x_label), x = x_label, y = y_label) +
-    theme_minimal() +
-    theme(plot.title = element_text(size = 16, face = "bold"),
-          axis.title = element_text(size = 14),
-          axis.text = element_text(size = 12))
+
+# Function to create plots for phase vs avbias and phase vs sampleid
+# With '+' or 'x' signs
+create_plot <- function(data, phase_name, phase_label, x, y, x_label, y_label, use_plus_sign = TRUE) {
+    shape_type <- ifelse(use_plus_sign, 3, 4)  # Shape 3 for '+', Shape 4 for 'x'
+    
+    plot <- ggplot(data %>% filter(phase == phase_name), aes_string(x = x, y = y)) +
+            geom_point(shape = shape_type, color = "black", size = 3) +
+            labs(title = paste(phase_label, "Phase Count vs", x_label), x = x_label, y = y_label) +
+            theme_minimal() +
+            theme(plot.title = element_text(size = 16, face = "bold"),
+                  axis.title = element_text(size = 14),
+                  axis.text = element_text(size = 12))
+    return(plot)
 }
 
 # Create and save plots
-plot_rapi_avbias <- create_plot(phase_counts, "rapi", "Average Bias", "Phase Count")
-plot_shot_avbias <- create_plot(phase_counts, "shot", "Average Bias", "Phase Count")
-plot_inac_avbias <- create_plot(phase_counts, "inac", "Average Bias", "Phase Count")
+# Using '+' signs for avbias plots and 'x' signs for sampleid plots
+plot_rapi_avbias <- create_plot(phase_counts, "rapi", "Rapid", "avbias", "phase_count", "Average Bias", "Phase Count", TRUE)
+plot_shot_avbias <- create_plot(phase_counts, "shot", "Shotgun", "avbias", "phase_count", "Average Bias", "Phase Count", TRUE)
+plot_inac_avbias <- create_plot(phase_counts, "inac", "Inactive", "avbias", "phase_count", "Average Bias", "Phase Count", TRUE)
 
-plot_rapi_sampleid <- create_plot(phase_counts, "rapi", "piRNA Cluster Size", "Phase Count")
-plot_shot_sampleid <- create_plot(phase_counts, "shot", "piRNA Cluster Size", "Phase Count")
-plot_inac_sampleid <- create_plot(phase_counts, "inac", "piRNA Cluster Size", "Phase Count")
+plot_rapi_sampleid <- create_plot(phase_counts, "rapi", "Rapid", "sampleid_percent", "phase_count", "piRNA Cluster Size", "Phase Count", FALSE)
+plot_shot_sampleid <- create_plot(phase_counts, "shot", "Shotgun", "sampleid_percent", "phase_count", "piRNA Cluster Size", "Phase Count", FALSE)
+plot_inac_sampleid <- create_plot(phase_counts, "inac", "Inactive", "sampleid_percent", "phase_count", "piRNA Cluster Size", "Phase Count", FALSE)
 
 # Define images path
 images_path <- "images"
@@ -156,7 +160,7 @@ ggsave(filename = file.path(images_path, "phase_count_inac_sampleid.jpg"), plot 
 
 </details>
 
-## Result: Phase Counts vs Average Bias
+## Result: Phase Length vs Average Bias
 
 ### Rapid Phase Count vs Average Bias
 
@@ -172,14 +176,14 @@ Bias](images/phase_count_shot_avbias.jpg)
 ![Inactive Phase Count vs Average
 Bias](images/phase_count_inac_avbias.jpg)
 
-## Result: Phase Counts vs piRNA Cluster Size
+## Result: Phase Count vs piRNA Cluster Size
 
 ### Rapid Phase Count vs piRNA Cluster Size
 
 ![Rapid Phase Count vs piRNA Cluster
 Size](images/phase_count_rapi_sampleid.jpg)
 
-### Shotgun Phase Count vs Sampleid
+### Shotgun Phase Count vs piRNA Cluster Size
 
 ![Shotgun Phase Count vs piRNA Cluster
 Size](images/phase_count_shot_sampleid.jpg)

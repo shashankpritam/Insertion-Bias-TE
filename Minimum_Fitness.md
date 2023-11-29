@@ -116,7 +116,7 @@ load_data <- function(folder_path, u_value) {
   df_final <- select(df_final, rep, popstat, avbias, sampleid, min_w)
   
   # Calculate sampleid_percent
-  df_final$sampleid_percent <- (df_final$sampleid / 10000000) * 100 ## At the time of writing this code the piRNA Cluster was generated in base pairs, now it is generated in kb. So to replicate this one should use 10000000/1000 instead of 10000000 to divide.
+  df_final$sampleid_percent <- (df_final$sampleid / 10000000) * 100 ## At the time of writing this code the piRNA Cluster was generated in base pairs, now it is generated in kb. So to replicate this one should use 10000/1000 instead of 10000000 to divide.
   
   # Filter out fail-0 and fail-w
   df_filtered = df_final %>% filter(!popstat %in% c("fail-0", "fail-w"))
