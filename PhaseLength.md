@@ -13,7 +13,8 @@ Shashank Pritam
   R](#visualization-in-r)
   - [<span class="toc-section-number">3.1</span> Set the environment by
     loading modules](#set-the-environment-by-loading-modules)
-  - [<span class="toc-section-number">3.2</span> Load Data](#load-data)
+  - [<span class="toc-section-number">3.2</span> Load Data and Plot
+    Result](#load-data-and-plot-result)
 - [<span class="toc-section-number">4</span> Result: Phase Counts vs
   Average Bias](#result-phase-counts-vs-average-bias)
   - [<span class="toc-section-number">4.1</span> Rapid Phase Count vs
@@ -93,7 +94,7 @@ theme_set(theme_bw())
 
 </details>
 
-### Load Data
+### Load Data and Plot Result
 
 <details>
 <summary>Code</summary>
@@ -119,72 +120,37 @@ phase_counts <- all_data %>%
                 summarize(phase_count = n(), .groups = 'drop')
 
 # Function to create plots
-create_plot <- function(data, phase_name, y_label) {
+# Function to create plots
+create_plot <- function(data, phase_name, x_label, y_label) {
     ggplot(data %>% filter(phase == phase_name), aes(x = avbias, y = phase_count)) +
-    geom_point() +
-    labs(title = paste("Phase:", phase_name), x = "Average Bias", y = y_label) +
-    theme_minimal()
+    geom_point(aes(color = sampleid), size = 3) +
+    scale_color_viridis_c() +
+    labs(title = paste(phase_name, "Phase Count vs", x_label), x = x_label, y = y_label) +
+    theme_minimal() +
+    theme(plot.title = element_text(size = 16, face = "bold"),
+          axis.title = element_text(size = 14),
+          axis.text = element_text(size = 12))
 }
 
 # Create and save plots
-plot_rapi_avbias <- create_plot(phase_counts, "rapi", "Phase Count vs Average Bias")
-plot_shot_avbias <- create_plot(phase_counts, "shot", "Phase Count vs Average Bias")
-plot_inac_avbias <- create_plot(phase_counts, "inac", "Phase Count vs Average Bias")
+plot_rapi_avbias <- create_plot(phase_counts, "rapi", "Average Bias", "Phase Count")
+plot_shot_avbias <- create_plot(phase_counts, "shot", "Average Bias", "Phase Count")
+plot_inac_avbias <- create_plot(phase_counts, "inac", "Average Bias", "Phase Count")
 
-plot_rapi_sampleid <- create_plot(phase_counts, "rapi", "Phase Count vs piRNA Cluster Size")
-plot_shot_sampleid <- create_plot(phase_counts, "shot", "Phase Count vs piRNA Cluster Size")
-plot_inac_sampleid <- create_plot(phase_counts, "inac", "Phase Count vs piRNA Cluster Size")
+plot_rapi_sampleid <- create_plot(phase_counts, "rapi", "piRNA Cluster Size", "Phase Count")
+plot_shot_sampleid <- create_plot(phase_counts, "shot", "piRNA Cluster Size", "Phase Count")
+plot_inac_sampleid <- create_plot(phase_counts, "inac", "piRNA Cluster Size", "Phase Count")
 
 # Define images path
 images_path <- "images"
 
 # Save the plots
 ggsave(filename = file.path(images_path, "phase_count_rapi_avbias.jpg"), plot = plot_rapi_avbias, width = 10, height = 8, dpi = 600)
-```
-
-</details>
-
-    Warning: Removed 559 rows containing missing values (`geom_point()`).
-
-<details>
-<summary>Code</summary>
-
-``` r
 ggsave(filename = file.path(images_path, "phase_count_shot_avbias.jpg"), plot = plot_shot_avbias, width = 10, height = 8, dpi = 600)
-```
-
-</details>
-
-    Warning: Removed 239 rows containing missing values (`geom_point()`).
-
-<details>
-<summary>Code</summary>
-
-``` r
 ggsave(filename = file.path(images_path, "phase_count_inac_avbias.jpg"), plot = plot_inac_avbias, width = 10, height = 8, dpi = 600)
 
 ggsave(filename = file.path(images_path, "phase_count_rapi_sampleid.jpg"), plot = plot_rapi_sampleid, width = 10, height = 8, dpi = 600)
-```
-
-</details>
-
-    Warning: Removed 559 rows containing missing values (`geom_point()`).
-
-<details>
-<summary>Code</summary>
-
-``` r
 ggsave(filename = file.path(images_path, "phase_count_shot_sampleid.jpg"), plot = plot_shot_sampleid, width = 10, height = 8, dpi = 600)
-```
-
-</details>
-
-    Warning: Removed 239 rows containing missing values (`geom_point()`).
-
-<details>
-<summary>Code</summary>
-
-``` r
 ggsave(filename = file.path(images_path, "phase_count_inac_sampleid.jpg"), plot = plot_inac_sampleid, width = 10, height = 8, dpi = 600)
 ```
 
