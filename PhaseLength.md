@@ -14,14 +14,22 @@ Shashank Pritam
   - [<span class="toc-section-number">3.1</span> Set the environment by
     loading modules](#set-the-environment-by-loading-modules)
   - [<span class="toc-section-number">3.2</span> Load Data](#load-data)
-- [<span class="toc-section-number">4</span> Results: Phase Length
-  Plots](#results-phase-length-plots)
-  - [<span class="toc-section-number">4.1</span> Rapi Phase
-    Length](#rapi-phase-length)
-  - [<span class="toc-section-number">4.2</span> Shot Phase
-    Length](#shot-phase-length)
-  - [<span class="toc-section-number">4.3</span> Inac Phase
-    Length](#inac-phase-length)
+- [<span class="toc-section-number">4</span> Result: Phase Counts vs
+  Average Bias](#result-phase-counts-vs-average-bias)
+  - [<span class="toc-section-number">4.1</span> Rapid Phase Count vs
+    Average Bias](#rapid-phase-count-vs-average-bias)
+  - [<span class="toc-section-number">4.2</span> Shotgun Phase Count vs
+    Average Bias](#shotgun-phase-count-vs-average-bias)
+  - [<span class="toc-section-number">4.3</span> Inactive Phase Count vs
+    Average Bias](#inactive-phase-count-vs-average-bias)
+- [<span class="toc-section-number">5</span> Result: Phase Counts vs
+  piRNA Cluster Size](#result-phase-counts-vs-pirna-cluster-size)
+  - [<span class="toc-section-number">5.1</span> Rapid Phase Count vs
+    piRNA Cluster Size](#rapid-phase-count-vs-pirna-cluster-size)
+  - [<span class="toc-section-number">5.2</span> Shotgun Phase Count vs
+    Sampleid](#shotgun-phase-count-vs-sampleid)
+  - [<span class="toc-section-number">5.3</span> Inactive Phase Count vs
+    piRNA Cluster Size](#inactive-phase-count-vs-pirna-cluster-size)
 
 ## Introduction
 
@@ -91,96 +99,126 @@ theme_set(theme_bw())
 <summary>Code</summary>
 
 ``` r
+# Set the path of the combined file
+combined_file_path <- "Simulation-Results_Files/simulation_storm/phaselen/20thNov23at091514PM/combined.txt"
+
 # Define column names and numeric columns
 column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
 numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "fwcli", "avcli", "fixcli", "avbias", "sampleid")
 
-# Set the folder path where your txt files are stored
-folder_path <- "Simulation-Results_Files/simulation_storm/phaselen/20thNov23at091514PM"
-images_path <- "images"
-
-# Read all files into one data frame
-all_data <- map_df(0:99, ~read_delim(file.path(folder_path, paste0(.x, ".txt")), 
-                                     delim = '\t', 
-                                     col_names = column_names, 
-                                     show_col_types = FALSE))
+# Read the combined data
+all_data <- read_delim(combined_file_path, delim = '\t', col_names = column_names, show_col_types = FALSE) %>%
+            mutate(sampleid_percent = (sampleid / 10000) * 100)
 
 # Convert columns to numeric where necessary
 all_data[numeric_columns] <- lapply(all_data[numeric_columns], as.numeric)
 
-# Process data for each phase and calculate sampleid_percent
-process_data <- function(data, phase_name) {
-    data %>% 
-        filter(phase == phase_name) %>%
-        mutate(sampleid_percent = (sampleid / 10000) * 100) %>%
-        filter(sampleid_percent != 0) %>%
-        group_by(sampleid, sampleid_percent) %>%
-        summarize(phase_length = n(), 
-                  mean_avbias = mean(avbias, na.rm = TRUE), .groups = 'keep') 
+# Count phases for each combination of avbias and sampleid
+phase_counts <- all_data %>%
+                group_by(avbias, sampleid, phase) %>%
+                summarize(phase_count = n(), .groups = 'drop')
+
+# Function to create plots
+create_plot <- function(data, phase_name, y_label) {
+    ggplot(data %>% filter(phase == phase_name), aes(x = avbias, y = phase_count)) +
+    geom_point() +
+    labs(title = paste("Phase:", phase_name), x = "Average Bias", y = y_label) +
+    theme_minimal()
 }
 
-print(process_data(all_data, "rapi"))
+# Create and save plots
+plot_rapi_avbias <- create_plot(phase_counts, "rapi", "Phase Count vs Average Bias")
+plot_shot_avbias <- create_plot(phase_counts, "shot", "Phase Count vs Average Bias")
+plot_inac_avbias <- create_plot(phase_counts, "inac", "Phase Count vs Average Bias")
+
+plot_rapi_sampleid <- create_plot(phase_counts, "rapi", "Phase Count vs piRNA Cluster Size")
+plot_shot_sampleid <- create_plot(phase_counts, "shot", "Phase Count vs piRNA Cluster Size")
+plot_inac_sampleid <- create_plot(phase_counts, "inac", "Phase Count vs piRNA Cluster Size")
+
+# Define images path
+images_path <- "images"
+
+# Save the plots
+ggsave(filename = file.path(images_path, "phase_count_rapi_avbias.jpg"), plot = plot_rapi_avbias, width = 10, height = 8, dpi = 600)
 ```
 
 </details>
 
-    # A tibble: 71 × 4
-    # Groups:   sampleid, sampleid_percent [71]
-       sampleid sampleid_percent phase_length mean_avbias
-          <dbl>            <dbl>        <int>       <dbl>
-     1        1             0.01          766        57.9
-     2        2             0.02          268       -39.3
-     3        3             0.03          263       -18.6
-     4        4             0.04          540        29.4
-     5        5             0.05          168        57.0
-     6        6             0.06          102        90  
-     7        8             0.08          110        13  
-     8       10             0.1            72       -37  
-     9       11             0.11           98        13  
-    10       12             0.12           45       -89  
-    # ℹ 61 more rows
+    Warning: Removed 559 rows containing missing values (`geom_point()`).
 
 <details>
 <summary>Code</summary>
 
 ``` r
-# Plot for each phase
-plot_rapi <- ggplot(process_data(all_data, "rapi"), aes(x = sampleid_percent, y = phase_length, color = mean_avbias)) +
-             geom_point() +
-             scale_color_gradient(low = "blue", high = "orange") +
-             labs(title = "Phase: rapi", x = "Pirna Cluster Size Percent", y = "Phase Length") +
-             theme_minimal()
-
-plot_shot <- ggplot(process_data(all_data, "shot"), aes(x = sampleid_percent, y = phase_length, color = mean_avbias)) +
-             geom_point() +
-             scale_color_gradient(low = "blue", high = "orange") +
-             labs(title = "Phase: shot", x = "Pirna Cluster Size Percent", y = "Phase Length") +
-             theme_minimal()
-
-plot_inac <- ggplot(process_data(all_data, "inac"), aes(x = sampleid_percent, y = phase_length, color = mean_avbias)) +
-             geom_point() +
-             scale_color_gradient(low = "blue", high = "orange") +
-             labs(title = "Phase: inac", x = "Pirna Cluster Size Percent", y = "Phase Length") +
-             theme_minimal()
-
-# Save the plots
-ggsave(filename = file.path(images_path, "phase_length_rapi.jpg"), plot = plot_rapi, width = 10, height = 8, dpi = 600)
-ggsave(filename = file.path(images_path, "phase_length_shot.jpg"), plot = plot_shot, width = 10, height = 8, dpi = 600)
-ggsave(filename = file.path(images_path, "phase_length_inac.jpg"), plot = plot_inac, width = 10, height = 8, dpi = 600)
+ggsave(filename = file.path(images_path, "phase_count_shot_avbias.jpg"), plot = plot_shot_avbias, width = 10, height = 8, dpi = 600)
 ```
 
 </details>
 
-## Results: Phase Length Plots
+    Warning: Removed 239 rows containing missing values (`geom_point()`).
 
-### Rapi Phase Length
+<details>
+<summary>Code</summary>
 
-![Rapi Phase Length](images/phase_length_rapi.jpg)
+``` r
+ggsave(filename = file.path(images_path, "phase_count_inac_avbias.jpg"), plot = plot_inac_avbias, width = 10, height = 8, dpi = 600)
 
-### Shot Phase Length
+ggsave(filename = file.path(images_path, "phase_count_rapi_sampleid.jpg"), plot = plot_rapi_sampleid, width = 10, height = 8, dpi = 600)
+```
 
-![Shot Phase Length](images/phase_length_shot.jpg)
+</details>
 
-### Inac Phase Length
+    Warning: Removed 559 rows containing missing values (`geom_point()`).
 
-![Inac Phase Length](images/phase_length_inac.jpg)
+<details>
+<summary>Code</summary>
+
+``` r
+ggsave(filename = file.path(images_path, "phase_count_shot_sampleid.jpg"), plot = plot_shot_sampleid, width = 10, height = 8, dpi = 600)
+```
+
+</details>
+
+    Warning: Removed 239 rows containing missing values (`geom_point()`).
+
+<details>
+<summary>Code</summary>
+
+``` r
+ggsave(filename = file.path(images_path, "phase_count_inac_sampleid.jpg"), plot = plot_inac_sampleid, width = 10, height = 8, dpi = 600)
+```
+
+</details>
+
+## Result: Phase Counts vs Average Bias
+
+### Rapid Phase Count vs Average Bias
+
+![Rapid Phase Count vs Average Bias](images/phase_count_rapi_avbias.jpg)
+
+### Shotgun Phase Count vs Average Bias
+
+![Shotgun Phase Count vs Average
+Bias](images/phase_count_shot_avbias.jpg)
+
+### Inactive Phase Count vs Average Bias
+
+![Inactive Phase Count vs Average
+Bias](images/phase_count_inac_avbias.jpg)
+
+## Result: Phase Counts vs piRNA Cluster Size
+
+### Rapid Phase Count vs piRNA Cluster Size
+
+![Rapid Phase Count vs piRNA Cluster
+Size](images/phase_count_rapi_sampleid.jpg)
+
+### Shotgun Phase Count vs Sampleid
+
+![Shotgun Phase Count vs piRNA Cluster
+Size](images/phase_count_shot_sampleid.jpg)
+
+### Inactive Phase Count vs piRNA Cluster Size
+
+![Inactive Phase Count vs piRNA Cluster
+Size](images/phase_count_inac_sampleid.jpg)
