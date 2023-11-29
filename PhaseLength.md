@@ -31,6 +31,7 @@ Shashank Pritam
     piRNA Cluster Size](#shotgun-phase-count-vs-pirna-cluster-size)
   - [<span class="toc-section-number">5.3</span> Inactive Phase Count vs
     piRNA Cluster Size](#inactive-phase-count-vs-pirna-cluster-size)
+- [<span class="toc-section-number">6</span> Conclusion](#conclusion)
 
 ## Introduction
 
@@ -192,3 +193,12 @@ Size](images/phase_count_shot_sampleid.jpg)
 
 ![Inactive Phase Count vs piRNA Cluster
 Size](images/phase_count_inac_sampleid.jpg)
+
+## Conclusion
+
+The duration of the three phases—Rapid, Shotgun, and Inactive—changes
+based on insertion bias and piRNA cluster size. A higher bias leads to
+longer phase durations, suggesting that bias promotes the invasion
+period. Conversely, as piRNA cluster size grows, the phases shorten,
+indicating that as piRNAs become more established in the genome, the
+invasion period decreases.
