@@ -98,6 +98,7 @@ load_season_data <- function(folder_path, season) {
   # Convert necessary columns to numeric
   numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "fwcli", "avcli", "fixcli", "avbias", "sampleid")
   df[numeric_columns] <- lapply(df[numeric_columns], as.numeric)
+  df$season <- season
 
   # Create the sampleid_percent column
   df <- df %>%
@@ -130,6 +131,30 @@ plot_data <- function(df, season, u_value) {
     scale_x_log10() +
     theme(legend.position = "bottom")
 }
+
+
+
+# Function to prepare data for bar chart
+prepare_data_for_bar_chart <- function(df) {
+    df %>%
+    mutate(min_w_range = cut(min_w, breaks = c(0.01, 0.1, 0.33, 0.66, 1), include.lowest = TRUE)) %>%
+    count(season, min_w_range)
+}
+
+# Function to plot data
+plot_data_with_bar <- function(df) {
+    # Prepare data
+    bar_data <- prepare_data_for_bar_chart(df)
+
+    # Create bar chart
+    ggplot(bar_data, aes(x = season, y = n, fill = min_w_range)) +
+    geom_bar(stat = "identity", position = position_dodge()) +
+    xlab("Season") +
+    ylab("Count of min_w") +
+    labs(title = "Number of min_w Values in Each Range per Season") +
+    scale_fill_brewer(palette = "Set1") +
+    theme_minimal()
+}
 ```
 
 </details>
@@ -143,9 +168,11 @@ u_value <- 0.02
 for (season in season_folders) {
   df <- load_season_data(simulation_folder_path, season)
   plot <- plot_data(df, season, u_value)
+  bar_plot <- plot_data_with_bar(df)
   
   # Save the plot
   ggsave(paste0("images/pop_var_", season, ".jpg"), plot, width = 10, height = 8)
+  ggsave(paste0("images/pop_var_bar", season, ".jpg"), bar_plot, width = 10, height = 8)
 }
 ```
 
@@ -167,8 +194,13 @@ for (season in season_folders) {
 image_files <- paste0("images/pop_var_", season_folders, ".jpg")
 image_files_str <- paste(image_files, collapse = " ")
 
+# Create a string with the sorted image filenames
+bar_image_files <- paste0("images/pop_var_bar", season_folders, ".jpg")
+bar_image_files_str <- paste(bar_image_files, collapse = " ")
+
 # Create the GIF with the images in the correct order
-system(paste("convert -delay 100 -loop 0", image_files_str, "images/pop_var.gif"))
+system(paste("convert -delay 100 -loop 0", image_files_str, "images/pop_var_season.gif"))
+system(paste("convert -delay 100 -loop 0", bar_image_files_str, "images/bar_pop_var_season.gif"))
 ```
 
 </details>
@@ -184,5 +216,7 @@ Population Variation Plots
 <img src="images/pop_var_Winter.jpg" alt="Winter">
 
 <img src="images/pop_var_season.gif" alt="Annual Variation">
+
+<img src="images/bar_pop_var_season.gif" alt="Annual Variation">
 </body>
 </html>
