@@ -183,6 +183,6 @@ Population Variation Plots
 <img src="images/pop_var_Summer.jpg" alt="Summer">
 <img src="images/pop_var_Winter.jpg" alt="Winter">
 
-<img src="images/pop_var.gif" alt="Annual Variation">
+<img src="images/pop_var_season.gif" alt="Annual Variation">
 </body>
 </html>
