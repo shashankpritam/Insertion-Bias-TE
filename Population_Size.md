@@ -72,6 +72,7 @@ def get_rand_clusters():
 ``` r
 library(tidyverse)
 library(ggplot2)
+library(readr)
 theme_set(theme_bw())
 ```
 
@@ -80,16 +81,16 @@ theme_set(theme_bw())
 <summary>Code</summary>
 
 ``` r
-library(tidyverse)
-library(ggplot2)
-theme_set(theme_bw())
-
+#| output: false
 simulation_folder_path <- "/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/popvar/10thDec2023at072107PM/"
+
 month_folders <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+
 all_data <- tibble() 
 
 column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
-numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "fwcli", "avcli", "fixcli", "avbias", "sampleid", "sampleid_percent")
+
+numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "fwcli", "avcli", "fixcli", "avbias", "sampleid")
 
 for (month in month_folders) {
   file_path <- paste0(simulation_folder_path, month, "/combined.txt")
@@ -119,7 +120,133 @@ for (month in month_folders) {
   }
 }
 
-# all_data now contains data from all files with an additional 'Month' column
+# Create the sampleid_percent column and add it to numeric_columns
+all_data <- all_data %>%
+            mutate(sampleid_percent = (sampleid / 10000) * 100)
+
+numeric_columns <- c(numeric_columns, "sampleid_percent")
+
+# Convert columns to numeric where necessary
+all_data[numeric_columns] <- lapply(all_data[numeric_columns], as.numeric)
+
+# Count phases for each combination of avbias and sampleid
+phase_counts <- all_data %>%
+                group_by(avbias, sampleid_percent, phase) %>%
+                summarize(phase_count = n(), .groups = 'drop')
 ```
 
 </details>
+<details>
+<summary>Code</summary>
+
+``` r
+load_month_data <- function(folder_path, month) {
+  # Define column names
+  column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
+  
+  # Construct the file path
+  file_path <- paste0(folder_path, month, "/combined.txt")
+
+  # Read the data
+  df <- read_delim(file_path, delim = '\t', col_names = column_names, show_col_types = FALSE)
+
+  # Convert necessary columns to numeric
+  numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "fwcli", "avcli", "fixcli", "avbias", "sampleid")
+  df[numeric_columns] <- lapply(df[numeric_columns], as.numeric)
+
+  # Create the sampleid_percent column
+  df <- df %>%
+        mutate(sampleid_percent = (sampleid / 10000) * 100)
+
+  return(df)
+}
+```
+
+</details>
+<details>
+<summary>Code</summary>
+
+``` r
+plot_data <- function(df, month, u_value) {
+
+  ggplot(df, aes(x = sampleid_percent, y = avbias, color = min_w)) +
+    geom_point(alpha = 0.7, size = 0.8) +
+    ylab("Average Bias in TE Insertion") +
+    xlab("Cluster Size (% of 10 Mb Genome)") +
+    labs(
+      title = paste("Cluster Size vs Average Bias -", month),
+      subtitle = paste("Transposition rate (–u):", u_value)
+    ) +
+    theme_minimal() +
+    scale_color_gradientn(
+      name = "Minimum Fitness of the Population",
+      breaks = c(0.01, 0.1, 0.33, 0.66, 1),
+      colors = c("darkred", "red", "yellow", "lightgreen", "green")
+    ) +
+    scale_x_log10() +
+    theme(legend.position = "bottom")
+}
+```
+
+</details>
+<details>
+<summary>Code</summary>
+
+``` r
+u_value <- 0.02
+
+for (month in month_folders) {
+  df <- load_month_data(simulation_folder_path, month)
+  plot <- plot_data(df, month, u_value)
+  
+  # Save the plot
+  ggsave(paste0("images/pop_var_", month, ".jpg"), plot, width = 10, height = 8)
+}
+```
+
+</details>
+
+    Warning: Removed 11 rows containing missing values (`geom_point()`).
+
+    Warning: Removed 7 rows containing missing values (`geom_point()`).
+
+    Warning: Removed 6 rows containing missing values (`geom_point()`).
+
+    Warning: Removed 7 rows containing missing values (`geom_point()`).
+    Removed 7 rows containing missing values (`geom_point()`).
+
+    Warning: Removed 9 rows containing missing values (`geom_point()`).
+
+    Warning: Removed 7 rows containing missing values (`geom_point()`).
+
+    Warning: Removed 6 rows containing missing values (`geom_point()`).
+
+    Warning: Removed 3 rows containing missing values (`geom_point()`).
+
+    Warning: Removed 2 rows containing missing values (`geom_point()`).
+
+    Warning: Removed 3 rows containing missing values (`geom_point()`).
+
+    Warning: Removed 7 rows containing missing values (`geom_point()`).
+
+<html>
+<body>
+<h2>
+Population Variation Plots
+</h2>
+
+<img src="images/pop_var_January.jpg" alt="January">
+<img src="images/pop_var_February.jpg" alt="February">
+<img src="images/pop_var_March.jpg" alt="March">
+<img src="images/pop_var_April.jpg" alt="April">
+<img src="images/pop_var_May.jpg" alt="May">
+<img src="images/pop_var_June.jpg" alt="June">
+<img src="images/pop_var_July.jpg" alt="July">
+<img src="images/pop_var_August.jpg" alt="August">
+<img src="images/pop_var_September.jpg" alt="September">
+<img src="images/pop_var_October.jpg" alt="October">
+<img src="images/pop_var_November.jpg" alt="November">
+<img src="images/pop_var_December.jpg" alt="December">
+
+</body>
+</html>
