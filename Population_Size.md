@@ -73,6 +73,7 @@ def get_rand_clusters():
 library(tidyverse)
 library(ggplot2)
 library(readr)
+library(animation)
 theme_set(theme_bw())
 ```
 
@@ -81,65 +82,11 @@ theme_set(theme_bw())
 <summary>Code</summary>
 
 ``` r
-#| output: false
 simulation_folder_path <- "/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/popvar/10thDec2023at072107PM/"
 
 month_folders <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
 
-all_data <- tibble() 
 
-column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
-
-numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "fwcli", "avcli", "fixcli", "avbias", "sampleid")
-
-for (month in month_folders) {
-  file_path <- paste0(simulation_folder_path, month, "/combined.txt")
-  
-  if (file.exists(file_path)) {
-    month_data <- read.table(file_path, header = TRUE, sep = "\t")
-    month_data$Month <- month
-    
-    # Ensure all required columns are present
-    for (col in column_names) {
-      if (!col %in% colnames(month_data)) {
-        month_data[[col]] <- NA
-      }
-    }
-    
-    # Ensure numeric columns are numeric
-    for (col in numeric_columns) {
-      if (col %in% colnames(month_data)) {
-        month_data[[col]] <- as.numeric(month_data[[col]])
-      }
-    }
-    
-    # Optionally, reorder columns to match 'column_names'
-    month_data <- month_data[, c(column_names, "Month")]
-    
-    all_data <- bind_rows(all_data, month_data)
-  }
-}
-
-# Create the sampleid_percent column and add it to numeric_columns
-all_data <- all_data %>%
-            mutate(sampleid_percent = (sampleid / 10000) * 100)
-
-numeric_columns <- c(numeric_columns, "sampleid_percent")
-
-# Convert columns to numeric where necessary
-all_data[numeric_columns] <- lapply(all_data[numeric_columns], as.numeric)
-
-# Count phases for each combination of avbias and sampleid
-phase_counts <- all_data %>%
-                group_by(avbias, sampleid_percent, phase) %>%
-                summarize(phase_count = n(), .groups = 'drop')
-```
-
-</details>
-<details>
-<summary>Code</summary>
-
-``` r
 load_month_data <- function(folder_path, month) {
   # Define column names
   column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
@@ -168,9 +115,8 @@ load_month_data <- function(folder_path, month) {
 
 ``` r
 plot_data <- function(df, month, u_value) {
-
   ggplot(df, aes(x = sampleid_percent, y = avbias, color = min_w)) +
-    geom_point(alpha = 0.7, size = 0.8) +
+    geom_point(alpha = 1.2, size = 2.5) +
     ylab("Average Bias in TE Insertion") +
     xlab("Cluster Size (% of 10 Mb Genome)") +
     labs(
@@ -195,6 +141,7 @@ plot_data <- function(df, month, u_value) {
 ``` r
 u_value <- 0.02
 
+# Create the plots and save them as individual image files
 for (month in month_folders) {
   df <- load_month_data(simulation_folder_path, month)
   plot <- plot_data(df, month, u_value)
@@ -229,6 +176,19 @@ for (month in month_folders) {
 
     Warning: Removed 7 rows containing missing values (`geom_point()`).
 
+<details>
+<summary>Code</summary>
+
+``` r
+# Create a string with the sorted image filenames
+image_files <- paste0("images/pop_var_", month_folders, ".jpg")
+image_files_str <- paste(image_files, collapse = " ")
+
+# Create the GIF with the images in the correct order
+system(paste("convert -delay 100 -loop 0", image_files_str, "images/pop_var.gif"))
+```
+
+</details>
 <html>
 <body>
 <h2>
@@ -248,5 +208,6 @@ Population Variation Plots
 <img src="images/pop_var_November.jpg" alt="November">
 <img src="images/pop_var_December.jpg" alt="December">
 
+<img src="images/pop_var.gif" alt="Annual Variation">
 </body>
 </html>
