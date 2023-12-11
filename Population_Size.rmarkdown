@@ -1,0 +1,117 @@
+---
+title: "Population_Size"
+author: Shashank Pritam
+listing: default
+toc: true
+number-sections: true
+highlight-style: pygments
+format: 
+  gfm:
+    code-fold: true
+    html-math-method: katex
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+
+## Introduction
+
+In this simulation we explore the question - How does a species adapt to Transposable Element (TE) invasion across dynamic population sizes due to annual cycles and geographical variations?
+
+## Materials & Methods
+
+version: invadego0.1.3
+
+### Commands for the simulation
+
+The simulations were generated using the code from:
+
+- [sim_storm.py](./Simulation-Results_Files/simulation_storm/minfit/sim_storm.py)
+
+### Parameters
+
+Simulations were ran with the following parameters:
+
+
+- Number of simulations: 10000
+- Number of threads: 4
+- Number of replications (–rep): 1
+- Transposition rate (–u): 0.2
+- Number of steps (–steps): 5000
+- Population size (–N): Variable
+- Number of generations (–gen): 5000
+- Negative effect of a TE insertion (–x): 0.01
+- Genome (–genome) mb:10,10,10,10,10
+- Recombination Rate (–rr): 4,4,4,4,4
+- Negative effect of a cluster insertions (-no-x-cluins, i.e, x=0)
+- Silent mode: True
+
+Random Clusters were Generated using this snippet:
+
+
+```{python}
+def get_rand_clusters(): 
+    lower_limit = 0  # Lower bound
+    upper_limit = math.log10(1e+7)  # Upper bound
+    r = math.floor(10**random.uniform(lower_limit, upper_limit))
+    return f"{r},{r},{r},{r},{r}"
+```
+
+
+
+## Visualization in R
+
+### Setting the environment
+
+```{r}
+#| output: false
+library(tidyverse)
+library(ggplot2)
+theme_set(theme_bw())
+```
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+theme_set(theme_bw())
+
+simulation_folder_path <- "/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/popvar/10thDec2023at072107PM/"
+month_folders <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+all_data <- tibble() 
+
+column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
+numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "fwcli", "avcli", "fixcli", "avbias", "sampleid", "sampleid_percent")
+
+for (month in month_folders) {
+  file_path <- paste0(simulation_folder_path, month, "/combined.txt")
+  
+  if (file.exists(file_path)) {
+    month_data <- read.table(file_path, header = TRUE, sep = "\t")
+    month_data$Month <- month
+    
+    # Ensure all required columns are present
+    for (col in column_names) {
+      if (!col %in% colnames(month_data)) {
+        month_data[[col]] <- NA
+      }
+    }
+    
+    # Ensure numeric columns are numeric
+    for (col in numeric_columns) {
+      if (col %in% colnames(month_data)) {
+        month_data[[col]] <- as.numeric(month_data[[col]])
+      }
+    }
+    
+    # Optionally, reorder columns to match 'column_names'
+    month_data <- month_data[, c(column_names, "Month")]
+    
+    all_data <- bind_rows(all_data, month_data)
+  }
+}
+
+# all_data now contains data from all files with an additional 'Month' column
+
+```
+

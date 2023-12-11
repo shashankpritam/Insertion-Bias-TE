@@ -162,6 +162,3 @@ with open(f"{output_directory}/combined.txt", "wb") as outfile:
 
 # Sign of completion of the job.
 print("Done")
-
-
-### TODO: Use something like : for i in {0..9999}; do cat $i.txt >> combined.txt; done && echo "Done";

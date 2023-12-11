@@ -76,3 +76,50 @@ theme_set(theme_bw())
 ```
 
 </details>
+<details>
+<summary>Code</summary>
+
+``` r
+library(tidyverse)
+library(ggplot2)
+theme_set(theme_bw())
+
+simulation_folder_path <- "/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/popvar/10thDec2023at072107PM/"
+month_folders <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+all_data <- tibble() 
+
+column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
+numeric_columns <- c("rep", "gen", "fwte", "avw", "min_w", "avtes", "avpopfreq", "fixed", "fwcli", "avcli", "fixcli", "avbias", "sampleid", "sampleid_percent")
+
+for (month in month_folders) {
+  file_path <- paste0(simulation_folder_path, month, "/combined.txt")
+  
+  if (file.exists(file_path)) {
+    month_data <- read.table(file_path, header = TRUE, sep = "\t")
+    month_data$Month <- month
+    
+    # Ensure all required columns are present
+    for (col in column_names) {
+      if (!col %in% colnames(month_data)) {
+        month_data[[col]] <- NA
+      }
+    }
+    
+    # Ensure numeric columns are numeric
+    for (col in numeric_columns) {
+      if (col %in% colnames(month_data)) {
+        month_data[[col]] <- as.numeric(month_data[[col]])
+      }
+    }
+    
+    # Optionally, reorder columns to match 'column_names'
+    month_data <- month_data[, c(column_names, "Month")]
+    
+    all_data <- bind_rows(all_data, month_data)
+  }
+}
+
+# all_data now contains data from all files with an additional 'Month' column
+```
+
+</details>
