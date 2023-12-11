@@ -22,5 +22,5 @@ do
    mkdir -p $OUTPUT_DIR
 
    # Run the script with the corresponding population size and output directory
-   python3 sim_storm.py --steps 1 --N "${POPULATIONS[$i]}" --output $OUTPUT_DIR
+   python3 sim_storm.py --steps 1 --N "${POPULATIONS[$i]}" --output $OUTPUT_DIR --threads 32
 done
