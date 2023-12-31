@@ -211,7 +211,7 @@ For `min_w`, we have used a gradient of colors as follows:
 - **Dark Red (0.01)**: Represents $min\_w < 0.01$
 - **Red (0.1)**: Represents $min\_w < 0.1$
 - **Yellow (0.33)**: Represents $min\_w < 0.33$
-- **Green (1)**: Represents $min\_w = 11$
+- **Green (1)**: Represents $min\_w = 1$
 
 These colors visually guide the viewer through varying levels of fitness
 from lowest to highest.
