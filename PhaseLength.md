@@ -55,7 +55,7 @@ Simulations were ran with the following parameters:
 - Number of simulations: 10000
 - Number of threads: 4
 - Number of replications (–rep): 1
-- Transposition rate (–u): 0.2
+- Transposition rate (–u): 0.02
 - Number of steps (–steps): 1
 - Population size (–N): 1000
 - Number of generations (–gen): 5000
