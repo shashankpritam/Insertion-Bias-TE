@@ -131,8 +131,8 @@ load_data <- function(folder_path, u_value) {
 }
 
 # Load Data from Different Folders
-df1 <- load_data('Simulation-Results_Files/simulation_storm/minfit/13thSep23at104054PM/combined.txt', 0.02)
-df2 <- load_data('Simulation-Results_Files/simulation_storm/minfit/14thSep23at113630PM/combined.txt', 0.01)
+df1 <- load_data('Simulation-Results_Files/simulation_storm/minfit/13thSep23at104054PM/combined.txt', 0.2)
+df2 <- load_data('Simulation-Results_Files/simulation_storm/minfit/14thSep23at113630PM/combined.txt', 0.1)
 ```
 
 </details>
@@ -208,10 +208,10 @@ categories and values effectively:
 
 For `min_w`, we have used a gradient of colors as follows:
 
-- **Dark Red (0.01)**: Represents $min\_w < 0.01$
-- **Red (0.1)**: Represents $min\_w < 0.1$
-- **Yellow (0.33)**: Represents $min\_w < 0.33$
-- **Green (1)**: Represents $min\_w = 1$
+- **Dark Red (0.01)**: Represents $min_{w} < 0.01$
+- **Red (0.1)**: Represents $min_{w} < 0.1$
+- **Yellow (0.33)**: Represents $min_{w} < 0.33$
+- **Green (1)**: Represents $min_{w}= 11$
 
 These colors visually guide the viewer through varying levels of fitness
 from lowest to highest.
