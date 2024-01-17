@@ -61,7 +61,7 @@ g0 <- g0 +
   theme(
     plot.background = element_rect(fill = "white", color = "white"),
     panel.background = element_rect(fill = "white", color = "white"),
-    plot.margin = margin(20, 20, 20, 20, "pt")  # Adds 20pt margin on all sides
+    plot.margin = margin(20, 60, 20, 20, "pt")  # Adds 20pt margin on all sides
   )
 
 # Save the plot with a solid background and added padding
