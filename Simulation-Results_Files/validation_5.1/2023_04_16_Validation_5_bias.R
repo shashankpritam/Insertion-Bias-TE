@@ -4,11 +4,9 @@ library(RColorBrewer)
 library(ggpubr)
 theme_set(theme_bw())
 
-# Define palette
-p <- c("#1a9850", "#ffd700", "#d73027")
 
 # Read data and set column names
-df0 <- read.table("2023_04_16_Validation_5_bias", fill = TRUE, sep = "\t") 
+df0 <- read.table("Simulation-Results_Files/validation_5.1/2023_04_16_Validation_5_bias", fill = TRUE, sep = "\t") 
 names(df0) <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq",
                 "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3",
                 "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
@@ -46,11 +44,12 @@ g0 <- ggplot(data = df0_stat, aes(x = as.factor(sampleid), y = ok_rate, fill = o
   scale_x_discrete(labels = setNames(c("-90", "-80", "-70", "-60", "-50", "-40", "-30", "-20", "-10", "0",
                                        "10", "20", "30", "40", "50", "60", "70", "80", "90"),
                                      unique(df0_stat$sampleid))) +
-  scale_fill_gradientn(colors = RColorBrewer::brewer.pal(3, "Dark2")) +
+  geom_col(fill = "#525657") +
   xlab("Insertion Bias") +
   ylab("Successful Invasions (%)") +
   theme_minimal() +
   theme(text = element_text(size = 12))
 
-plot(g0)
+
+ggsave("images/2023_04_17_Validation_5a_bias.png", plot = g0)
 
