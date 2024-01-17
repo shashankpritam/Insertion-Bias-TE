@@ -35,6 +35,7 @@ df0_stat <- df0_stat %>%
 df0_stat$sampleid <- as.integer(df0_stat$sampleid)
 df0_stat <- df0_stat[order(df0_stat$sampleid),]
 
+
 # Create and plot the graph
 g0 <- ggplot(data = df0_stat, aes(x = as.factor(sampleid), y = ok_rate, fill = ok_rate)) +
   geom_col(show.legend = FALSE) +
@@ -47,9 +48,13 @@ g0 <- ggplot(data = df0_stat, aes(x = as.factor(sampleid), y = ok_rate, fill = o
   geom_col(fill = "#525657") +
   xlab("Insertion Bias") +
   ylab("Successful Invasions (%)") +
-  theme_minimal() +
-  theme(text = element_text(size = 12))
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.background = element_rect(fill = "white", color = "white"),
+    panel.background = element_rect(fill = "white", color = "white")
+  )
 
+# Save the plot with a solid background
+ggsave("images/2023_04_17_Validation_5a_bias.png", plot = g0, bg = "white")
 
-ggsave("images/2023_04_17_Validation_5a_bias.png", plot = g0)
 
