@@ -37,38 +37,38 @@ df0_stat <- df0_stat[order(df0_stat$sampleid),]
 
 
 
-# Create and plot the graph
+# Create and plot the graph with well-defined grid and margin
 g0 <- ggplot(data = df0_stat, aes(x = as.factor(sampleid), y = ok_rate, fill = ok_rate)) +
   geom_col(show.legend = FALSE) +
   geom_hline(yintercept = 0.8, linetype = "dashed", color = "red") +
-  scale_y_continuous(limits = c(0, 1), expand = expansion(mult = c(0, 0)), breaks = seq(0, 1, 0.2),
-                     labels = scales::percent) +
-  scale_x_discrete(labels = setNames(c("-90", "-80", "-70", "-60", "-50", "-40", "-30", "-20", "-10", "0",
-                                       "10", "20", "30", "40", "50", "60", "70", "80", "90"),
-                                     unique(df0_stat$sampleid))) +
+  scale_y_continuous(
+    limits = c(0, 1), 
+    expand = expansion(mult = c(0, 0)), 
+    breaks = seq(0, 1, 0.2),
+    labels = scales::percent
+  ) +
+  scale_x_discrete(
+    limits = as.character(seq(-100, 100, by = 10)),
+    labels = setNames(
+      c("-90", "-80", "-70", "-60", "-50", "-40", "-30", "-20", "-10", "0",
+        "10", "20", "30", "40", "50", "60", "70", "80", "90"),
+      unique(df0_stat$sampleid)
+    )
+  ) +
   geom_col(fill = "#525657") +
   xlab("Insertion Bias") +
   ylab("Successful Invasions (%)") +
   theme_minimal(base_size = 12) +
   theme(
     plot.background = element_rect(fill = "white", color = "white"),
-    panel.background = element_rect(fill = "white", color = "white")
-  )
-
-
-# Adjust the theme to add padding around the plot
-g0 <- g0 +
-  theme(
-    plot.background = element_rect(fill = "white", color = "white"),
     panel.background = element_rect(fill = "white", color = "white"),
-    plot.margin = margin(20, 60, 20, 20, "pt")  # Adds 20pt margin on all sides
+    plot.margin = margin(20, 60, 20, 20, "pt"),  # Adjusted margin
+    panel.grid.major.x = element_line(color = "grey90", size = 0.5),  # Custom major x grid lines
+    panel.grid.major.y = element_line(color = "grey90", size = 0.5)   # Custom major y grid lines
   )
 
 # Save the plot with a solid background and added padding
-ggsave("images/2023_04_17_Validation_5a_bias.png", plot = g0, bg = "white")
+ggsave("images/2023_04_17_Validation_5a_bias.png", plot = g0, bg = "white", width = 10, height = 6)
 
-
-# Save the plot with a solid background
-ggsave("images/2023_04_17_Validation_5a_bias.png", plot = g0, bg = "white")
 
 
