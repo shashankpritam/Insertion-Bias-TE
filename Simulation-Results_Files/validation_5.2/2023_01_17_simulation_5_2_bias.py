@@ -6,11 +6,20 @@ import seaborn as sns
 df = pd.read_csv("Simulation-Results_Files/validation_5.2/2023_05_01_simulation_5_2_bias", 
                  sep="\t", header=None, na_values=[""])
 
+
+df.drop(df.columns[-1], axis=1, inplace=True)
+
+
 # Step 2: Assign column names
 column_names = ["rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", 
                 "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", 
                 "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid"]
 df.columns = column_names
+
+column_names = ["rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", 
+                  "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", 
+                  "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid"]
+
 
 # Step 3: Filter relevant columns and remove rows with NA in 'sampleid'
 relevant_columns = ["rep", "phase", "sampleid", "fwcli", "avcli", "avtes", "gen"]
