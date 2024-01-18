@@ -55,6 +55,7 @@ theme_set(theme_bw())
 df <- read.table("Simulation-Results_Files/validation_5.2/2023_05_01_simulation_5_2_bias", 
                  header = FALSE, sep = "\t", fill = TRUE)
 
+
 # Step 2: Assign column names
 column_names <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", 
                   "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", 
@@ -74,47 +75,63 @@ df$sampleid <- factor(df$sampleid, levels = c("bm90", "bm80", "bm70", "bm60", "b
 
 df <- filter(df, sampleid %in% c("bm50", "b0", "b50"))
 
-# Step 4: Further processing
-df1 <- filter(df, phase %in% c("shot", "inac"))
+# Divide in shot and inact phases
+df1 <- subset(df, phase %in% c("shot", "inac"))
 df2 <- data.frame()
 
+# New dataframe with only the first shotgun & the first inactive phase of each replicate
 repcheck <- 1
 x <- 1
 y <- 1
 while (x < nrow(df1)) {
-  if (repcheck != df1[x, "rep"]) {
+  if (repcheck != df1[x, 1]) {
     y <- 1
   }
-  if (y == 1 && df1[x, "phase"] == "shot") {
-    df2 <- rbind(df2, df1[x, ])
-    y <- 2
-    repcheck <- df1[x, "rep"]
+  if (y == 1) {
+    if (df1[x, 2] == "shot") {
+      df2 <- rbind(df2, df1[x,])
+      y <- 2
+      repcheck <- df1[x, 1]
+    }
   }
-  if (y == 2 && df1[x, "phase"] == "inac") {
-    df2 <- rbind(df2, df1[x, ])
-    y <- 1
+  if (y == 2) {
+    if (df1[x, 2] == "inac") {
+      df2 <- rbind(df2, df1[x,])
+      y <- 1
+    }
   }
   x <- x + 1
 }
 
-# Step 5: Summary statistics
-df_summary <- df2 %>%
-  group_by(sampleid, phase) %>%
-  summarize(
-    av_fwcli = mean(fwcli, na.rm = TRUE),
-    sd_fwcli = sd(fwcli, na.rm = TRUE),
-    av_cli = mean(avcli, na.rm = TRUE),
-    sd_cli = sd(avcli, na.rm = TRUE),
-    av_tes = mean(avtes, na.rm = TRUE),
-    sd_tes = sd(avtes, na.rm = TRUE),
-    .groups = 'drop'
-  )
+# Summary statistics
+#df2 <- select(df2, -c(22))
 
-# Step 6: Plotting
-g_avtes <- ggplot(df_summary, aes(x = phase, y = av_tes, fill = phase)) +
+df_count <- df2 %>%
+  dplyr::count(sampleid, phase)
+
+df_summary <- df2 %>%
+  dplyr::group_by(sampleid, phase) %>%
+  dplyr::summarize(av_fwcli = mean(fwcli), sd_fwcli = sd(fwcli),
+                   av_cli = mean(avcli), sd_cli = sd(avcli), cv_cli_percent = sd(avcli) / mean(avcli),
+                   av_tes = mean(avtes), sd_tes = sd(avtes), cv_tes_percent = sd(avtes) / mean(avtes),
+                   length_previous_phase = mean(gen),
+                   sd_gen_phases = sd(gen))
+df_summary <- cbind(df_count$n, df_summary)
+
+colnames(df_summary)[1] <- "n"
+
+# CI 95%: z* sd/sqrt(population)
+df_summary$ci_fwcli <- qt(0.975, df = df_summary$n - 1) * (df_summary$sd_fwcli / sqrt(df_summary$n))
+df_summary$ci_cli <- qt(0.975, df = df_summary$n - 1) * (df_summary$sd_cli / sqrt(df_summary$n))
+df_summary$ci_tes <- qt(0.975, df = df_summary$n - 1) * (df_summary$sd_tes / sqrt(df_summary$n))
+
+# Filter the data
+df_summary_filtered <- df_summary %>% filter(sampleid %in% c("bm50", "b0", "b50"))
+
+# Plot
+g_avtes <- ggplot(df_summary_filtered, aes(x = phase, y = av_tes, fill = phase)) +
   geom_bar(stat = "identity") +
-  geom_errorbar(aes(ymin = av_tes - sd_tes, ymax = av_tes + sd_tes), 
-                width = 0.2, colour = "black", alpha = 0.9, size = 0.8) +
+  geom_errorbar(aes(x = phase, ymin = av_tes - sd_tes, ymax = av_tes + sd_tes), width = 0.2, colour = "black", alpha = 0.9, size = 0.8) +
   ylab("Insertions per individual") +
   xlab("Phase") +
   ggtitle("Bias vs TE Insertions") +
@@ -124,10 +141,12 @@ g_avtes <- ggplot(df_summary, aes(x = phase, y = av_tes, fill = phase)) +
         panel.grid.minor = element_line(colour = "gray95"),
         strip.background = element_rect(fill = "lightgrey"),
         strip.text = element_text(face = "bold")) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.01))) +
   scale_fill_manual(values = c("#ffd700", "#d73027")) +
-  facet_wrap(~sampleid)
+  facet_wrap(~sampleid, labeller = labeller(sampleid =
+                                              c("b0" = "bias = 0",
+                                                "b50" = "bias = 50",
+                                                "bm50" = "bias = -50")))
 
+# Print the plot
 print(g_avtes)
-ggsave(filename = "images/average_te_ins_wbias.jpg", plot = g_avtes, width = 10, height = 8, dpi = 600)
-
-
