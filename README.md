@@ -10,10 +10,6 @@ This repository contains the results and data associated with the validation and
 
 a.  [Simulation Storm for Minimum Fitness](./Minimum_Fitness.md)
 
-b.  [Phase Lengths for PiRNA Cluster Size](./PhaseLength.md)
-
-c.  [Simulation Storm for Variable Population](./Population_Size.md)
-
 ### Validation
 
 1. [Validation 1 Invasion](./Validation_1_invasion.md)
@@ -27,7 +23,7 @@ c.  [Simulation Storm for Variable Population](./Population_Size.md)
 
 ### Data
 
-  
+
 A. [Simulation Results Files](./Simulation-Results_Files)
 
 -  [Slurm Job Scripts and Simulation Data](./Simulation-Results_Files/Slurm-Jobs)
@@ -52,6 +48,7 @@ A. [Simulation Results Files](./Simulation-Results_Files)
    
 8. [validation_7](./Simulation-Results_Files/validation_7)
    
+
 </details>
 
 i.  [archives](./archives)
