@@ -20,7 +20,9 @@ Shashank Pritam
   Individual](#average-te-insertions-per-individual)
 - [<span class="toc-section-number">6</span> Average Cluster Insertions
   per Individual](#average-cluster-insertions-per-individual)
-- [<span class="toc-section-number">7</span> Conclusion](#conclusion)
+- [<span class="toc-section-number">7</span> Average Phase Length of
+  Simulations](#average-phase-length-of-simulations)
+- [<span class="toc-section-number">8</span> Conclusion](#conclusion)
 
 ## Introduction
 
@@ -209,8 +211,8 @@ df_summary <- df2 %>%
   dplyr::summarize(av_fwcli = mean(fwcli), sd_fwcli = sd(fwcli),
                    av_cli = mean(avcli), sd_cli = sd(avcli), cv_cli_percent = sd(avcli) / mean(avcli),
                    av_tes = mean(avtes), sd_tes = sd(avtes), cv_tes_percent = sd(avtes) / mean(avtes),
-                   length_previous_phase = mean(gen),
-                   sd_gen_phases = sd(gen))
+                   length_previous_phase = mean(gen), sd_length_previous_phase = sd(gen)
+                   )
 df_summary <- cbind(df_count$n, df_summary)
 colnames(df_summary)[1] <- "n"
 
@@ -284,6 +286,7 @@ impact of insertion bias on host defense.
 ``` r
 g_avcli_min <- 0
 g_avcli_max <- 8
+df_summary$sampleid <- factor(df_summary$sampleid, levels = c("bm50", "b0", "b50"))
 
 g_avcli <- ggplot(df_summary, aes(x = phase, y = av_cli, fill = phase)) +
   geom_bar(stat = "identity") +
@@ -302,9 +305,10 @@ g_avcli <- ggplot(df_summary, aes(x = phase, y = av_cli, fill = phase)) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.01))) +
   scale_fill_manual(values = c("#1a9850", "#ffd700")) + 
   facet_wrap(~sampleid, labeller = labeller(sampleid =
-                                             c("b0" = "bias = 0",
-                                               "b50" = "bias = 50",
-                                               "bm50" = "bias = -50"
+                                             c("bm50" = "bias = -50",
+                                              "b0" = "bias = 0",
+                                               "b50" = "bias = 50"
+                                               
 )))
 
 plot(g_avcli)
@@ -319,6 +323,51 @@ plot(g_avcli)
 
 ``` r
 ggsave((filename = "images/Average_Cluster_Insertions_per_Individual.jpg"), plot = g_avcli, width = 16, height = 9, dpi = 600)
+```
+
+</details>
+
+## Average Phase Length of Simulations
+
+<details class="code-fold">
+<summary>Code</summary>
+
+``` r
+g_len <- ggplot(df_summary, aes(x = phase, y = length_previous_phase, fill = phase)) +
+  geom_bar(stat = "identity") +
+  ylab("Average Length of Phases") +
+  xlab("Phase Length") +
+  scale_x_discrete(labels = c("Rapid", "Shotgun")) +  # Custom x-axis labels
+  geom_errorbar(aes(x = phase, ymin = length_previous_phase - sd_length_previous_phase, ymax = length_previous_phase + sd_length_previous_phase), 
+                width = 0.2, colour = "black", alpha = 0.9, size = 0.8) +
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5),
+        panel.grid.major = element_line(colour = "gray90"),
+        panel.grid.minor = element_line(colour = "gray95"),
+        strip.background = element_rect(fill = "lightgrey"),
+        strip.text = element_text(face = "bold")) +
+  ggtitle("Phase Length") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.01))) +
+  scale_fill_manual(values = c("#1a9850", "#ffd700")) + 
+  facet_wrap(~sampleid, labeller = labeller(sampleid =
+                                             c("bm50" = "bias = -50",
+                                              "b0" = "bias = 0",
+                                               "b50" = "bias = 50"
+                                               
+)))
+
+plot(g_len)
+```
+
+</details>
+
+![](PhaseLength_files/figure-commonmark/unnamed-chunk-7-1.png)
+
+<details class="code-fold">
+<summary>Code</summary>
+
+``` r
+ggsave((filename = "images/Phase_Length.jpg"), plot = g_len, width = 16, height = 9, dpi = 600)
 ```
 
 </details>
