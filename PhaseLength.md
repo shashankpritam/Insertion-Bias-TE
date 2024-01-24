@@ -7,6 +7,8 @@ Shashank Pritam
   Methods](#materials--methods)
   - [<span class="toc-section-number">2.1</span> Commands for the
     simulation](#commands-for-the-simulation)
+  - [<span class="toc-section-number">2.2</span> Seed values for the
+    simulation](#seed-values-for-the-simulation)
 - [<span class="toc-section-number">3</span> Visualization in
   R](#visualization-in-r)
   - [<span class="toc-section-number">3.1</span> Set the environment by
@@ -22,7 +24,8 @@ Shashank Pritam
   per Individual](#average-cluster-insertions-per-individual)
 - [<span class="toc-section-number">7</span> Average Phase Length of
   Simulations](#average-phase-length-of-simulations)
-- [<span class="toc-section-number">8</span> Conclusion](#conclusion)
+- [<span class="toc-section-number">8</span> Fitness](#fitness)
+- [<span class="toc-section-number">9</span> Conclusion](#conclusion)
 
 ## Introduction
 
@@ -70,6 +73,14 @@ done
 ```
 
 </details>
+
+### Seed values for the simulation
+
+| Bias | Sample ID | Seed Value          |
+|------|-----------|---------------------|
+| 0    | b0        | 1705607730979174052 |
+| 50   | b50       | 1705607730980408965 |
+| -50  | bm50      | 1705607730975817076 |
 
 ## Visualization in R
 
@@ -162,6 +173,8 @@ ggsave((filename = "images/TE_Insertion_Per_Diploid_Individual_Through_Generatio
 ```
 
 </details>
+
+![](images/TE_Insertion_Per_Diploid_Individual_Through_Generations.jpg)
 
 This plot depicts the average transposon insertion (‘avtes’ represented
 by the y-axis) as we trace the replication of the diploid organism
@@ -264,6 +277,8 @@ ggsave((filename = "images/Average_TE_insertions_per_individual.jpg"), plot = co
 
 </details>
 
+![](images/Average_TE_insertions_per_individual.jpg)
+
 In our analysis, we identified the first generation displaying both
 “Shotgun” and “Inactive” phases. To optimize computational resources and
 time, we utilize these generations as proxies for the preceding
@@ -311,21 +326,13 @@ g_avcli <- ggplot(df_summary, aes(x = phase, y = av_cli, fill = phase)) +
                                                
 )))
 
-plot(g_avcli)
-```
 
-</details>
-
-![](PhaseLength_files/figure-commonmark/unnamed-chunk-6-1.png)
-
-<details class="code-fold">
-<summary>Code</summary>
-
-``` r
 ggsave((filename = "images/Average_Cluster_Insertions_per_Individual.jpg"), plot = g_avcli, width = 16, height = 9, dpi = 600)
 ```
 
 </details>
+
+![](images/Average_Cluster_Insertions_per_Individual.jpg)
 
 ## Average Phase Length of Simulations
 
@@ -336,7 +343,7 @@ ggsave((filename = "images/Average_Cluster_Insertions_per_Individual.jpg"), plot
 g_len <- ggplot(df_summary, aes(x = phase, y = length_previous_phase, fill = phase)) +
   geom_bar(stat = "identity") +
   ylab("Average Length of Phases") +
-  xlab("Phase Length") +
+  xlab("Phase") +
   scale_x_discrete(labels = c("Rapid", "Shotgun")) +  # Custom x-axis labels
   geom_errorbar(aes(x = phase, ymin = length_previous_phase - sd_length_previous_phase, ymax = length_previous_phase + sd_length_previous_phase), 
                 width = 0.2, colour = "black", alpha = 0.9, size = 0.8) +
@@ -356,21 +363,52 @@ g_len <- ggplot(df_summary, aes(x = phase, y = length_previous_phase, fill = pha
                                                
 )))
 
-plot(g_len)
+
+ggsave((filename = "images/Phase_Length.jpg"), plot = g_len, width = 16, height = 9, dpi = 600)
 ```
 
 </details>
 
-![](PhaseLength_files/figure-commonmark/unnamed-chunk-7-1.png)
+![](images/Phase_Length.jpg)
+
+## Fitness
 
 <details class="code-fold">
 <summary>Code</summary>
 
 ``` r
-ggsave((filename = "images/Phase_Length.jpg"), plot = g_len, width = 16, height = 9, dpi = 600)
+f_min = 0.5
+f_max = 1
+
+g_fit <- ggplot(df1, aes(x = gen, y = avw, group = rep, color = phase)) +
+  geom_bar(stat = "identity") +
+  ylab("Average Fitness of Phases") +
+  xlab("Phase") +
+  ylim(f_min, f_max) +  # Normalize y-axis
+  xlim(0, 5000) +  # Normalize x-axis
+  scale_x_discrete(labels = c("Rapid", "Shotgun")) +  # Custom x-axis labels
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5),
+        panel.grid.major = element_line(colour = "gray90"),
+        panel.grid.minor = element_line(colour = "gray95"),
+        strip.background = element_rect(fill = "lightgrey"),
+        strip.text = element_text(face = "bold")) +
+  ggtitle("Fitness") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.01))) +
+  scale_fill_manual(values = c("#1a9850", "#ffd700")) + 
+  facet_wrap(~sampleid, labeller = labeller(sampleid =
+                                             c("bm50" = "bias = -50",
+                                              "b0" = "bias = 0",
+                                               "b50" = "bias = 50"
+                                               
+)))
+
+ggsave((filename = "images/Fitness.jpg"), plot = g_fit, width = 16, height = 9, dpi = 600)
 ```
 
 </details>
+
+![](images/Fitness.jpg)
 
 ## Conclusion
 
