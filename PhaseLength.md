@@ -24,13 +24,12 @@ Shashank Pritam
   per Individual](#average-cluster-insertions-per-individual)
 - [<span class="toc-section-number">7</span> Average Phase Length of
   Simulations](#average-phase-length-of-simulations)
-- [<span class="toc-section-number">8</span> Fitness](#fitness)
-- [<span class="toc-section-number">9</span> Conclusion](#conclusion)
 
 ## Introduction
 
-In this simulation we explore the question - How does various phases of
-invasion change with bias?
+The simulation investigates how bias influences the dynamics of
+transposon invasion throughout distinct phases: Rapid, Shotgun, and
+Inactive.
 
 ## Materials & Methods
 
@@ -176,9 +175,7 @@ ggsave((filename = "images/TE_Insertion_Per_Diploid_Individual_Through_Generatio
 
 ![](images/TE_Insertion_Per_Diploid_Individual_Through_Generations.jpg)
 
-This plot depicts the average transposon insertion (‘avtes’ represented
-by the y-axis) as we trace the replication of the diploid organism
-across generations.
+#### This plot depicts the average transposon insertion (‘avtes’ represented by the y-axis) as we trace the 100 replications of the diploid organism across 5000 generations.
 
 ## Average TE Insertions per Individual
 
@@ -217,6 +214,7 @@ while (x < nrow(df1)) {
 
 # Summary statistics
 df2 <- select(df2, -c(22))
+
 df_count <- df2 %>%
   dplyr::count(sampleid, phase)
 df_summary <- df2 %>%
@@ -226,6 +224,8 @@ df_summary <- df2 %>%
                    av_tes = mean(avtes), sd_tes = sd(avtes), cv_tes_percent = sd(avtes) / mean(avtes),
                    length_previous_phase = mean(gen), sd_length_previous_phase = sd(gen)
                    )
+
+
 df_summary <- cbind(df_count$n, df_summary)
 colnames(df_summary)[1] <- "n"
 
@@ -279,19 +279,9 @@ ggsave((filename = "images/Average_TE_insertions_per_individual.jpg"), plot = co
 
 ![](images/Average_TE_insertions_per_individual.jpg)
 
-In our analysis, we identified the first generation displaying both
-“Shotgun” and “Inactive” phases. To optimize computational resources and
-time, we utilize these generations as proxies for the preceding
-generations with “Rapid” and “Shotgun” phases. Following data filtration
-procedures, we determine the mean values of ‘avtes’ within each
-generation by calculating their averages. These avtes means are then
-represented on the y-axis of our plot.
+#### In our analysis, we identified the first generation displaying both “Shotgun” and “Inactive” phases. To optimize computational resources and time, we utilize these generations as proxies for the preceding generations with “Rapid” and “Shotgun” phases. Following data filtration procedures, we determine the mean values of ‘avtes’ within each generation by calculating their averages. These avtes means are then represented on the y-axis of our plot.
 
-This plot displays the average TE (Transposable Element) load at the
-conclusion of both “Rapid” and “Shotgun” phases. Moreover, the plot
-reveals a correlation: as the insertion bias increases, there is a
-corresponding decrease in transposon load, indicating a significant
-impact of insertion bias on host defense.
+#### This plot displays the average TE (Transposable Element) load at the conclusion of both “Rapid” and “Shotgun” phases. Moreover, the plot reveals a correlation: as the insertion bias increases, there is a corresponding decrease in transposon load, indicating a significant impact of insertion bias on host defense.
 
 ## Average Cluster Insertions per Individual
 
@@ -334,6 +324,10 @@ ggsave((filename = "images/Average_Cluster_Insertions_per_Individual.jpg"), plot
 
 ![](images/Average_Cluster_Insertions_per_Individual.jpg)
 
+#### mean(avcli) of the first generation of Shotgun and Inactice (Proxies for last generation of Rapid and Shotgun) across 100 replication vs Generation
+
+#### We observe consistent values across different bias values.
+
 ## Average Phase Length of Simulations
 
 <details class="code-fold">
@@ -371,50 +365,6 @@ ggsave((filename = "images/Phase_Length.jpg"), plot = g_len, width = 16, height 
 
 ![](images/Phase_Length.jpg)
 
-## Fitness
+#### mean(gen) values of the first generation of Shotgun and Inactice (Proxies for last generation of Rapid and Shotgun) across 100 replication vs Generation
 
-<details class="code-fold">
-<summary>Code</summary>
-
-``` r
-f_min = 0.5
-f_max = 1
-
-g_fit <- ggplot(df1, aes(x = gen, y = avw, group = rep, color = phase)) +
-  geom_bar(stat = "identity") +
-  ylab("Average Fitness of Phases") +
-  xlab("Phase") +
-  ylim(f_min, f_max) +  # Normalize y-axis
-  xlim(0, 5000) +  # Normalize x-axis
-  scale_x_discrete(labels = c("Rapid", "Shotgun")) +  # Custom x-axis labels
-  theme(legend.position = "none",
-        plot.title = element_text(hjust = 0.5),
-        panel.grid.major = element_line(colour = "gray90"),
-        panel.grid.minor = element_line(colour = "gray95"),
-        strip.background = element_rect(fill = "lightgrey"),
-        strip.text = element_text(face = "bold")) +
-  ggtitle("Fitness") +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.01))) +
-  scale_fill_manual(values = c("#1a9850", "#ffd700")) + 
-  facet_wrap(~sampleid, labeller = labeller(sampleid =
-                                             c("bm50" = "bias = -50",
-                                              "b0" = "bias = 0",
-                                               "b50" = "bias = 50"
-                                               
-)))
-
-ggsave((filename = "images/Fitness.jpg"), plot = g_fit, width = 16, height = 9, dpi = 600)
-```
-
-</details>
-
-![](images/Fitness.jpg)
-
-## Conclusion
-
-The duration of the three phases—Rapid, Shotgun, and Inactive—changes
-based on insertion bias and piRNA cluster size. A higher bias leads to
-longer phase durations, suggesting that bias promotes the invasion
-period. Conversely, as piRNA cluster size grows, the phases shorten,
-indicating that as piRNAs become more established in the genome, the
-invasion period decreases.
+#### We observe consistent values across different bias values except bias = 50 has slightly longer Shotgun phase of transposon invasion.
