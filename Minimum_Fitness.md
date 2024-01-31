@@ -4,7 +4,7 @@ Shashank Pritam
 - [<span class="toc-section-number">1</span>
   Introduction](#introduction)
 - [<span class="toc-section-number">2</span> Materials &
-  Methods](#materials-methods)
+  Methods](#materials--methods)
   - [<span class="toc-section-number">2.1</span> Commands for the
     simulation](#commands-for-the-simulation)
   - [<span class="toc-section-number">2.2</span>
@@ -61,7 +61,7 @@ Simulations were ran with the following parameters:
 
 Random Clusters were Generated using this snippet:
 
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 
 ``` python
@@ -78,7 +78,7 @@ def get_rand_clusters():
 
 ### Set the environment by loading modules
 
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 
 ``` r
@@ -91,7 +91,7 @@ theme_set(theme_bw())
 
 ### Load Data
 
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 
 ``` r
@@ -139,7 +139,7 @@ df2 <- load_data('Simulation-Results_Files/simulation_storm/minfit/14thSep23at11
 
 ### ggplot function to Plot Data
 
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 
 ``` r
@@ -157,7 +157,7 @@ plot_data <- function(df_list) {
     xlab("Cluster Size (% of 10 Mb Genome)") +
     labs(
       title = "Cluster Size (% of 10 Mb Genome) vs Average Bias",
-      subtitle = paste("Minimum Fitness by Color | Transposition rate (–u):", unique(df_final$u))
+      subtitle = paste("Minimum Fitness by Color | Transposition rate (u):", unique(df_final$u))
     ) +
     scale_color_gradientn(
       name = "Minimum Fitness of the Population",
@@ -182,16 +182,18 @@ plot_data <- function(df_list) {
 
 ### Create the plots
 
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 
 ``` r
 # Save the final plot
 plot1 <- plot_data(df1)
 ggsave(filename = "images/minimum_fitness_u02.jpg", plot = plot1, width = 10, height = 6)
+ggsave(filename = "images/minimum_fitness_u02.pdf", plot = plot1, width = 10, height = 6, device = "pdf")
 
 plot2 <- plot_data(df2)
 ggsave(filename = "images/minimum_fitness_u01.jpg", plot = plot2, width = 10, height = 6)
+ggsave(filename = "images/minimum_fitness_u01.pdf", plot = plot2, width = 10, height = 6, device = "pdf")
 ```
 
 </details>

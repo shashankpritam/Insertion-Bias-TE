@@ -102,7 +102,7 @@ Visualization:
 # Load libraries
 
 # Read data and set column names
-df0 <- read.table("2023_04_16_Validation_5_bias", fill = TRUE, sep = "\t") 
+df0 <- read.table("Simulation-Results_Files/validation_5.1/2023_04_16_Validation_5_bias", fill = TRUE, sep = "\t") 
 names(df0) <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq",
                 "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3",
                 "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
@@ -165,6 +165,7 @@ g0 <- ggplot(data = df0_stat, aes(x = as.factor(sampleid), y = ok_rate, fill = o
 
 # Save the plot with a solid background and added padding
 ggsave("images/2023_04_17_Validation_5a_bias.png", plot = g0, bg = "white", width = 10, height = 6)
+ggsave("images/2023_04_17_Validation_5a_bias.pdf", plot = g0, bg = "white", width = 10, height = 6, device = "pdf")
 
 plot(g0)
 ```
