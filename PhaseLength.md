@@ -169,6 +169,7 @@ combined_plot <- grid.arrange(g1, g2, g3, nrow = 1, widths = c(1, 1, 1))
 
 ``` r
 ggsave((filename = "images/TE_Insertion_Per_Diploid_Individual_Through_Generations.jpg"), plot = combined_plot, width = 16, height = 9, dpi = 600)
+ggsave((filename = "images/TE_Insertion_Per_Diploid_Individual_Through_Generations.pdf"), plot = combined_plot, width = 16, height = 9, dpi = 600, device = "pdf")
 ```
 
 </details>
@@ -273,6 +274,7 @@ combined_p_plot <- grid.arrange(p1, p2, p3, nrow = 1, widths = c(1, 1, 1))
 
 ``` r
 ggsave((filename = "images/Average_TE_insertions_per_individual.jpg"), plot = combined_p_plot, width = 16, height = 9, dpi = 600)
+ggsave((filename = "images/Average_TE_insertions_per_individual.pdf"), plot = combined_p_plot, width = 16, height = 9, dpi = 600, device = "pdf")
 ```
 
 </details>
@@ -359,6 +361,7 @@ g_len <- ggplot(df_summary, aes(x = phase, y = length_previous_phase, fill = pha
 
 
 ggsave((filename = "images/Phase_Length.jpg"), plot = g_len, width = 16, height = 9, dpi = 600)
+ggsave((filename = "images/Phase_Length.pdf"), plot = g_len, width = 16, height = 9, dpi = 600, device = "pdf")
 ```
 
 </details>

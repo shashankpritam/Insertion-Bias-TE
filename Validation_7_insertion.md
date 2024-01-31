@@ -138,11 +138,24 @@ a <- ggplot(df2, aes(x = sampleid)) +
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5))
 
-ggsave(filename = "images/Validation_7_1A.png", plot = a, width = 10, height = 10, units = "in")
+ggsave(
+  filename = "images/Validation_7_1A.png",
+  plot = a,
+  width = 10,
+  height = 10,
+  units = "in"
+)
+ggsave(
+  filename = "images/Validation_7_1A.pdf",
+  plot = a,
+  width = 10,
+  height = 10,
+  units = "in"
+)
 print(a)
 ```
 
-![](images/Validation_7_insertion_files/figure-gfm/plot-av-cli-1.png)<!-- -->
+![](Validation_7_insertion_files/figure-gfm/plot-av-cli-1.png)<!-- -->
 
 The distribution of average TE (Transposable Elements) insertions across
 different insertion bias levels for all replicates. The x-axis shows the
@@ -168,11 +181,14 @@ df_filtered$insertion_bias <- as.factor(df_filtered$sampleid)
 png(filename = "images/Validation_7_1B.png", width = 800, height = 600)
 
 # Boxplot
-boxplot(df_filtered$TE_insertions ~ df_filtered$insertion_bias, 
-        border = rgb(0.1, 0.1, 0.7, 0.5),
-        main="Variability in Cluster Insertion Across 100 Replications", 
-        xlab="Insertion Bias", 
-        ylab="TE Cluster Insertion Variability Across 100 Replications")
+boxplot(df_filtered$TE_insertions ~ df_filtered$insertion_bias,
+  border = rgb(0.1, 0.1, 0.7, 0.5),
+  main = "Variability in Cluster Insertion Across 100 Replications",
+  xlab = "Insertion Bias",
+  ylab = "TE Cluster Insertion Variability Across 100 Replications")
+
+
+
 
 # Add data points
 mylevels <- levels(df_filtered$insertion_bias)
@@ -239,10 +255,11 @@ c <- ggplot(df_summary, aes(x = sampleid)) +
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5))
 ggsave(filename = "images/Validation_7_1C.png", plot = c, width = 10, height = 10, units = "in")
+ggsave(filename = "images/Validation_7_1C.pdf", plot = c, width = 10, height = 10, units = "in", device = "pdf")
 print(c)
 ```
 
-![](images/Validation_7_insertion_files/figure-gfm/plot-mean-cli-1.png)<!-- -->
+![](Validation_7_insertion_files/figure-gfm/plot-mean-cli-1.png)<!-- -->
 
 This plot visualizes the mean of Average Cluster Insertion across
 various Insertion Bias levels, with error bars indicating standard
@@ -278,7 +295,7 @@ ggsave(filename = "images/Validation_7_1D.png", plot = d, width = 10, height = 1
 print(d)
 ```
 
-![](images/Validation_7_insertion_files/figure-gfm/mean_av_cli-1.png)<!-- -->
+![](Validation_7_insertion_files/figure-gfm/mean_av_cli-1.png)<!-- -->
 
 Figure 3 presents the same data as Figure 2, but with a logarithmic
 transformation applied to the y-values. The transformation is performed
@@ -309,7 +326,7 @@ ggsave(filename = "images/Validation_7_1E.png", plot = e, width = 10, height = 1
 print(e)
 ```
 
-![](images/Validation_7_insertion_files/figure-gfm/plot-avtes-1.png)<!-- -->
+![](Validation_7_insertion_files/figure-gfm/plot-avtes-1.png)<!-- -->
 
 Average TE insertions (y-axis) and insertion bias (x-axis) for a single
 replicate . The x-axis represents the Insertion Bias varying from -100
@@ -340,7 +357,7 @@ ggsave(filename = "images/Validation_7_1F.png", plot = a, width = 10, height = 1
 print(f)
 ```
 
-![](images/Validation_7_insertion_files/figure-gfm/plot-mean-avtes-1.png)<!-- -->
+![](Validation_7_insertion_files/figure-gfm/plot-mean-avtes-1.png)<!-- -->
 
 All replicates’ mean average TE insertions (y-axis) against the
 insertion bias (x-axis). The plot includes error bars, which visually
