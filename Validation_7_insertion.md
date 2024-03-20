@@ -155,7 +155,7 @@ ggsave(
 plot(a)
 ```
 
-![](Validation_7_insertion_files/figure-gfm/plot-av-cli-1.png)<!-- -->
+![](images/Validation_7_1A.jpeg)<!-- -->
 
 The distribution of average TE (Transposable Elements) insertions across
 different insertion bias levels for all replicates. The x-axis shows the
