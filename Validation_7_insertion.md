@@ -139,7 +139,7 @@ a <- ggplot(df2, aes(x = sampleid)) +
   theme(plot.title = element_text(hjust = 0.5))
 
 ggsave(
-  filename = "images/Validation_7_1A.png",
+  filename = "images/Validation_7_1A.jpeg",
   plot = a,
   width = 10,
   height = 10,
@@ -152,10 +152,15 @@ ggsave(
   height = 10,
   units = "in"
 )
-print(a)
+plot(a)
 ```
 
-![](images/Validation_7_1A.png)<!-- -->
+![](Validation_7_insertion_files/figure-gfm/plot-av-cli-1.png)<!-- -->
+
+<figure>
+<img src="images/Validation_7_1A.jpeg" alt="Validation 7 A" />
+<figcaption aria-hidden="true">Validation 7 A</figcaption>
+</figure>
 
 The distribution of average TE (Transposable Elements) insertions across
 different insertion bias levels for all replicates. The x-axis shows the
