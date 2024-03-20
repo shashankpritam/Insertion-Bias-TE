@@ -157,11 +157,6 @@ plot(a)
 
 ![](Validation_7_insertion_files/figure-gfm/plot-av-cli-1.png)<!-- -->
 
-<figure>
-<img src="images/Validation_7_1A.jpeg" alt="Validation 7 A" />
-<figcaption aria-hidden="true">Validation 7 A</figcaption>
-</figure>
-
 The distribution of average TE (Transposable Elements) insertions across
 different insertion bias levels for all replicates. The x-axis shows the
 different Insertion Bias levels ranging from -100 to 100. The y-axis
