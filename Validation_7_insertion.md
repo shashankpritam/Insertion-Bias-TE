@@ -152,10 +152,10 @@ ggsave(
   height = 10,
   units = "in"
 )
-plot(a)
 ```
 
-![](images/Validation_7_1A.jpeg)<!-- -->
+<img src="images/Validation_7_1A.jpeg"
+style="display: block; margin: 0 auto" width="800" height="600" />
 
 The distribution of average TE (Transposable Elements) insertions across
 different insertion bias levels for all replicates. The x-axis shows the
