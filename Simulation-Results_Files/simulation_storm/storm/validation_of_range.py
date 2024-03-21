@@ -42,4 +42,3 @@ plt.grid(True)
 
 # Save the plot with optimized settings
 plt.savefig('avtes_yz_color_coded.png', dpi=150, format='png', bbox_inches='tight')
-plt.show()
