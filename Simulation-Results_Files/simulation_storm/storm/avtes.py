@@ -24,11 +24,7 @@ ORDER BY s.y, s.z, s.rep;
 # Use the connection object to execute the query
 df = conn.execute(query).df()
 
-# Now you can proceed with your data processing and visualization
-# Don't forget to close the connection when done
 conn.close()
-
-
 
 # Step 2: Visualization with Seaborn
 g = sns.FacetGrid(df, col="z", row="y", hue="rep", margin_titles=True, palette="viridis", legend_out=True)
@@ -39,4 +35,5 @@ g.add_legend(title="Replicate")
 g.set_axis_labels("Generation", "Average avtes")
 g.set_titles(row_template='y={row_name}', col_template='z={col_name}')
 
-plt.show()
+# Save the plot with optimized settings
+plt.savefig('avtes_new.png', dpi=150, format='png', bbox_inches='tight')

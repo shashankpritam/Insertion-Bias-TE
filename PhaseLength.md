@@ -77,9 +77,9 @@ done
 
 | Bias | Sample ID | Seed Value          |
 |------|-----------|---------------------|
-| 0    | b0        | 1705607730979174052 |
-| 50   | b50       | 1705607730980408965 |
-| -50  | bm50      | 1705607730975817076 |
+| 0    | b0        | 1710966014330428879 |
+| 50   | b50       | 1710966014334456379 |
+| -50  | bm50      | 1710966014326260870 |
 
 ## Visualization in R
 
@@ -109,7 +109,7 @@ theme_set(theme_bw())
 p <- c("#1a9850", "#ffd700", "#d73027")
 
 # Set the path of the combined file
-combined_file_path <- "Simulation-Results_Files/simulation_storm/phase_len/Phase_Length_Simulation"
+combined_file_path <- "Simulation-Results_Files/simulation_storm/phase_len_2/Phase_Length_Simulation_0_exploration"
 
 # Read the data
 df <- read.table(combined_file_path, fill = TRUE, sep = "\t", header = TRUE)
