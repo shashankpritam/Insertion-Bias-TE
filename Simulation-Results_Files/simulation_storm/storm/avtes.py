@@ -3,7 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import duckdb
 import pandas as pd
-import datetime
 from matplotlib.colors import LinearSegmentedColormap
 
 def parse_3tot(value):
@@ -15,7 +14,7 @@ def fetch_data_in_bulk(database, generation):
     query = f"""
     SELECT y, z, "3tot"
     FROM simulations
-    WHERE z > y AND popstat = 'ok' AND gen = {generation};
+    WHERE popstat = 'ok' AND gen = {generation};
     """
     with duckdb.connect(database=database, read_only=True) as conn:
         df = conn.execute(query).df()
@@ -60,7 +59,7 @@ def main():
 
             ax = axes[i, j]
             im = ax.imshow(heatmap_data, cmap=cmap, interpolation='nearest', origin='lower',
-                           extent=[y_min, df['y'].max(), z_min, df['z'].max()], vmin=global_min, vmax=global_max)
+                           extent=[y_min, df['y'].max(), z_min, df['z'].max()], vmin=global_min, vmax=6)
             ax.set_title(f'Gen {generation} in {"Simulation " + database.split("_")[0]}')
             ax.grid(False)
 
