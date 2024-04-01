@@ -9,10 +9,9 @@ def parse_3tot(value):
     return np.array([float(x.split(',')[0].split('(')[0]) if x else 0 for x in value])
 
 def fetch_data_in_bulk(database, generation):
-    """Fetch all relevant data in one go to minimize database connections, filtering by popstat and generation."""
-    # Fetching 'avcli' instead of '3tot'
+    """Fetch all relevant data in one go, filtering by popstat and generation, including rep."""
     query = f"""
-    SELECT y, z, avcli
+    SELECT y, z, rep, avcli
     FROM simulations
     WHERE popstat = 'ok' AND gen = {generation};
     """
@@ -20,15 +19,14 @@ def fetch_data_in_bulk(database, generation):
         df = conn.execute(query).df()
     return df
 
-
 def create_custom_colormap():
     """Create a custom colormap from green to yellow to blue."""
-    colors = ["green", "yellow", "blue"]  # Adjusted color range for the gradient
+    colors = ["green", "yellow", "blue"]  # Color gradient
     cmap_name = 'gyb'
     return LinearSegmentedColormap.from_list(cmap_name, colors, N=256)
 
 def process_data(df):
-    """Compute average 'avcli' values for all (y, z) pairs at once."""
+    """Compute average 'avcli' values across all reps for each (y, z) pair."""
     avg_avcli_df = df.groupby(['y', 'z'])['avcli'].mean().reset_index()
     return avg_avcli_df
 
@@ -59,7 +57,7 @@ def main():
 
             ax = axes[i, j]
             im = ax.imshow(heatmap_data, cmap=cmap, interpolation='nearest', origin='lower',
-                           extent=[y_min, df['y'].max(), z_min, df['z'].max()], vmin=global_min, vmax=global_max)
+                           extent=[y_min, df['y'].max(), z_min, df['z'].max()], vmin=0, vmax=1)
             ax.set_title(f'Gen {generation} in {"Simulation " + database.split("_")[0]}')
             ax.grid(False)
 
