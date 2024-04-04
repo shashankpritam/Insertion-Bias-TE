@@ -57,5 +57,3 @@ ii.  [README.md](./README.md)
 
 
 Feel free to explore the repository for more details on the validation and simulation results.
-
-<img src="images/animation.gif" alt="animation.gif" center/>
