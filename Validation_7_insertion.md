@@ -254,17 +254,15 @@ c <- ggplot(df_summary, aes(x = sampleid)) +
   theme(plot.title = element_text(hjust = 0.5))
 ggsave(filename = "images/Validation_7_1C.jpg", plot = c, width = 10, height = 10, units = "in")
 ggsave(filename = "images/Validation_7_1C.pdf", plot = c, width = 10, height = 10, units = "in", device = "pdf")
-print(c)
 ```
 
-![](Validation_7_insertion_files/figure-gfm/plot-mean-cli-1.png)<!-- -->
-
-This plot visualizes the mean of Average Cluster Insertion across
-various Insertion Bias levels, with error bars indicating standard
-deviation. Unlike previous plot’s individual data points, this
-representation provides a concise summary of the data (mean), making it
-easier to discern overall trends and reducing the impact of outliers.
-The expected values are depicted by a dashed red line.
+![](images/Validation_7_1C.jpg) This plot visualizes the mean of Average
+Cluster Insertion across various Insertion Bias levels, with error bars
+indicating standard deviation. Unlike previous plot’s individual data
+points, this representation provides a concise summary of the data
+(mean), making it easier to discern overall trends and reducing the
+impact of outliers. The expected values are depicted by a dashed red
+line.
 
 #### Figure 2 B
 
@@ -291,10 +289,9 @@ d <- ggplot(df_summary, aes(x = sampleid)) +
 
 ggsave(filename = "images/Validation_7_1D.jpg", plot = d, width = 10, height = 10, units = "in")
 ggsave(filename = "images/Validation_7_1D.pdf", plot = d, width = 10, height = 10, units = "in")
-print(d)
 ```
 
-![](Validation_7_insertion_files/figure-gfm/mean_av_cli-1.png)<!-- -->
+![](images/Validation_7_1D.jpg)
 
 Figure 3 presents the same data as Figure 2, but with a logarithmic
 transformation applied to the y-values. The transformation is performed
@@ -323,10 +320,9 @@ e <- ggplot(df_rep1, aes(x = sampleid, y = avtes)) +
 
 ggsave(filename = "images/Validation_7_1E.jpg", plot = e, width = 10, height = 10, units = "in")
 ggsave(filename = "images/Validation_7_1E.pdf", plot = e, width = 10, height = 10, units = "in")
-print(e)
 ```
 
-![](Validation_7_insertion_files/figure-gfm/plot-avtes-1.png)<!-- -->
+![](images/Validation_7_1E.jpg)
 
 Average TE insertions (y-axis) and insertion bias (x-axis) for a single
 replicate . The x-axis represents the Insertion Bias varying from -100
@@ -355,10 +351,9 @@ f <- ggplot(df_summary_2, aes(x = sampleid)) +
 
 ggsave(filename = "images/Validation_7_1F.jpg", plot = f, width = 10, height = 10, units = "in")
 ggsave(filename = "images/Validation_7_1F.pdf", plot = f, width = 10, height = 10, units = "in")
-print(f)
 ```
 
-![](Validation_7_insertion_files/figure-gfm/plot-mean-avtes-1.png)<!-- -->
+![](images/Validation_7_1F.jpg)
 
 All replicates’ mean average TE insertions (y-axis) against the
 insertion bias (x-axis). The plot includes error bars, which visually
