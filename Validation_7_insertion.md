@@ -132,14 +132,14 @@ df2$pc <- sapply(df2$sampleid, function(x) pc(x, 0.03))
 a <- ggplot(df2, aes(x = sampleid)) +
   geom_point(aes(y = avcli), color = "#003f5c") +
   geom_line(aes(y = pc), color = "#ffa600") +
-  labs(title = "Average Cluster Insertion across Insertion Bias",
+  labs(title = "Average Cluster Insertion across Insertion Bias: All Data Points",
        x = "Insertion Bias",
-       y = "Average Cluster Insertion / Expected Value") +
+       y = "Average Cluster Insertion Observed (Dots) and Expected Value (Lines)") +
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5))
 
 ggsave(
-  filename = "images/Validation_7_1A.jpeg",
+  filename = "images/Validation_7_1A.jpg",
   plot = a,
   width = 10,
   height = 10,
@@ -154,8 +154,7 @@ ggsave(
 )
 ```
 
-<img src="images/Validation_7_1A.jpeg"
-style="display: block; margin: 0 auto" width="800" height="600" />
+![](images/Validation_7_1A.jpg)
 
 The distribution of average TE (Transposable Elements) insertions across
 different insertion bias levels for all replicates. The x-axis shows the
@@ -178,7 +177,7 @@ df_filtered$TE_insertions <- 100 * df_filtered$TE_insertions
 df_filtered$insertion_bias <- as.factor(df_filtered$sampleid)
 
 # Create a new plot file with larger dimensions
-png(filename = "images/Validation_7_1B.png", width = 800, height = 600)
+png(filename = "images/Validation_7_1B.jpg", width = 800, height = 600)
 
 # Boxplot
 boxplot(df_filtered$TE_insertions ~ df_filtered$insertion_bias,
@@ -213,8 +212,7 @@ for(i in 1:length(mylevels)){
 invisible(dev.off())
 ```
 
-<img src="images/Validation_7_1B.png"
-style="display: block; margin: 0 auto" width="800" height="600" />
+![](images/Validation_7_1B.jpg)
 
 The plot displays the variability in Transposable Elements (TE)
 insertions across different levels of Insertion Bias, using data from
@@ -251,10 +249,10 @@ c <- ggplot(df_summary, aes(x = sampleid)) +
   geom_line(aes(y = pc), color = "#ffa600") +
   labs(title = "Observed and Expected Average Cluster Insertion across Insertion Bias",
        x = "Insertion Bias",
-       y = "Mean of Average Cluster Insertion") +
+       y = "Mean of Average Cluster Insertion Observed (Dots)") +
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5))
-ggsave(filename = "images/Validation_7_1C.png", plot = c, width = 10, height = 10, units = "in")
+ggsave(filename = "images/Validation_7_1C.jpg", plot = c, width = 10, height = 10, units = "in")
 ggsave(filename = "images/Validation_7_1C.pdf", plot = c, width = 10, height = 10, units = "in", device = "pdf")
 print(c)
 ```
@@ -291,7 +289,8 @@ d <- ggplot(df_summary, aes(x = sampleid)) +
 
 # Print the plot
 
-ggsave(filename = "images/Validation_7_1D.png", plot = d, width = 10, height = 10, units = "in")
+ggsave(filename = "images/Validation_7_1D.jpg", plot = d, width = 10, height = 10, units = "in")
+ggsave(filename = "images/Validation_7_1D.pdf", plot = d, width = 10, height = 10, units = "in")
 print(d)
 ```
 
@@ -322,7 +321,8 @@ e <- ggplot(df_rep1, aes(x = sampleid, y = avtes)) +
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5))
 
-ggsave(filename = "images/Validation_7_1E.png", plot = e, width = 10, height = 10, units = "in")
+ggsave(filename = "images/Validation_7_1E.jpg", plot = e, width = 10, height = 10, units = "in")
+ggsave(filename = "images/Validation_7_1E.pdf", plot = e, width = 10, height = 10, units = "in")
 print(e)
 ```
 
@@ -353,7 +353,8 @@ f <- ggplot(df_summary_2, aes(x = sampleid)) +
     theme_minimal() +
     theme(plot.title = element_text(hjust = 0.5))
 
-ggsave(filename = "images/Validation_7_1F.png", plot = a, width = 10, height = 10, units = "in")
+ggsave(filename = "images/Validation_7_1F.jpg", plot = f, width = 10, height = 10, units = "in")
+ggsave(filename = "images/Validation_7_1F.pdf", plot = f, width = 10, height = 10, units = "in")
 print(f)
 ```
 
