@@ -320,6 +320,7 @@ g_avcli <- ggplot(df_summary, aes(x = phase, y = av_cli, fill = phase)) +
 
 
 ggsave((filename = "images/Average_Cluster_Insertions_per_Individual.jpg"), plot = g_avcli, width = 16, height = 9, dpi = 600)
+ggsave((filename = "images/Average_Cluster_Insertions_per_Individual.pdf"), plot = g_avcli, width = 16, height = 9, dpi = 600)
 ```
 
 </details>
