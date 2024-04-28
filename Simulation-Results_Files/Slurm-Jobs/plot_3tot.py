@@ -67,7 +67,7 @@ def fetch_data_in_bulk(database, rep_values, generations):
 
 
 def plot_data(database, output_file):
-    rep_values = range(1, 2)
+    rep_values = range(1, 101)
     generations = [1, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
     
     # Creating a figure with a specific size to accommodate all subplots
@@ -93,14 +93,24 @@ def plot_data(database, output_file):
         pivot_z = gen_data.pivot(index="y", columns="z", values="3tot_z").fillna(0).infer_objects(copy=False)
 
         def scale_data(y, x):
-            s_values = 2 * (y / (x + y)) - 1
-            s_values[(y == 0) & (x == 0)] = np.nan  # Handle zero cases appropriately
+            with np.errstate(divide='ignore', invalid='ignore'):  # Handle division and invalid operations gracefully
+                s_values = 2 * (y / (x + y)) - 1
+            s_values[(y == 0) & (x == 0)] = 0  # Explicitly set 0 when both X and Y are zero
+            # Also handle the case where X+Y == 0 but not both are zero (if necessary)
+            s_values[np.isinf(s_values)] = 0  # Replace infinity (result from division by zero when not both are zero)
             return s_values
+
 
         scaled_data = scale_data(pivot_y, pivot_z)
 
         
-        sns.heatmap(scaled_data, cmap="RdBu_r", center=0, ax=ax, mask=np.isnan(scaled_data), vmin=-1, vmax=1)
+        if not gen_data.empty:
+            sns.heatmap(scaled_data, cmap="RdBu_r", center=0, ax=ax, mask=np.isnan(scaled_data), vmin=-1, vmax=1)
+        else:
+            ax.text(0.5, 0.5, 'No data available', ha='center', va='center')
+            ax.set_xlim(0, 1)
+            ax.set_ylim(0, 1)
+
         ax.set_title(r'Gen ${}$'.format(gen), fontsize=20)
         ax.set_xlabel(r'Bias 1 TE', fontsize=20,)
         ax.set_ylabel(r'Bias 2 TE' if col == 0 else "", fontsize=20)
@@ -131,8 +141,8 @@ def plot_data(database, output_file):
 
 
 if __name__ == '__main__':
-    databases = ['reStorm1.duckdb']#, 'storm2_invasion.duckdb', 'storm3_invasion.duckdb']
-    files = ['reStorm1.pdf']#, 'averaged_insertion_plot2.pdf', 'averaged_insertion_plot3.pdf']
+    databases = ['reStormAll3.duckdb']#, 'storm2_invasion.duckdb', 'storm3_invasion.duckdb']
+    files = ['reStormAll3.pdf']#, 'averaged_insertion_plot2.pdf', 'averaged_insertion_plot3.pdf']
 
     for db, file in zip(databases, files):
         plot_data(db, file)
