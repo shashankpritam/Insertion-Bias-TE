@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --job-name=reStorm2
-#SBATCH --output=reStorm2_%A_%a.log
+#SBATCH --job-name=reStormAll1
+#SBATCH --output=reStormAll1_%A_%a.log
 #SBATCH --time=10-00:00:00
-#SBATCH --array=1-6
+#SBATCH --array=1-5
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=10
+#SBATCH --cpus-per-task=12
 #SBATCH --mem-per-cpu=4G
 
 # Path to the simulation tool
@@ -14,14 +14,14 @@ tool="./main"
 N=1000
 B=100
 gen=5000
-genome="mb:10"
-cluster="kb:300"
-rr="0"
-rep=1
+genome="mb:10,10,10,10,10"
+cluster="kb:300,300,300,300,300"
+rr="4,4,4,4,4"
+rep=100
 u=0.1
 steps=1
-folder="reStorm2"
-segment_file="ij_combinations_$(printf "%03d" $SLURM_ARRAY_TASK_ID).txt"
+folder="reStormAll1"
+segment_file="ij_pairs_50_part_$(printf "%d" $SLURM_ARRAY_TASK_ID).txt"
 
 # Ensure the segment file exists
 if [ ! -f "$segment_file" ]; then
@@ -33,7 +33,7 @@ fi
 mkdir -p "$folder"
 
 # Counter to control the number of parallel processes
-max_parallel=10
+max_parallel=40
 count=0
 
 # Read each i, j pair from the segment file and execute the simulation
