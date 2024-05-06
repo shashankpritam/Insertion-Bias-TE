@@ -129,32 +129,54 @@ df2$pc <- sapply(df2$sampleid, function(x) pc(x, 0.03))
 #### Figure 1 A
 
 ``` r
+# Define the common theme for consistency
+common_theme <- function() {
+    theme_minimal() +
+    theme(
+        plot.title = element_text(hjust = 0.5, size = 14),
+        axis.title = element_text(size = 12),
+        axis.text = element_text(size = 10),
+        legend.position = "bottom",
+        panel.background = element_rect(fill = "white"),  # Ensure white background
+        plot.background = element_rect(fill = "white", color = NA)  # Remove panel border
+    )
+}
+
+# Create the plot with annotations for line and dot information
 a <- ggplot(df2, aes(x = sampleid)) +
-  geom_point(aes(y = avcli), color = "#003f5c") +
-  geom_line(aes(y = pc), color = "#ffa600") +
-  labs(title = "Average Cluster Insertion across Insertion Bias: All Data Points",
-       x = "Insertion Bias",
-       y = "Average Cluster Insertion Observed (Dots) and Expected Value (Lines)") +
-  theme_minimal() +
-  theme(plot.title = element_text(hjust = 0.5))
+    geom_point(aes(y = avcli), color = "#0072B2") +  # Blue color for avcli points
+    geom_line(aes(y = pc), color = "black") +  # Orange color for pc line
+    labs(
+        title = "Average Cluster Insertion Expected vs Observed Value Across Insertion Bias",
+        x = "Insertion Bias",
+        y = "Average Cluster Insertion"
+    ) +
+    annotate("text", x = Inf, y = Inf, label = "Black Line: Expected\nBlue Points: Observed",
+             hjust = 1.5, vjust = 2, fontface = "italic", color = "black", size = 4,
+             position = position_nudge(y = -10)) +  # Annotation positioned at the top right
+    common_theme()
+
+# Save the plot with high resolution
+ggsave(
+    filename = "images/Validation_7_1A.png",
+    plot = a,
+    width = 8,
+    height = 6,
+    units = "in",
+    dpi = 300  # Sufficient for high-quality prints
+)
 
 ggsave(
-  filename = "images/Validation_7_1A.jpg",
-  plot = a,
-  width = 10,
-  height = 10,
-  units = "in"
-)
-ggsave(
-  filename = "images/Validation_7_1A.pdf",
-  plot = a,
-  width = 10,
-  height = 10,
-  units = "in"
+    filename = "images/Validation_7_1A.pdf",
+    plot = a,
+    width = 8,
+    height = 6,
+    units = "in",
+    dpi = 300  # Sufficient for high-quality prints
 )
 ```
 
-![](images/Validation_7_1A.jpg)
+![](images/Validation_7_1A.png)
 
 The distribution of average TE (Transposable Elements) insertions across
 different insertion bias levels for all replicates. The x-axis shows the
