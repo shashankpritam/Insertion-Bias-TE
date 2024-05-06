@@ -1,5 +1,4 @@
-# InvadeGo: Insertion-Bias Module <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_-_Drosophila_melanogaster.svg" alt="Fly" style="width: 32px; height: 32px;">
-
+# InvadeGo: Insertion-Bias
 This repository contains the results and data associated with the validation and simulation processes of Invadego's Insertion-Bias module.
 
 **InvadeGo Version:** 0.1.3
@@ -51,9 +50,7 @@ A. [Simulation Results Files](./Simulation-Results_Files)
 
 </details>
 
-i.  [archives](./archives)
-
-ii.  [README.md](./README.md)
+i.  [README.md](./README.md)
 
 
 Feel free to explore the repository for more details on the validation and simulation results.
