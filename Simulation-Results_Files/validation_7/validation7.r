@@ -46,38 +46,58 @@ df2 <- df[df$gen == 0, numeric_columns] %>% arrange(sampleid)
 # Calculate the expected values (pc) for each 'sampleid'
 df2$pc <- sapply(df2$sampleid, function(x) pc(x, 0.03))
 
-# Load ggplot2 library
-library(ggplot2)
 
 # Load ggplot2 library
 library(ggplot2)
+
+# Define the common theme for consistency
+common_theme <- function() {
+    theme_minimal() +
+    theme(
+        plot.title = element_text(hjust = 0.5, size = 14),
+        axis.title = element_text(size = 12),
+        axis.text = element_text(size = 10),
+        legend.position = "bottom",
+        panel.background = element_rect(fill = "white"),  # Ensure white background
+        plot.background = element_rect(fill = "white", color = NA)  # Remove panel border
+    )
+}
 
 # Create the plot with annotations for line and dot information
 a <- ggplot(df2, aes(x = sampleid)) +
-  geom_point(aes(y = avcli), color = "#0072B2") +  # Blue color for avcli points
-  geom_line(aes(y = pc), color = "#D55E00") +  # Orange color for pc line
-  labs(title = "Average Cluster Insertion Expected vs Observed value across Insertion Bias",
-       x = "Insertion Bias",
-       y = "Average Cluster Insertion") +
-  theme_minimal() +
-  theme(plot.title = element_text(hjust = 0.5),
-        panel.background = element_rect(fill = "white"), # Ensure white background
-        plot.background = element_rect(fill = "white", color = NA)) + # Remove panel border
-  annotate("text", x = -60, y = Inf, label = "Orange Line: Expected\nBlue Points: Observed", 
-           hjust = 1.1, vjust = 1.1, fontface = "italic", color = "black", size = 3.5,
-           position = position_nudge(y = -0.1)) # Annotation for line and dot information
+    geom_point(aes(y = avcli), color = "#0072B2") +  # Blue color for avcli points
+    geom_line(aes(y = pc), color = "black") +  # Orange color for pc line
+    labs(
+        title = "Average Cluster Insertion Expected vs Observed Value Across Insertion Bias",
+        x = "Insertion Bias",
+        y = "Average Cluster Insertion"
+    ) +
+    annotate("text", x = Inf, y = Inf, label = "Black Line: Expected\nBlue Points: Observed",
+             hjust = 1.5, vjust = 2, fontface = "italic", color = "black", size = 4,
+             position = position_nudge(y = -10)) +  # Annotation positioned at the top right
+    common_theme()
 
 # Save the plot with high resolution
-ggsave(filename = "images/Validation_7_1A.png",
-       plot = a,
-       width = 8,
-       height = 6,
-       units = "in",
-       dpi = 1200) # High resolution for publication
+ggsave(
+    filename = "images/Validation_7_1A.png",
+    plot = a,
+    width = 8,
+    height = 6,
+    units = "in",
+    dpi = 300  # Sufficient for high-quality prints
+)
 
-# Print the plot for viewing
+ggsave(
+    filename = "images/Validation_7_1A.pdf",
+    plot = a,
+    width = 8,
+    height = 6,
+    units = "in",
+    dpi = 300  # Sufficient for high-quality prints
+)
+
+# Optionally print the plot for viewing in an interactive session
 print(a)
-
 
 
 # Filter out the group with sampleid = 100 and -100
