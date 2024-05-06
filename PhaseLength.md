@@ -130,7 +130,7 @@ df <- read.table(combined_file_path, fill = TRUE, sep = "\t", header = TRUE)
 
 # Rename columns
 names(df) <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes",
-               "avpopfreq","fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
+               "avpopfreq", "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
 
 # Convert 'phase' and 'sampleid' to factors with specified levels
 df$phase <- factor(df$phase, levels = c("rapi", "shot", "inac"))
@@ -141,11 +141,189 @@ df$sampleid <- factor(df$sampleid, levels = c("b0", "b50", "bm50"))
 
 ## TE Insertion Per Diploid Individual Through Generations
 
+<details class="code-fold">
+<summary>Code</summary>
+
+``` r
+#| warning: false
+#| output: false
+g_min <- min(df$avtes, na.rm = TRUE)
+g_max <- 1500
+
+plot_diploid <- function(data, title) {
+  ggplot(data, aes(x = gen, y = avtes, group = rep, color = phase)) +
+    geom_line(alpha = 1, linewidth = 0.7) +
+    xlab("Generation") +
+    ylab("TE insertions per diploid individual") +
+    ggtitle(title) +
+    scale_colour_manual(values = p) +
+    ylim(g_min, g_max) +
+    common_theme()  # Apply the common theme
+}
+
+g1 <- plot_diploid(subset(df, sampleid == "bm50"), "Bias = -50")
+g2 <- plot_diploid(subset(df, sampleid == "b0"), "Bias = 0")
+g3 <- plot_diploid(subset(df, sampleid == "b50"), "Bias = 50")
+
+# Combine plots in a grid
+combined_plot <- grid.arrange(g1, g2, g3, nrow = 1, widths = c(1, 1, 1))
+```
+
+</details>
+
+![](PhaseLength_files/figure-commonmark/unnamed-chunk-4-1.png)
+
+<details class="code-fold">
+<summary>Code</summary>
+
+``` r
+ggsave((filename = "images/TE_Insertion_Per_Diploid_Individual_Through_Generations.jpg"), plot = combined_plot, width = 16, height = 9, dpi = 600)
+ggsave((filename = "images/TE_Insertion_Per_Diploid_Individual_Through_Generations.pdf"), plot = combined_plot, width = 16, height = 9, dpi = 600, device = "pdf")
+```
+
+</details>
+
 ![](images/TE_Insertion_Per_Diploid_Individual_Through_Generations.jpg)
 
 #### This plot depicts the average transposon insertion (‘avtes’ represented by the y-axis) as we trace the 100 replications of the diploid organism across 5000 generations.
 
 ## Average TE Insertions per Individual
+
+<details class="code-fold">
+<summary>Code</summary>
+
+``` r
+#| warning: false
+#| output: false
+# Divide in shot and inact phases
+df1 <- subset(df, phase %in% c("shot", "inac"))
+df2 <- data.frame()
+
+# New dataframe with only the first shotgun & the first inactive phase of each replicate
+repcheck <- 1
+x <- 1
+y <- 1
+while (x < nrow(df1)) {
+  if (repcheck != df1[x, 1]) {
+    y <- 1
+  }
+  if (y == 1) {
+    if (df1[x, 12] == "shot") {
+      df2 <- rbind(df2, df1[x,])
+      y <- 2
+      repcheck <- df1[x, 1]
+    }
+  }
+  if (y == 2) {
+    if (df1[x, 12] == "inac") {
+      df2 <- rbind(df2, df1[x,])
+      y <- 1
+    }
+  }
+  x <- x + 1
+}
+
+
+# Summary statistics
+df2 <- select(df2, -c(22))
+
+df_summary <- df2 %>%
+  dplyr::group_by(sampleid, phase) %>%
+  dplyr::summarize(
+    av_fwcli = mean(fwcli),
+    sd_fwcli = sd(fwcli),
+    av_cli = mean(avcli),
+    sd_cli = sd(avcli),
+    cv_cli_percent = sd(avcli) / mean(avcli),
+    av_tes = mean(avtes),
+    sd_tes = sd(avtes),
+    cv_tes_percent = sd(avtes) / mean(avtes),
+    av_w = mean(avw),
+    min_w = min(min_w),
+    length_previous_phase = mean(gen),
+    sd_length_previous_phase = sd(gen)
+  )
+```
+
+</details>
+
+    `summarise()` has grouped output by 'sampleid'. You can override using the
+    `.groups` argument.
+
+<details class="code-fold">
+<summary>Code</summary>
+
+``` r
+df_count <- df2 %>%
+  dplyr::count(sampleid, phase)
+
+df_summary <- cbind(df_count$n, df_summary)
+```
+
+</details>
+
+    New names:
+    • `` -> `...1`
+
+<details class="code-fold">
+<summary>Code</summary>
+
+``` r
+colnames(df_summary)[1] <- "n"
+
+
+# CI 95%: z* sd/sqrt(population)
+df_summary$ci_fwcli <- qt(0.975, df = df_summary$n - 1) * (df_summary$sd_fwcli / sqrt(df_summary$n))
+df_summary$ci_cli <- qt(0.975, df = df_summary$n - 1) * (df_summary$sd_cli / sqrt(df_summary$n))
+df_summary$ci_tes <- qt(0.975, df = df_summary$n - 1) * (df_summary$sd_tes / sqrt(df_summary$n))
+
+plot_diploid <- function(data, title, min_val, max_val) {
+  ggplot(data, aes(x = phase, y = av_tes, fill = phase)) +
+    geom_bar(stat = "identity") +
+    geom_errorbar(aes(x = phase, ymin = av_tes - sd_tes, ymax = av_tes + sd_tes), 
+                  width = 0.2, colour = "black", alpha = 0.9, size = 0.8) +
+    xlab("Phase") +
+    ylab("Average TE insertions per diploid individual") +
+    scale_x_discrete(labels = c("Rapid", "Shotgun")) +
+    ggtitle(title) +
+    scale_y_continuous(limits = c(min_val, max_val), expand = expansion(mult = c(0, 0.01))) +
+    scale_fill_manual(values = c("#1a9850", "#ffd700")) +
+    common_theme()  # Apply the common theme
+}
+
+# Generate the plots
+p1 <- plot_diploid(subset(df_summary, sampleid == "bm50"), "Bias = -50", 0, 1000)
+```
+
+</details>
+
+    Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+    ℹ Please use `linewidth` instead.
+
+<details class="code-fold">
+<summary>Code</summary>
+
+``` r
+p2 <- plot_diploid(subset(df_summary, sampleid == "b0"), "Bias = 0", 0, 1000)
+p3 <- plot_diploid(subset(df_summary, sampleid == "b50"), "Bias = 50", 0, 1000)
+
+# Combine and save the plots
+combined_p_plot <- grid.arrange(p1, p2, p3, nrow = 1, widths = c(1, 1, 1))
+```
+
+</details>
+
+![](PhaseLength_files/figure-commonmark/unnamed-chunk-5-1.png)
+
+<details class="code-fold">
+<summary>Code</summary>
+
+``` r
+ggsave("images/Average_TE_insertions_per_individual.jpg", plot = combined_p_plot, width = 16, height = 9, dpi = 600)
+ggsave("images/Average_TE_insertions_per_individual.pdf", plot = combined_p_plot, width = 16, height = 9, dpi = 600, device = "pdf")
+```
+
+</details>
 
 ![](images/Average_TE_insertions_per_individual.jpg)
 
