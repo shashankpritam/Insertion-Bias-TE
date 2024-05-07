@@ -35,7 +35,7 @@ def plot_bar_metrics(data):
     # Adding labels and titles
     ax.set_xlabel('', fontsize=20)
     ax.set_ylabel('Fitness Values', fontsize=20)
-    ax.set_title('Fitness at Generation 5000', fontsize=24, pad=20)
+    ax.set_title('', fontsize=24, pad=20)
     ax.set_xticks(index + bar_width / 2)
     ax.set_xticklabels(labels, fontsize=16)
     ax.set_ylim(0, 1)  # Set y-axis limits from 0 to 1
@@ -49,11 +49,11 @@ def plot_bar_metrics(data):
     ax.grid(True, which='minor', color='black', linestyle=':', linewidth=1)
 
     # Save to PDF
-    plt.savefig('fitness_bar_gen5000.pdf', format='pdf', dpi=600, bbox_inches='tight')
+    plt.savefig('/Users/shashankpritam/github/Insertion-Bias-TE/images/fig_pdf/fitness_bar_gen5000.pdf', format='pdf', dpi=600, bbox_inches='tight')
 
 
 # Fetch data
-conn = duckdb.connect(database="fitness.duckdb", read_only=True)
+conn = duckdb.connect(database="/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/fitness/fitness.duckdb", read_only=True)
 query = """
 WITH data AS (
     SELECT sampleid, gen, AVG(min_w) AS avg_min_w, STDDEV(min_w) AS stddev_min_w, AVG(avw) AS avg_avw, STDDEV(avw) AS stddev_avw
