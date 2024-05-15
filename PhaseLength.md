@@ -171,7 +171,7 @@ combined_plot <- grid.arrange(g1, g2, g3, nrow = 1, widths = c(1, 1, 1))
 
 </details>
 
-
+![](PhaseLength_files/figure-commonmark/unnamed-chunk-4-1.png)
 
 <details class="code-fold">
 <summary>Code</summary>
@@ -313,7 +313,7 @@ combined_p_plot <- grid.arrange(p1, p2, p3, nrow = 1, widths = c(1, 1, 1))
 
 </details>
 
-
+![](PhaseLength_files/figure-commonmark/unnamed-chunk-5-1.png)
 
 <details class="code-fold">
 <summary>Code</summary>
