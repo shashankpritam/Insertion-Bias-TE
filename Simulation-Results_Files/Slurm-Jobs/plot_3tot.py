@@ -68,11 +68,11 @@ def fetch_data_in_bulk(database, rep_values, generations):
 
 def plot_data(database, output_file):
     rep_values = range(1, 101)
-    generations = [1, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
+    generations = [500] #[1, 20, 60, 100, 200, 260, 300, 360, 400, 460, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
     
     # Creating a figure with a specific size to accommodate all subplots
     plt.figure(figsize=(22, 18))  # Adjusted figure size to provide adequate space
-    gs = gridspec.GridSpec(4, 3)  # 4x3 grid
+    gs = gridspec.GridSpec(1, 1)  # 4x3 grid
 
     # Fetch all required data, excluding 'Annotations' as it does not fetch data
     all_data = fetch_data_in_bulk(database, rep_values, generations)
@@ -105,24 +105,29 @@ def plot_data(database, output_file):
 
         
         if not gen_data.empty:
-            sns.heatmap(scaled_data, cmap="RdBu_r", center=0, ax=ax, mask=np.isnan(scaled_data), vmin=-1, vmax=1)
+            heatmap = sns.heatmap(scaled_data, cmap="RdBu_r", center=0, ax=ax, 
+                                  mask=np.isnan(scaled_data), vmin=-1, vmax=1)
+            cbar = heatmap.collections[0].colorbar
+            cbar.ax.tick_params(labelsize=30)  # Adjust the font size of colorbar tick labels
         else:
             ax.text(0.5, 0.5, 'No data available', ha='center', va='center')
             ax.set_xlim(0, 1)
             ax.set_ylim(0, 1)
 
-        ax.set_title(r'Gen ${}$'.format(gen), fontsize=20)
-        ax.set_xlabel(r'Bias 1 TE', fontsize=20,)
-        ax.set_ylabel(r'Bias 2 TE' if col == 0 else "", fontsize=20)
+        ax.set_title(r'Generation ${}$'.format(gen), fontsize=42)
+        ax.set_xlabel(r'Bias 1 TE', fontsize=42,)
+        ax.set_ylabel(r'Bias 2 TE' if col == 0 else "", fontsize=42)
         ax.invert_yaxis()
-        
+                
+        ax.tick_params(axis='both', which='major', labelsize=30)  
+        ax.tick_params(axis='both', which='minor', labelsize=30) 
 
 
 
     # Add explanatory subplot with Markdown-styled text
-    ax = plt.subplot(gs[3, 2])
-    ax.axis('off')
-    ax.set_title('Scale and Color Code Explanation', fontsize=20)
+    #ax = plt.subplot(gs[3, 2])
+    #ax.axis('off')
+    #ax.set_title('Scale and Color Code Explanation', fontsize=20)
     
 
     annotations = r"""
@@ -132,7 +137,7 @@ def plot_data(database, output_file):
         \textbf{Near 0:} when neither dominates (White) \\
         \textbf{Exactly 0:} when both are zero (Grey Dot)
         """
-    ax.text(0.1, 0.5, annotations, ha='left', va='center', fontsize=20, color='black', style='italic')
+    #ax.text(0.1, 0.5, annotations, ha='left', va='center', fontsize=20, color='black', style='italic')
 
 
     plt.tight_layout()
@@ -141,8 +146,8 @@ def plot_data(database, output_file):
 
 
 if __name__ == '__main__':
-    databases = ['reStormAll3.duckdb']#, 'storm2_invasion.duckdb', 'storm3_invasion.duckdb']
-    files = ['reStormAll3.pdf']#, 'averaged_insertion_plot2.pdf', 'averaged_insertion_plot3.pdf']
+    databases = ['reStormAll1ns_nsc.duckdb']#, 'storm2_invasion.duckdb', 'storm3_invasion.duckdb']
+    files = ['plot_51a_neutral55.pdf']#, 'averaged_insertion_plot2.pdf', 'averaged_insertion_plot3.pdf']
 
     for db, file in zip(databases, files):
         plot_data(db, file)
