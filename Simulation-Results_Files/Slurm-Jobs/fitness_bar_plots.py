@@ -29,31 +29,31 @@ def plot_bar_metrics(data):
     fig, ax = plt.subplots(figsize=(12, 8))
 
     # Create bar plots with patterns
-    bars1 = ax.bar(index, min_w_values, bar_width, label='Minimum Fitness', color='black', edgecolor='white', yerr=min_w_stdevs, capsize=5)
-    bars2 = ax.bar(index + bar_width, avw_values, bar_width, label='Average Fitness', color='grey', edgecolor='black', yerr=avw_stdevs, capsize=5)
+    bars1 = ax.bar(index, min_w_values, bar_width, label='Minimum Fitness', color='darkgreen', edgecolor='white', yerr=min_w_stdevs, capsize=5)
+    #bars2 = ax.bar(index + bar_width, avw_values, bar_width, label='Average Fitness', color='grey', edgecolor='black', yerr=avw_stdevs, capsize=5)
 
     # Adding labels and titles
     ax.set_xlabel('', fontsize=20)
-    ax.set_ylabel('Fitness Values', fontsize=20)
-    ax.set_title('', fontsize=24, pad=20)
-    ax.set_xticks(index + bar_width / 2)
+    ax.set_ylabel('Minimum Fitness Values', fontsize=20)
+    ax.set_title('Minimum fitness of the population after 5000 generations', fontsize=24, pad=20)
+    ax.set_xticks(index )
     ax.set_xticklabels(labels, fontsize=16)
     ax.set_ylim(0, 1)  # Set y-axis limits from 0 to 1
     ax.set_yticks(np.linspace(0, 1, num=5))
     ax.set_yticklabels([f'{y:.2f}' for y in np.linspace(0, 1, num=5)], fontsize=16)
 
-    ax.legend(fontsize=16, frameon=True, loc='upper right')
+    #ax.legend(fontsize=16, frameon=True, loc='upper right')
 
     # Adjust grid lines
     ax.grid(True, which='major', color='grey', linestyle='-', linewidth=1.5)
     ax.grid(True, which='minor', color='black', linestyle=':', linewidth=1)
 
     # Save to PDF
-    plt.savefig('/Users/shashankpritam/github/Insertion-Bias-TE/images/fig_pdf/fitness_bar_gen5000.pdf', format='pdf', dpi=600, bbox_inches='tight')
+    plt.savefig('/Users/shashankpritam/github/Insertion-Bias-TE/images/fig_pdf/fitness_ncs_bar_gen5000.pdf', format='pdf', dpi=600, bbox_inches='tight')
 
 
 # Fetch data
-conn = duckdb.connect(database="/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/fitness/fitness.duckdb", read_only=True)
+conn = duckdb.connect(database="/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/fitness_ncs/fitness_ncs.duckdb", read_only=True)
 query = """
 WITH data AS (
     SELECT sampleid, gen, AVG(min_w) AS avg_min_w, STDDEV(min_w) AS stddev_min_w, AVG(avw) AS avg_avw, STDDEV(avw) AS stddev_avw
