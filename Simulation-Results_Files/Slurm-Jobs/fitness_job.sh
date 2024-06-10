@@ -16,7 +16,7 @@ rr="4,4,4,4,4"
 rep=100
 u=0.1
 steps=1
-folder="./fitness"
+folder="./fitness_ncs"
 x=0.01
 max_jobs=64
 
@@ -40,7 +40,7 @@ for i in -5 0 5; do
   output_file="$folder/fitness_${sampleid}.log"
 
   # Construct the command
-  command="$tool --N $N --gen $gen --genome $genome --cluster $cluster --rr $rr --rep $rep --u $u --basepop \"$basepop\" --steps $steps --sampleid $sampleid --x $x"
+  command="$tool --N $N --gen $gen --genome $genome --cluster $cluster --no-x-cluins --rr $rr --rep $rep --u $u --basepop \"$basepop\" --steps $steps --sampleid $sampleid --x $x"
 
   # Run the simulation
   echo "Running command: $command"

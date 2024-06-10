@@ -7,7 +7,7 @@ import re
 from tqdm.auto import tqdm
 
 # Configuration and patterns
-folder_path = '/storehouse/shashank/validinvadego/reStormAll3'
+folder_path = '/storehouse/shashank/validinvadego/reStormAll2ns_nsc'
 filename_pattern = re.compile(r'output_sample_(\d+)_(-?\d+)_(-?\d+).txt')
 header_pattern = re.compile(r'Invade:.*seed: (\d+)|#')
 
@@ -15,7 +15,7 @@ header_pattern = re.compile(r'Invade:.*seed: (\d+)|#')
 column_names = [
     "rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq",
     "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3", "avbias",
-    "3tot", "3cluster"]#, "spacer_4", "sampleid"]
+    "3tot", "3cluster", "spacer_4", "sampleid"]
 
 # Define which columns are expected to be of which type
 int_columns = ["rep", "gen", "fixed", "fixcli"]
@@ -63,7 +63,7 @@ def parse_file(full_file_path):
     return df, None
 
 def insert_into_duckdb(dfs):
-    conn = duckdb.connect(database='reStormAll3.duckdb', read_only=False)
+    conn = duckdb.connect(database='reStormAll1ns_nsc.duckdb', read_only=False)
     try:
         conn.execute("""
             CREATE TABLE IF NOT EXISTS simulations (
@@ -72,7 +72,7 @@ def insert_into_duckdb(dfs):
                 fwte FLOAT, avw FLOAT, min_w FLOAT, avtes FLOAT, avpopfreq FLOAT,
                 fixed INTEGER, spacer_2 VARCHAR, phase VARCHAR, fwcli FLOAT,
                 avcli FLOAT, fixcli INTEGER, spacer_3 VARCHAR, avbias FLOAT,
-                "3tot" VARCHAR, "3cluster" VARCHAR
+                "3tot" VARCHAR, "3cluster" VARCHAR, spacer_4 VARCHAR, sampleid VARCHAR,
             )
         """)
 
