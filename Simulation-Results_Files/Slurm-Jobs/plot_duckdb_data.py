@@ -38,15 +38,15 @@ def plot_metrics(data):
     axes[1].set_title('Average Fitness Over Generations')
     axes[1].set_xlabel('Generation')
     axes[1].set_ylabel('Average Fitness of the Population')
-    axes[1].set_ylim(0, 1)
+    axes[1].set_ylim(0, 1.2)
     axes[1].legend(lines, [bias_map[sample] for sample in sample_order], title='', loc='lower left')
     axes[1].yaxis.set_tick_params(which='both', labelleft=True)
 
 
-    plt.savefig('fitness_plots.pdf', format='pdf', dpi=600, bbox_inches='tight', pad_inches=0.5)
+    plt.savefig('/Users/shashankpritam/github/Insertion-Bias-TE/images/fig_pdf/fitness_ncs_plots.pdf', format='pdf', dpi=600, bbox_inches='tight', pad_inches=0.5)
     plt.show()
 
-conn = duckdb.connect(database="fitness.duckdb", read_only=True)
+conn = duckdb.connect(database="/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/fitness_ncs/fitness_ncs.duckdb", read_only=True)
 query = """
 WITH data AS (
     SELECT sampleid, gen, AVG(min_w) AS avg_min_w, STDDEV(min_w) AS stddev_min_w, AVG(avw) AS avg_avw, STDDEV(avw) AS stddev_avw
