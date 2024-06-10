@@ -9,7 +9,7 @@ pc <- function(bias, clufrac) {
     genfit = 1.0 - clufit
     totfit = clufrac * clufit + genfrac * genfit
     p = (clufrac * clufit) / totfit
-    return(p * 100)
+    return(p)
 }
 
 # Generate data
@@ -22,9 +22,9 @@ df2 <- data.frame(bias = bias_values, pc = pc_values)
 a <- ggplot(df2, aes(x = bias, y = pc)) +
   geom_line(color = "darkgreen", size = 1.2) +
   geom_point(color = "#003f5c", size = 3) +
-  labs(title = "Average Cluster Insertion and Insertion Bias",
+  labs(title = "Probability of average cluster insertion against Insertion Bias",
        x = "Insertion Bias",
-       y = "Average Cluster Insertion") +
+       y = "Average Cluster Insertion Probability") +
   scale_x_continuous(breaks = seq(-100, 100, by = 10)) +
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5, size = 16),
