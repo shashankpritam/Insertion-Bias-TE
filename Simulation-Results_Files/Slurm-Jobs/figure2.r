@@ -7,7 +7,7 @@ common_theme <- function() {
     legend.position = "none",
     plot.title = element_text(hjust = 0.5, size = 24),
     axis.title = element_text(size = 20),
-    axis.text.x = element_text(size = 16, angle = 45, hjust = 1),  # Rotate x-axis labels
+    axis.text.x = element_text(size = 16),
     axis.text.y = element_text(size = 16),
     panel.grid.major = element_line(colour = "gray90"),
     panel.grid.minor = element_line(colour = "gray95"),
@@ -20,7 +20,7 @@ common_theme <- function() {
 }
 
 # Read data and set column names
-df0 <- read.table("Simulation-Results_Files/validation_5.1/2023_04_16_Validation_5_bias", fill = TRUE, sep = "\t") 
+df0 <- read.table("/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/validation_5.1/2023_04_16_Validation_5_bias", fill = TRUE, sep = "\t") 
 names(df0) <- c("rep", "gen", "popstat", "spacer_1", "fwte", "avw", "min_w", "avtes", "avpopfreq",
                 "fixed", "spacer_2", "phase", "fwcli", "avcli", "fixcli", "spacer_3",
                 "avbias", "3tot", "3cluster", "spacer_4", "sampleid")
@@ -49,10 +49,6 @@ df0_stat <- df0_stat %>%
 df0_stat$sampleid <- as.integer(df0_stat$sampleid)
 df0_stat <- df0_stat[order(df0_stat$sampleid),]
 
-# Define the sample ID labels to include
-sampleid_labels <- c("-90", "-80", "-70", "-60", "-50", "-40", "-30", "-20", "-10", "0",
-                     "10", "20", "30", "40", "50", "60", "70", "80", "90")
-
 # Create and plot the graph with well-defined grid and margin
 g0 <- ggplot(data = df0_stat, aes(x = as.factor(sampleid), y = ok_rate, fill = ok_rate)) +
   geom_col(show.legend = FALSE) +
@@ -64,8 +60,12 @@ g0 <- ggplot(data = df0_stat, aes(x = as.factor(sampleid), y = ok_rate, fill = o
     labels = scales::percent
   ) +
   scale_x_discrete(
-    limits = sampleid_labels,
-    labels = setNames(sampleid_labels, sampleid_labels)
+    limits = as.character(seq(-100, 100, by = 10)),
+    labels = setNames(
+      c("-90", "-80", "-70", "-60", "-50", "-40", "-30", "-20", "-10", "0",
+        "10", "20", "30", "40", "50", "60", "70", "80", "90"),
+      unique(df0_stat$sampleid)
+    )
   ) +
   geom_col(fill = "darkgreen") +
   xlab("Insertion Bias") +
@@ -77,7 +77,7 @@ g0 <- ggplot(data = df0_stat, aes(x = as.factor(sampleid), y = ok_rate, fill = o
   )
 
 # Save the plot with a solid background and added padding
-ggsave("/Users/shashankpritam/github/Insertion-Bias-TE/images/Figure_2.png", plot = g0, bg = "white", width = 10, height = 6)
-ggsave("/Users/shashankpritam/github/Insertion-Bias-TE/images/fig_pdf/Figure_2.pdf", plot = g0, bg = "white", width = 10, height = 6, device = "pdf")
+ggsave("images/Figure_2.png", plot = g0, bg = "white", width = 10, height = 6)
+ggsave("images/Figure_2.pdf", plot = g0, bg = "white", width = 10, height = 6, device = "pdf")
 
 plot(g0)
