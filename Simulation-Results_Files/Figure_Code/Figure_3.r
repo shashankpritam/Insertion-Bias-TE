@@ -46,25 +46,40 @@ df$sampleid <- factor(df$sampleid, levels = c("b0", "b50", "bm50"))
 g_min <- min(df$avtes, na.rm = TRUE)
 g_max <- 1500
 
-plot_diploid <- function(data, title) {
-  ggplot(data, aes(x = gen, y = avtes, group = rep, color = phase)) +
+library(ggplot2)
+library(gridExtra)
+
+# Updated plot_diploid function with control over y-axis label display
+plot_diploid <- function(data, title, show_y_label = FALSE) {
+  p <- ggplot(data, aes(x = gen, y = avtes, group = rep, color = phase)) +
     geom_line(alpha = 1, linewidth = 0.7) +
     xlab("Generation") +
-    ylab("Insertions per Individual") +
     ggtitle(title) +
     scale_colour_manual(values = p) +
     ylim(g_min, g_max) +
     common_theme()  # Apply the common theme
+
+  # Conditionally add y-axis label
+  if (show_y_label) {
+    p <- p + ylab("Insertions per Individual")
+  } else {
+    p <- p + ylab("") + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
+  }
+
+  return(p)
 }
 
-g1 <- plot_diploid(subset(df, sampleid == "bm50"), "Insertion Bias = -50")
-g2 <- plot_diploid(subset(df, sampleid == "b0"), "Insertion Bias = 0")
-g3 <- plot_diploid(subset(df, sampleid == "b50"), "Insertion Bias = 50")
+# Generate plots for each sampleid with y-axis control
+g1 <- plot_diploid(subset(df, sampleid == "bm50"), "Insertion Bias = -50", TRUE)  # Y-label on
+g2 <- plot_diploid(subset(df, sampleid == "b0"), "Insertion Bias = 0")           # Y-label off
+g3 <- plot_diploid(subset(df, sampleid == "b50"), "Insertion Bias = 50")         # Y-label off
 
 # Combine plots in a grid
 combined_plot <- grid.arrange(g1, g2, g3, nrow = 1, widths = c(1, 1, 1))
 
+# Save the combined plot
 ggsave("Figure_1C.pdf", plot = combined_plot, width = 16, height = 9, dpi = 600, device = "pdf")
+
 
 
 df1 <- subset(df, phase %in% c("shot", "inac"))

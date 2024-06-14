@@ -1,5 +1,5 @@
 library(extrafont)
-
+library(ggplot2)
 # Now you can use Helvetica in your ggplot
 common_theme <- function() {
   theme(
@@ -13,13 +13,10 @@ common_theme <- function() {
     strip.background = element_rect(fill = "white"),
     strip.text = element_text(face = "bold", size = 20, family = "Helvetica"),
     axis.line = element_line(color = "black"),
-    axis.ticks = element_line(color = "black"),
+    #axis.ticks = element_line(color = "black"),
     panel.background = element_rect(fill = "white", colour = "white")
   )
 }
-
-# Note: When saving the plot with ggsave, specify the family as 'Helvetica'
-
 
 pc <- function(bias, clufrac) {
     genfrac = 1.0 - clufrac
@@ -37,7 +34,7 @@ pc_values <- sapply(bias_values, pc, clufrac = clufrac)
 df2 <- data.frame(bias = bias_values, pc = pc_values)
 
 a <- ggplot(df2, aes(x = bias, y = pc)) +
-  geom_line(color = "darkgreen", size = 1.2) +
+  geom_line(color = "darkgreen", linewidth = 1.2) +
   labs(title = "",
        x = "Insertion Bias",
        y = "Average Cluster Insertion Probability") +
