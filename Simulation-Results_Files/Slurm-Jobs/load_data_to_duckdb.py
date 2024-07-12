@@ -50,7 +50,7 @@ def parse_file(full_file_path):
     return df
 
 def insert_into_duckdb(dfs):
-    conn = duckdb.connect(database='/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/fitness_ncs/fitness_ncs.duckdb', read_only=False)
+    conn = duckdb.connect(database='/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/fitness_ncs_2/fitness_ncs2.duckdb', read_only=False)
     try:
         conn.execute("""
             CREATE TABLE IF NOT EXISTS simulations (
@@ -67,7 +67,7 @@ def insert_into_duckdb(dfs):
         conn.close()
 
 def main():
-    files = ["/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/fitness_ncs/fitness_Simulation_exploration.txt"]
+    files = ["/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/fitness_ncs_2/fitness_Simulation_exploration.txt"]
     num_cpus = os.cpu_count() or 4
     max_workers = min(2, num_cpus)
     dfs_to_insert = []
