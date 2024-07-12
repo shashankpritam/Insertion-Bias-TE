@@ -16,7 +16,7 @@ common_theme <- function() {
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     strip.background = element_rect(fill = "lightgrey"),
-    strip.text = element_text(face = "bold", size = 20),
+    strip.text = element_text(face = "plain", size = 20),
     axis.line = element_line(color = "black"),
     axis.ticks = element_line(color = "black"),
     panel.background = element_rect(fill = "white", colour = "white")
@@ -28,7 +28,7 @@ plot_metrics <- function(data) {
   # Define colors and styles
   colors <- c('red', 'green', 'blue')
   line_styles <- c("dotdash", "solid", "dotted")
-  lighter_colors <- scales::alpha(colors, 0.5)
+  lighter_colors <- scales::alpha(colors, 0.2)
   
   # Map for sampleid labels
   bias_map <- c('bm50' = 'Insertion Bias = -50', 'b50' = 'Insertion Bias = 50', 'b0' = 'Insertion Bias = 0')
@@ -44,12 +44,8 @@ plot_metrics <- function(data) {
       geom_ribbon(aes(ymin = avg_avw - stddev_avw, ymax = avg_avw + stddev_avw), fill = lighter_colors[i]) +
       labs(title = bias_map[[sample_id]], x = 'Generation') +
       ylim(0, 1.2) +
-      common_theme() +
-      theme(
-        plot.title = element_text(hjust = 0.5),
-        axis.text = element_text(size = 16),
-        axis.title = element_text(size = 24)
-      )
+      common_theme()
+
     if (i == 1) {
       p <- p + ylab('Average Fitness of the Population') + theme(axis.title.y = element_text(size = 24))
     } else {
@@ -66,7 +62,7 @@ plot_metrics <- function(data) {
 }
 
 # Database connection and data fetching
-conn <- dbConnect(duckdb::duckdb(), dbdir = "/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/fitness_ncs/fitness_ncs.duckdb", read_only = TRUE)
+conn <- dbConnect(duckdb::duckdb(), dbdir = "/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/fitness_ncs_2/fitness_ncs2.duckdb", read_only = TRUE)
 query <- "
 WITH data AS (
     SELECT sampleid, gen, AVG(avw) AS avg_avw, STDDEV(avw) AS stddev_avw

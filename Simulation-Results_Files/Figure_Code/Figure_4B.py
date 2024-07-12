@@ -56,7 +56,7 @@ def plot_bar_metrics(data):
     plt.savefig('Figure_4B.pdf', format='pdf', dpi=600, bbox_inches='tight')
 
 # Fetch data
-conn = duckdb.connect(database="/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/fitness_ncs/fitness_ncs.duckdb", read_only=True)
+conn = duckdb.connect(database="/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/fitness_ncs_2/fitness_ncs2.duckdb", read_only=True)
 query = """
 WITH data AS (
     SELECT sampleid, gen, AVG(min_w) AS avg_min_w, STDDEV(min_w) AS stddev_min_w, AVG(avw) AS avg_avw, STDDEV(avw) AS stddev_avw
