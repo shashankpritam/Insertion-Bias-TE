@@ -82,7 +82,7 @@ args = parser.parse_args()
 
 # The basic command line input for invadego which will have some parameters appended later on
 def get_basis(invade):
-    return f'{invade} -no-x-cluins --N {args.N} --gen {args.gen} --genome mb:10,10,10,10,10 --x 0.01 --rr 4,4,4,4,4 --rep {args.rep} --u {args.u} --steps {args.steps} --silent'
+    return f'{invade} --N {args.N} --gen {args.gen} --genome mb:10,10,10,10,10 --x 0.01 --rr 4,4,4,4,4 --rep {args.rep} --u {args.u} --steps {args.steps} --silent'
 
 
 # Removing irrelavant lines from putput files
