@@ -131,8 +131,9 @@ load_data <- function(folder_path, u_value) {
 }
 
 # Load Data from Different Folders
-df1 <- load_data('Simulation-Results_Files/simulation_storm/minfit/13thSep23at104054PM/combined.txt', 0.2)
-df2 <- load_data('Simulation-Results_Files/simulation_storm/minfit/14thSep23at113630PM/combined.txt', 0.1)
+#df1 <- load_data('Simulation-Results_Files/simulation_storm/minfit/13thSep23at104054PM/combined.txt', 0.2)
+#df2 <- load_data('Simulation-Results_Files/simulation_storm/minfit/14thSep23at113630PM/combined.txt', 0.1)
+df3 <- load_data('Simulation-Results_Files/simulation_storm/13thJul24at044203AM/combined.txt', 0.1)
 ```
 
 </details>
@@ -187,19 +188,27 @@ plot_data <- function(df_list) {
 
 ``` r
 # Save the final plot
-plot1 <- plot_data(df1)
-ggsave(filename = "images/minimum_fitness_u02.jpg", plot = plot1, width = 10, height = 6)
-ggsave(filename = "images/minimum_fitness_u02.pdf", plot = plot1, width = 10, height = 6, device = "pdf")
+#plot1 <- plot_data(df1)
+#ggsave(filename = "images/minimum_fitness_u02.jpg", plot = plot1, width = 10, height = 6)
+#ggsave(filename = "images/minimum_fitness_u02.pdf", plot = plot1, width = 10, height = 6, device = "pdf")
 
-plot2 <- plot_data(df2)
-ggsave(filename = "images/minimum_fitness_u01.jpg", plot = plot2, width = 10, height = 6)
-ggsave(filename = "images/minimum_fitness_u01.pdf", plot = plot2, width = 10, height = 6, device = "pdf")
+#plot2 <- plot_data(df2)
+#ggsave(filename = "images/minimum_fitness_u01.jpg", plot = plot2, width = 10, height = 6)
+#ggsave(filename = "images/minimum_fitness_u01.pdf", plot = plot2, width = 10, height = 6, device = "pdf")
+
+
+plot3 <- plot_data(df3)
+ggsave(filename = "images/minimum_fitness_new.jpg", plot = plot3, width = 10, height = 6)
+ggsave(filename = "images/minimum_fitness_new.pdf", plot = plot3, width = 10, height = 6, device = "pdf")
 ```
 
 </details>
 
 ![Minimum Fitness at u = 0.1](images/minimum_fitness_u01.jpg) ![Minimum
 Fitness at u = 0.2](images/minimum_fitness_u02.jpg)
+
+![New Minimum Fitness at u = 0.1 and -nocluins
+off](images/minimum_fitness_new.jpg)
 
 ## Color Scheme in the Plot
 
