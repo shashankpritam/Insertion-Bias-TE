@@ -1,12 +1,9 @@
 #!/bin/bash
-#PBS -N simulation_job
-#PBS -o simulation_output.log
-#PBS -e simulation_error.log
-#PBS -l nodes=1:ppn=4,mem=64gb
-#PBS -l walltime=120:00:00
-#PBS -W group_list=x-ccast-prj-[group name redacted]
+#SBATCH --job-name=min_fitness
+#SBATCH --output=min_fitness_%A_%a.log
+#SBATCH --time=10-00:00:00
+#SBATCH --ntasks=64
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=4G
 
-
-cd /mmfs1/thunder/home/shashank.pritam/shashank_simulations/invadego
-
-python3 /mmfs1/thunder/home/shashank.pritam/shashank_simulations/invadego/sim_storm.py --number 10000 --silent
+python3 /storehouse/shashank/validinvadego/sim_storm.py --number 10000 --threads 64 --silent
