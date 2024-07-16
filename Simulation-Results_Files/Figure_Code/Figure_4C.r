@@ -42,7 +42,7 @@ load_data <- function(folder_path, u_value) {
   return(list(df_final = df_final, df_filtered = df_filtered))
 }
 
-df2 <- load_data('Simulation-Results_Files/simulation_storm/minfit/14thSep23at113630PM/combined.txt', 0.1)
+df2 <- load_data('Simulation-Results_Files/simulation_storm/13thJul24at044203AM/combined.txt', 0.1)
 
 plot_data <- function(df_list) {
   df_final <- df_list$df_final %>% filter(sampleid_percent > 0.001)
