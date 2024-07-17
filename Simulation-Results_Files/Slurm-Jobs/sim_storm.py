@@ -91,8 +91,8 @@ def get_filter():
 
 # Getting random cluter insertions values in the range of (3% to 97%)
 def get_rand_clusters(): 
-    lower_limit = 0  # Lower bound
-    upper_limit = math.log10(1e+4)  # Upper bound, note the cluster size is in kb
+    lower_limit = math.log10(1e+2)
+    upper_limit = math.log10(1e+7)  # Upper bound, note the cluster size is in kb
     r = math.floor(10**random.uniform(lower_limit, upper_limit))
     return f"{r},{r},{r},{r},{r}"
 
@@ -108,7 +108,7 @@ def run_cluster_negsel(invade, count, output):
         tr = current_milli_time() + i
         sampleid_value = x.split(',')[0]
         command_basis = get_basis(invade)
-        command = f'{command_basis} --basepop "100({get_rand_bias()})" --cluster kb:{x} --replicate-offset {i} --seed {tr} '
+        command = f'{command_basis} --basepop "100({get_rand_bias()})" --cluster bp:{x} --replicate-offset {i} --seed {tr} '
         command += f'--sampleid {sampleid_value} {get_filter()} > {os.path.join(output, str(i))}.txt'
         commandlist.append(command)
     return commandlist
@@ -153,12 +153,4 @@ Silent mode: {args.silent}
 submit_job_max_len(commandlist, max_processes=args.threads)
 
 
-# Cat 🐈 all the files together:
-with open(f"{output_directory}/combined.txt", "wb") as outfile:
-    for i in range(args.count):
-        filename = f"{args.output}/{i}.txt"
-        with open(filename, 'rb') as infile:
-            shutil.copyfileobj(infile, outfile)
-
-# Sign of completion of the job.
 print("Done")
