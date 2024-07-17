@@ -47,16 +47,15 @@ The simulations were generated using the code from:
 Simulations were ran with the following parameters:
 
 - Number of simulations: 10000
-- Number of threads: 4
+- Number of threads: 64
 - Number of replications (–rep): 1
-- Transposition rate (–u): Variable
+- Transposition rate (–u): 0.1
 - Number of steps (–steps): 5000
 - Population size (–N): 1000
 - Number of generations (–gen): 5000
 - Negative effect of a TE insertion (–x): 0.01
 - Genome (–genome) mb:10,10,10,10,10
 - Recombination Rate (–rr): 4,4,4,4,4
-- Negative effect of a cluster insertions (-no-x-cluins, i.e, x=0)
 - Silent mode: True
 
 Random Clusters were Generated using this snippet:
@@ -66,7 +65,7 @@ Random Clusters were Generated using this snippet:
 
 ``` python
 def get_rand_clusters(): 
-    lower_limit = 0  # Lower bound
+    lower_limit = math.log10(1e+2)  # Lower bound
     upper_limit = math.log10(1e+7)  # Upper bound
     r = math.floor(10**random.uniform(lower_limit, upper_limit))
     return f"{r},{r},{r},{r},{r}"
@@ -85,6 +84,23 @@ def get_rand_clusters():
 library(tidyverse)
 library(ggplot2)
 theme_set(theme_bw())
+common_theme <- function() {
+  theme(
+    text = element_text(family = "Helvetica"),
+    legend.position = "bottom",
+    plot.title = element_text(hjust = 0.5, size = 20),
+    axis.title = element_text(size = 16),
+    axis.text.x = element_text(size = 16, angle = 45, hjust = 1),
+    axis.text.y = element_text(size = 16),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    strip.background = element_rect(fill = "lightgrey"),
+    strip.text = element_text(face = "bold", size = 20),
+    axis.line = element_line(color = "black"),
+    axis.ticks = element_line(color = "black"),
+    panel.background = element_rect(fill = "white", colour = "white")
+  )
+}
 ```
 
 </details>
@@ -116,7 +132,7 @@ load_data <- function(folder_path, u_value) {
   df_final <- select(df_final, rep, popstat, avbias, sampleid, min_w)
   
   # Calculate sampleid_percent
-  df_final$sampleid_percent <- (df_final$sampleid / 10000000) * 100 ## At the time of writing this code the piRNA Cluster was generated in base pairs, now it is generated in kb. So to replicate this one should use 10000/1000 instead of 10000000 to divide.
+  df_final$sampleid_percent <- (df_final$sampleid / 1000) * 100 # At the time of writing this code the piRNA Cluster was generated in base pairs.
   
   # Filter out fail-0 and fail-w
   df_filtered = df_final %>% filter(!popstat %in% c("fail-0", "fail-w"))
@@ -130,10 +146,8 @@ load_data <- function(folder_path, u_value) {
   return(list(df_final = df_final, df_filtered = df_filtered))
 }
 
-# Load Data from Different Folders
-#df1 <- load_data('Simulation-Results_Files/simulation_storm/minfit/13thSep23at104054PM/combined.txt', 0.2)
-#df2 <- load_data('Simulation-Results_Files/simulation_storm/minfit/14thSep23at113630PM/combined.txt', 0.1)
-df3 <- load_data('Simulation-Results_Files/simulation_storm/13thJul24at044203AM/combined.txt', 0.1)
+
+df1 <- load_data('Simulation-Results_Files/simulation_storm/minfit/16thJul24at055746PM/combined.txt', 0.1)
 ```
 
 </details>
@@ -166,14 +180,15 @@ plot_data <- function(df_list) {
       colors = colors
     ) +
     scale_x_log10(
-      breaks = c(0.001, 0.01, 0.1, 1, 10),
-      labels = c("0.001%", "0.01%", "0.1%", "1%", "10%")
+      breaks = c(0.001, 0.01, 0.1, 1, 10, 100),
+      labels = c("0.001%", "0.01%", "0.1%", "1%", "10%", "100%")
     ) +
     theme_minimal() +
     theme(
       legend.position = "bottom",
-      panel.background = element_rect(fill = "grey90")
-    ) 
+      panel.background = element_rect(fill = "white")
+    )  +
+    common_theme()
   
   return(plot)
 }
@@ -187,25 +202,12 @@ plot_data <- function(df_list) {
 <summary>Code</summary>
 
 ``` r
-# Save the final plot
-#plot1 <- plot_data(df1)
-#ggsave(filename = "images/minimum_fitness_u02.jpg", plot = plot1, width = 10, height = 6)
-#ggsave(filename = "images/minimum_fitness_u02.pdf", plot = plot1, width = 10, height = 6, device = "pdf")
-
-#plot2 <- plot_data(df2)
-#ggsave(filename = "images/minimum_fitness_u01.jpg", plot = plot2, width = 10, height = 6)
-#ggsave(filename = "images/minimum_fitness_u01.pdf", plot = plot2, width = 10, height = 6, device = "pdf")
-
-
-plot3 <- plot_data(df3)
+plot3 <- plot_data(df1)
 ggsave(filename = "images/minimum_fitness_new.jpg", plot = plot3, width = 10, height = 6)
 ggsave(filename = "images/minimum_fitness_new.pdf", plot = plot3, width = 10, height = 6, device = "pdf")
 ```
 
 </details>
-
-![Minimum Fitness at u = 0.1](images/minimum_fitness_u01.jpg) ![Minimum
-Fitness at u = 0.2](images/minimum_fitness_u02.jpg)
 
 ![New Minimum Fitness at u = 0.1 and -nocluins
 off](images/minimum_fitness_new.jpg)
