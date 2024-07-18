@@ -132,7 +132,7 @@ load_data <- function(folder_path, u_value) {
   df_final <- select(df_final, rep, popstat, avbias, sampleid, min_w)
   
   # Calculate sampleid_percent
-  df_final$sampleid_percent <- (df_final$sampleid / 1000) * 100 # At the time of writing this code the piRNA Cluster was generated in base pairs.
+  df_final$sampleid_percent <- (df_final$sampleid / 10000000) * 100 # At the time of writing this code the piRNA Cluster was generated in base pairs.
   
   # Filter out fail-0 and fail-w
   df_filtered = df_final %>% filter(!popstat %in% c("fail-0", "fail-w"))
@@ -147,7 +147,7 @@ load_data <- function(folder_path, u_value) {
 }
 
 
-df1 <- load_data('Simulation-Results_Files/simulation_storm/minfit/16thJul24at055746PM/combined.txt', 0.1)
+df1 <- load_data('/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/minfit/17thJul24at050214PM/combined.txt', 0.1)
 ```
 
 </details>
