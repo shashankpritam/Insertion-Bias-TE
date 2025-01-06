@@ -78,7 +78,7 @@ g3 <- plot_diploid(subset(df, sampleid == "b50"), "Insertion Bias = 50")        
 combined_plot <- grid.arrange(g1, g2, g3, nrow = 1, widths = c(1, 1, 1))
 
 # Save the combined plot
-ggsave("Figure_1C.pdf", plot = combined_plot, width = 16, height = 9, dpi = 600, device = "pdf")
+#ggsave("Figure_1C.pdf", plot = combined_plot, width = 16, height = 9, dpi = 600, device = "pdf")
 
 
 
@@ -164,7 +164,7 @@ p3 <- plot_diploid(subset(df_summary, sampleid == "b50"), "Insertion Bias = 50",
 
 # Combine and save the plots
 combined_p_plot <- grid.arrange(p1, p2, p3, nrow = 1, widths = c(1, 1, 1))
-ggsave("Figure_3B.pdf", plot = combined_p_plot, width = 16, height = 9, dpi = 600, device = "pdf")
+#ggsave("Figure_3B.pdf", plot = combined_p_plot, width = 16, height = 9, dpi = 600, device = "pdf")
 
 
 g_avcli_min <- 0
@@ -186,7 +186,7 @@ create_plot <- function(data_subset, title, show_y_label = FALSE) {
 
   # Conditionally add y-axis label
   if (show_y_label) {
-    p <- p + ylab("Average Cluster Insertions Individual")
+    p <- p + ylab("Average Cluster Insertions per Individual")
   } else {
     p <- p + ylab("") + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
   }
@@ -238,5 +238,5 @@ p3 <- plot_phase_length(subset(df_summary, sampleid == "b50"), "b50", "Insertion
 
 combined_plot <- invisible(grid.arrange(p1, p2, p3, nrow = 1, widths = c(1, 1, 1)))
 
-ggsave(filename = "Figure_3A.pdf", plot = combined_plot, width = 16, height = 9, dpi = 600, device = "pdf")
+#ggsave(filename = "Figure_3A.pdf", plot = combined_plot, width = 16, height = 9, dpi = 600, device = "pdf")
 
