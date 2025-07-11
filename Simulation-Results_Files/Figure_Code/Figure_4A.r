@@ -6,6 +6,7 @@ library(cowplot)
 
 # Define common theme with Helvetica font
 common_theme <- function() {
+  theme_classic() +  # Start with a classic theme (includes axis lines)
   theme(
     text = element_text(family = "Helvetica"),
     legend.position = "bottom",
@@ -13,13 +14,12 @@ common_theme <- function() {
     axis.title = element_text(size = 20),
     axis.text.x = element_text(size = 16, angle = 45, hjust = 1),  # Rotate x-axis labels
     axis.text.y = element_text(size = 16),
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    strip.background = element_rect(fill = "lightgrey"),
+    strip.background = element_blank(),  # Remove facet label background
     strip.text = element_text(face = "plain", size = 20),
     axis.line = element_line(color = "black"),
     axis.ticks = element_line(color = "black"),
-    panel.background = element_rect(fill = "white", colour = "white")
+    panel.background = element_rect(fill = "transparent", colour = NA), # Ensure transparent background
+    plot.background = element_rect(fill = "transparent", colour = NA) # Ensure transparent plot area
   )
 }
 
@@ -38,7 +38,7 @@ plot_metrics <- function(data) {
   plots <- list()
   for (i in seq_along(sample_order)) {
     sample_id <- sample_order[i]
-    group <- data %>% filter(sampleid == sample_id)
+    group <- data %>% dplyr::filter(sampleid == sample_id)
     p <- ggplot(group, aes(x = gen, y = avg_avw)) +
       geom_line(color = colors[i], linetype = line_styles[i]) +
       geom_ribbon(aes(ymin = avg_avw - stddev_avw, ymax = avg_avw + stddev_avw), fill = lighter_colors[i]) +
@@ -57,8 +57,11 @@ plot_metrics <- function(data) {
   # Combine the plots into a single figure
   plot_combined <- plot_grid(plotlist = plots, nrow = 1, align = 'v')
   
-  # Save the combined plot as PDF
+  # Save the combined plot as PDF (default behavior)
   ggsave('Figure_4A.pdf', plot = plot_combined, path = "/Users/shashankpritam/github/Insertion-Bias-TE", device = cairo_pdf, width = 22, height = 8)
+  
+  # Save as high-quality PNG for the paper
+  ggsave('Figure_4A.png', plot = plot_combined, path = "/Users/shashankpritam/github/Insertion-Bias-TE/paper_figure", device = "png", width = 22, height = 8, dpi = 300)
 }
 
 # Database connection and data fetching

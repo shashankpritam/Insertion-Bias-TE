@@ -10,7 +10,7 @@ fm.fontManager.addfont(helvetica_path)
 plt.rcParams['font.family'] = 'Helvetica'
 
 def plot_bar_metrics(data):
-    sns.set_theme(style="whitegrid", context='talk', palette='muted')
+    sns.set_theme(style="white", context='talk', palette='muted')
     
     # Map sample IDs to their display order based on bias_map
     bias_map = {'b50': 'Insertion Bias = 50', 'b0': 'Insertion Bias = 0', 'bm50': 'Insertion Bias = -50'}
@@ -52,8 +52,18 @@ def plot_bar_metrics(data):
     ax.yaxis.grid(False)
     ax.xaxis.grid(False)
 
-    # Save to PDF
-    plt.savefig('Figure_4B.pdf', format='pdf', dpi=600, bbox_inches='tight')
+    sns.despine()  # Remove top and right spines
+
+    # Improve layout and save the figure
+    plt.tight_layout()
+    
+    # Save as PDF (default behavior)
+    plt.savefig('/Users/shashankpritam/github/Insertion-Bias-TE/Figure_4B.pdf')
+    
+    # Save as high-quality PNG for the paper
+    plt.savefig('/Users/shashankpritam/github/Insertion-Bias-TE/paper_figure/Figure_4B.png', dpi=300)
+    
+    plt.show()
 
 # Fetch data
 conn = duckdb.connect(database="/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/fitness_ncs_2/fitness_ncs2.duckdb", read_only=True)
