@@ -29,7 +29,7 @@ common_theme <- function() {
 p <- c("#1a9850", "#ffd700", "#d73027")
 
 # Set the path of the combined file
-combined_file_path <- "/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/phase_len_2/Phase_Length_Simulation_0_exploration"
+combined_file_path <- "/Users/shashankpritam/github/Insertion-Bias-TE/Simulation-Results_Files/simulation_storm/phase_len_2/combined_data_for_figure3.tsv"
 
 # Read the data
 df <- read.table(combined_file_path, fill = TRUE, sep = "\t", header = TRUE)
@@ -141,6 +141,16 @@ colnames(df_summary)[1] <- "n"
 # CI 95%: z* sd/sqrt(population)
 df_summary$ci_fwcli <- qt(0.975, df = df_summary$n - 1) * (df_summary$sd_fwcli / sqrt(df_summary$n))
 df_summary$ci_cli <- qt(0.975, df = df_summary$n - 1) * (df_summary$sd_cli / sqrt(df_summary$n))
+
+# Perform statistical tests and prepare for plotting
+stat_test <- df2 %>% 
+  group_by(sampleid) %>% 
+  wilcox_test(gen ~ phase) %>% 
+  adjust_pvalue(method = "bonferroni") %>% 
+  add_significance("p.adj")
+
+# Add y-position for the significance bars
+stat_test <- stat_test %>% add_xy_position(x = "phase", fun = "max", data = df_summary, formula = length_previous_phase ~ phase)
 df_summary$ci_tes <- qt(0.975, df = df_summary$n - 1) * (df_summary$sd_tes / sqrt(df_summary$n))
 
 plot_diploid <- function(data, title, min_val, max_val) {
@@ -208,11 +218,15 @@ ggsave(filename = "Figure_3C.pdf", plot = combined_plots, width = 16, height = 9
 
 
 # Updated plot_phase_length function with control over y-axis label display
-plot_phase_length <- function(data, sampleid, title, show_y_label = FALSE) {
+# Updated plot_phase_length function with control over y-axis label display and statistical comparison
+plot_phase_length <- function(data, sampleid_val, title, show_y_label = FALSE) {
   p <- ggplot(data, aes(x = phase, y = length_previous_phase, fill = phase)) +
     geom_bar(stat = "identity") +
     geom_errorbar(aes(ymin = length_previous_phase - sd_length_previous_phase, ymax = length_previous_phase + sd_length_previous_phase),
                   width = 0.2, colour = "black", alpha = 0.9, linewidth = 0.8) +
+    # Add significance brackets
+    stat_pvalue_manual(stat_test %>% filter(sampleid == sampleid_val), label = "p.adj.signif", tip.length = 0.01, hide.ns = TRUE) +
+    geom_text(data = stat_test %>% filter(sampleid == sampleid_val), aes(x = phase, y = length_previous_phase + sd_length_previous_phase, label = paste0("p = ", round(p.adj.signif, 3))), check_overlap = TRUE, size = 3.5) +
     scale_x_discrete(labels = c("Rapid", "Shotgun")) +
     scale_fill_manual(values = c("#1a9850", "#ffd700")) +
     xlab("Phase") +
@@ -238,5 +252,4 @@ p3 <- plot_phase_length(subset(df_summary, sampleid == "b50"), "b50", "Insertion
 
 combined_plot <- invisible(grid.arrange(p1, p2, p3, nrow = 1, widths = c(1, 1, 1)))
 
-#ggsave(filename = "Figure_3A.pdf", plot = combined_plot, width = 16, height = 9, dpi = 600, device = "pdf")
-
+ggsave(filename = "/Users/shashankpritam/github/InsertionBiasGENETICS-1/figures/Figure_3_HQ.pdf", plot = combined_plot, width = 16, height = 9, dpi = 600, device = "pdf")
